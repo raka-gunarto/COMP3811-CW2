@@ -7,9 +7,25 @@
 
 #include <iostream>
 
+bool PlaneRenderer::initialised = false;
+std::shared_ptr<VBO> PlaneRenderer::planeVBO;
+std::shared_ptr<VAO> PlaneRenderer::planeVAO;
+std::shared_ptr<EBO> PlaneRenderer::planeEBO;
+
 PlaneRenderer::PlaneRenderer(std::shared_ptr<Object> obj) : Renderer(obj)
 {
+    // ensure vertex data is initialised
+    PlaneRenderer::initVertexData();
+
     name = "PlaneRenderer";
+
+    // default mode flat color, white
+    mode = PlaneRenderer::Mode::FLAT_COLOR;
+    color = glm::vec3(1.0f, 1.0f, 1.0f);
+}
+
+void PlaneRenderer::initVertexData() {
+    if (initialised) return;
     // initialise buffers
     // the vertices can be constant, it can be transformed using
     // the transform component. Vertices are for a flat plane
@@ -31,9 +47,7 @@ PlaneRenderer::PlaneRenderer(std::shared_ptr<Object> obj) : Renderer(obj)
     // set buffer attributes
     planeVAO->link(planeVBO, 0, 3, GL_FLOAT, 3 * sizeof(GLfloat), (void*)0); // vertex coords
 
-    // default colour white
-    mode = PlaneRenderer::Mode::FLAT_COLOR;
-    color = glm::vec3(1.0f, 1.0f, 1.0f);
+    initialised = true;
 }
 
 void PlaneRenderer::render(std::shared_ptr<Scene> s)

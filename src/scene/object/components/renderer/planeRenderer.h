@@ -18,8 +18,11 @@ class EBO;
 class PlaneRenderer : public Renderer {
 public:
     PlaneRenderer(std::shared_ptr<Object> obj);
+
     void render(std::shared_ptr<Scene> s) override;
     void renderInspector() override;
+
+    static void initVertexData();
 
     enum Mode
     {
@@ -31,8 +34,11 @@ public:
     glm::vec3 color;
     std::shared_ptr<Texture> tex;
 
-private:
-    std::shared_ptr<VBO> planeVBO;
-    std::shared_ptr<VAO> planeVAO;
-    std::shared_ptr<EBO> planeEBO;
+
+protected:
+    static bool initialised;
+    // every renderer uses the same plane, make them static
+    static std::shared_ptr<VBO> planeVBO;
+    static std::shared_ptr<VAO> planeVAO;
+    static std::shared_ptr<EBO> planeEBO;
 };
