@@ -2,6 +2,8 @@
 
 #include <scene/object/components/transform.h>
 
+#include <imgui.h>
+
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -20,8 +22,8 @@ PlaneRenderer::PlaneRenderer(std::shared_ptr<Object> obj) : Renderer(obj)
     name = "PlaneRenderer";
 
     // default mode flat color, white
-    mode = PlaneRenderer::Mode::FLAT_COLOR;
-    color = glm::vec3(1.0f, 1.0f, 1.0f);
+    mode = PlaneRenderer::Mode::MATERIAL;
+    diffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
 void PlaneRenderer::initVertexData() {
@@ -71,13 +73,19 @@ void PlaneRenderer::render(std::shared_ptr<Scene> s)
     // activate the renderer's shader
     shader->activate();
 
+    // scene ambient parameters
+    glUniform3f(glGetUniformLocation(shader->id, "ambientColor"),
+        s->ambientColor.r,
+        s->ambientColor.g,
+        s->ambientColor.b
+    );
+    glUniform1f(glGetUniformLocation(shader->id, "ambientIntensity"), s->ambientIntensity);
+
     // model mat and normal mat
     glm::mat4 modelMat = t->modelMatrix();
     glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(modelMat)));
     glUniformMatrix4fv(glGetUniformLocation(shader->id, "model"), 1, GL_FALSE, glm::value_ptr(modelMat));
     glUniformMatrix3fv(glGetUniformLocation(shader->id, "normalMat"), 1, GL_FALSE, glm::value_ptr(normalMat));
-    // mode: color / texture?
-    glUniform1i(glGetUniformLocation(shader->id, "mode"), (uint)mode);
     // specular lighting, camera position
     glUniform3f(glGetUniformLocation(shader->id, "cameraPos"),
         s->activeCamera->transform->position.x,
@@ -89,14 +97,17 @@ void PlaneRenderer::render(std::shared_ptr<Scene> s)
     // load color / texture
     switch (mode)
     {
-    case PlaneRenderer::Mode::FLAT_COLOR:
-        glUniform3f(glGetUniformLocation(shader->id, "color"),
-            color.r,
-            color.g,
-            color.b
+    case PlaneRenderer::Mode::MATERIAL:
+        glUniform3f(glGetUniformLocation(shader->id, "diffuseColor"),
+            diffuseColor.r,
+            diffuseColor.g,
+            diffuseColor.b
         );
+        glUniform1f(glGetUniformLocation(shader->id, "specularIntensity"), specularIntensity);
         break;
-    case PlaneRenderer::Mode::TEXTURE:
+    case PlaneRenderer::Mode::TEX_MAP:
+        glUniform3f(glGetUniformLocation(shader->id, "diffuseColor"), 0, 0, 0);
+        glUniform1f(glGetUniformLocation(shader->id, "specularIntensity"), 0);
         break;
     }
     planeVAO->bind();
@@ -106,5 +117,18 @@ void PlaneRenderer::render(std::shared_ptr<Scene> s)
 
 void PlaneRenderer::renderInspector()
 {
-
+    ImGui::Text("Plane Renderer");
+    ImGui::Text("Mode"); ImGui::SameLine();
+    if (ImGui::RadioButton("Material", mode == MATERIAL)) { mode = MATERIAL; } ImGui::SameLine();
+    if (ImGui::RadioButton("Texture Map", mode == TEX_MAP)) { mode = TEX_MAP; }
+    switch (mode) {
+    case PlaneRenderer::Mode::MATERIAL:
+        ImGui::ColorEdit3("Diffuse", glm::value_ptr(diffuseColor));
+        break;
+    case PlaneRenderer::Mode::TEX_MAP:
+        if (ImGui::BeginDragDropTarget())
+            ImGui::EndDragDropTarget();
+        break;
+    }
+    ImGui::Separator();
 }

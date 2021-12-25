@@ -33,10 +33,8 @@ public:
     std::vector<std::shared_ptr<Object>> blueprints;
 
     GLFWwindow* window;
-private:
-    void renderUI_Overview();
-    void renderUI_ObjectTree();
-    void renderUI_Inspector();
 
     bool vsync = true;
+    glm::vec3 ambientColor;
+    float ambientIntensity;
 };

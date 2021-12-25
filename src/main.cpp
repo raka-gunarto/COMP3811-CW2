@@ -14,6 +14,10 @@
 #include <scene/object/components/transform.h>
 #include <scene/object/components/renderer/planeRenderer.h>
 
+#include <ui/overview.h>
+#include <ui/inspector.h>
+#include <ui/objectHierarchy.h>
+
 const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
 
@@ -50,6 +54,11 @@ std::shared_ptr<Scene> constructDefaultScene(GLFWwindow* w) {
     mainCamera->components.push_back(std::shared_ptr<Component>(new Camera(mainCamera, width, height, 45.0f, 0.1f, 100.0f)));
     s->objects.push_back(mainCamera);
     s->activeCamera = std::dynamic_pointer_cast<Camera>(mainCamera->components[1]);
+
+    // add UI windows
+    s->windowUIs.push_back(std::shared_ptr<Window>(new Overview(s)));
+    s->windowUIs.push_back(std::shared_ptr<Window>(new ObjectHierarchy(s)));
+    s->windowUIs.push_back(std::shared_ptr<Window>(new Inspector(s)));
 
     return s;
 }

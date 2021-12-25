@@ -26,13 +26,15 @@ public:
 
     enum Mode
     {
-        FLAT_COLOR,
-        TEXTURE
+        MATERIAL,
+        TEX_MAP
     };
     PlaneRenderer::Mode mode;
 
-    glm::vec3 color;
-    std::shared_ptr<Texture> tex;
+    glm::vec3 diffuseColor;
+    float specularIntensity;
+    std::shared_ptr<Texture> diffuseTex;
+    std::shared_ptr<Texture> specularTex;
 
 
 protected:

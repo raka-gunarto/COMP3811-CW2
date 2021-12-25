@@ -1,5 +1,7 @@
 #include "camera.h"
 
+#include <imgui.h>
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 
@@ -50,5 +52,11 @@ glm::mat4 Camera::getMatrix() {
 }
 
 void Camera::renderInspector() {
-
+    ImGui::Text("Camera");
+    ImGui::DragInt("Width", &width);
+    ImGui::DragInt("Height", &height);
+    ImGui::DragFloat("FOV", &FOV, 0.1f);
+    ImGui::DragFloat("Near Plane", &near, 0.1f);
+    ImGui::DragFloat("Far Plane", &far, 0.1f);
+    ImGui::Separator();
 }

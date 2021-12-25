@@ -2,22 +2,27 @@
 
 out vec4 FragColor;
 
+in vec2 texCoords;
+
 in vec3 cPos;
 in vec3 normal;
 
 uniform sampler2D texDiffuse;
 uniform sampler2D texSpecular;
+uniform vec3 diffuseColor;
+uniform float specularIntensity;
 
-uniform int mode;
+uniform vec3 ambientColor;
+uniform float ambientIntensity;
+
 uniform vec3 cameraPos;
-uniform vec3 color;
 
 void main()
 {
-    // ambient
-    float ambient = 0.5f;
+    vec3 dColor = diffuseColor + texture(texDiffuse, texCoords).rgb;
+    vec3 ambient = ambientColor * ambientIntensity * dColor;
+    vec3 diffuse = dColor * 0.0;
 
-    // TODO: texture if(mode == 1)
-    FragColor = vec4(color, 1.0f) * (vec4(1.0f) * ambient);
-    FragColor = vec4(1.0f);
+    vec3 finalColor = ambient + diffuse;
+    FragColor = vec4(finalColor, 1.0);
 }

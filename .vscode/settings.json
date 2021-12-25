@@ -36,5 +36,14 @@
         "type_traits": "cpp",
         "typeinfo": "cpp",
         "utility": "cpp"
-    }
+    },
+    "LineCount.excludes": [
+        "**/.vscode/**",
+        "**/build/**",
+        "**/lib/**",
+        "**/res/**",
+    ],
+    "LineCount.includes": [
+        "**/res/shader/**",
+    ]
 }

@@ -19,7 +19,7 @@ char* readShaderFile(const char* path) {
     return retbuf;
 }
 
-void checkErrors(GLuint shader, GLenum type)
+void checkErrors(GLuint shader, GLenum type, const char* shaderPath)
 {
     GLint compiled;
     char errors[1024];
@@ -29,7 +29,7 @@ void checkErrors(GLuint shader, GLenum type)
             glGetShaderiv(shader, GL_COMPILE_STATUS, &compiled);
             if (compiled == GL_FALSE) {
                 glGetShaderInfoLog(shader, 1024, NULL, errors);
-                std::cout << "ERROR::SHADER::COMPILE::" << errors << std::endl;
+                std::cout << "ERROR::SHADER::COMPILE::" << shaderPath << "::" << errors << std::endl;
             }
         break;
         default:
@@ -53,19 +53,19 @@ Shader::Shader(const char* name, const char* vertFile, const char* fragFile)
     GLuint vert = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vert, 1, &vertSrc, NULL);
     glCompileShader(vert);
-    checkErrors(vert, GL_VERTEX_SHADER);
+    checkErrors(vert, GL_VERTEX_SHADER, vertFile);
 
     // comppile fragment shader
     GLuint frag = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(frag, 1, &fragSrc, NULL);
     glCompileShader(frag);
-    checkErrors(frag, GL_FRAGMENT_SHADER);
+    checkErrors(frag, GL_FRAGMENT_SHADER, fragFile);
 
     id = glCreateProgram();
     glAttachShader(id, vert);
     glAttachShader(id, frag);
     glLinkProgram(id);
-    checkErrors(id, 0);
+    checkErrors(id, 0, NULL);
 
     // cleanup
     delete[] (char*) vertSrc;

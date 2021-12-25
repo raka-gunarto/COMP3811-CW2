@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
-project (
+project(
     "comp_graphics_cw2"
     VERSION 1.0
     LANGUAGES CXX
