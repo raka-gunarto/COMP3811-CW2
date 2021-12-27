@@ -11,9 +11,10 @@ char* readShaderFile(const char* path) {
 
     int len;
     len = f.tellg();
-    retbuf = new char[len];
+    retbuf = new char[len + 1];
     f.seekg(0, std::ios::beg);
     f.read(retbuf, len);
+    retbuf[len] = 0;
     f.close();
 
     return retbuf;
