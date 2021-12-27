@@ -5,8 +5,17 @@
 #include <imgui_impl_opengl3.h>
 
 void Scene::update() {
+    // calculate deltaTime
+    dTime = glfwGetTime() - dTime;
     for (auto obj : objects)
         obj->update(this->shared_from_this());
+
+    // set the dtime to current time for next frame calc
+    dTime = glfwGetTime();
+
+    // reset scroll values
+    scrollX = 0.0f;
+    scrollY = 0.0f;
 }
 
 void Scene::render() {

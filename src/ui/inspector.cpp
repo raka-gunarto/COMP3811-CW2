@@ -8,5 +8,7 @@ void Inspector::render() {
     ImGui::Begin(std::string("Inspector: " + scene->inspectedObject->getName() + "###inspectorWindow").c_str());
     for (auto component : scene->inspectedObject->components)
         component->renderInspector();
+    for (auto script : scene->inspectedObject->scripts)
+        script->renderInspector();
     ImGui::End();
 }

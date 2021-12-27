@@ -18,7 +18,14 @@ class Camera;
 class Scene : public std::enable_shared_from_this<Scene>
 {
 public:
-    Scene(GLFWwindow* window) : window(window) {}
+    Scene(GLFWwindow* window) : window(window) {
+        glfwSetWindowUserPointer(window, this);
+        glfwSetScrollCallback(window, [](GLFWwindow* w, double x, double y) {
+            Scene* s = (Scene*)glfwGetWindowUserPointer(w);
+            s->scrollX += x;
+            s->scrollY += y;
+            });
+    }
     void update();
     void render();
     void renderUI();
@@ -35,6 +42,11 @@ public:
     GLFWwindow* window;
 
     bool vsync = true;
-    glm::vec3 ambientColor;
-    float ambientIntensity;
+    glm::vec3 ambientColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    float ambientIntensity = 0.2f;
+    float dTime = 0.0f;
+
+    // scroll values because glfw handles scroll with callbacks
+    float scrollX = 0.0f;
+    float scrollY = 0.0f;
 };

@@ -13,6 +13,7 @@
 #include <scene/object/components/camera.h>
 #include <scene/object/components/transform.h>
 #include <scene/object/components/renderer/planeRenderer.h>
+#include <scene/object/scripts/camera/editCamera.h>
 
 #include <ui/overview.h>
 #include <ui/inspector.h>
@@ -43,17 +44,18 @@ std::shared_ptr<Scene> constructDefaultScene(GLFWwindow* w) {
     s->objects.push_back(groundPlane);
 
     // create main camera
-    std::shared_ptr<Object> mainCamera(new Object(s));
-    mainCamera->setName("Main Camera");
+    std::shared_ptr<Object> editCamera(new Object(s));
+    editCamera->setName("Edit Camera");
     int width, height;
     glfwGetWindowSize(w, &width, &height);
-    std::shared_ptr<Transform> mainCameraTransform(new Transform(mainCamera));
-    mainCameraTransform->position.y = 1;
-    mainCameraTransform->rotation.x = -45;
-    mainCamera->components.push_back(std::shared_ptr<Component>(mainCameraTransform));
-    mainCamera->components.push_back(std::shared_ptr<Component>(new Camera(mainCamera, width, height, 45.0f, 0.1f, 100.0f)));
-    s->objects.push_back(mainCamera);
-    s->activeCamera = std::dynamic_pointer_cast<Camera>(mainCamera->components[1]);
+    std::shared_ptr<Transform> editCameraTransform(new Transform(editCamera));
+    editCameraTransform->position.y = 1;
+    editCameraTransform->rotation.x = -45;
+    editCamera->components.push_back(std::shared_ptr<Component>(editCameraTransform));
+    editCamera->components.push_back(std::shared_ptr<Component>(new Camera(editCamera, width, height, 45.0f, 0.1f, 100.0f)));
+    editCamera->scripts.push_back(std::shared_ptr<Script>(new EditCamera(editCamera)));
+    s->objects.push_back(editCamera);
+    s->activeCamera = std::dynamic_pointer_cast<Camera>(editCamera->components[1]);
 
     // add UI windows
     s->windowUIs.push_back(std::shared_ptr<Window>(new Overview(s)));

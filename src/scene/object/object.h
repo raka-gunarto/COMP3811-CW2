@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 
 #include <scene/object/components/component.h>
-#include <scene/object/script/script.h>
+#include <scene/object/scripts/script.h>
 #include <scene/scene.h>
 
 #include <vector>
