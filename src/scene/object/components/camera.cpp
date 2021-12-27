@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include <scene/object/object.h>
 #include <scene/object/components/transform.h>
@@ -40,9 +40,16 @@ Camera::Camera(std::shared_ptr<Object> obj, int width, int height, float FOV, fl
 
 glm::mat4 Camera::getMatrix() {
     // calculate direction vector
-    glm::vec3 direction = glm::rotateX(glm::vec3(0, 0, -1), glm::radians(transform->rotation.x));
-    direction = glm::rotateY(direction, glm::radians(transform->rotation.y));
-    direction = glm::rotateZ(direction, glm::radians(transform->rotation.z));
+    glm::vec3 direction = glm::rotate(
+        glm::quat(
+            glm::vec3(
+                glm::radians(transform->rotation.x),
+                glm::radians(transform->rotation.y),
+                glm::radians(transform->rotation.z)
+            )
+        ),
+        glm::vec3(0, 0, -1)
+    );
 
     return
         // calculate projection matrix
