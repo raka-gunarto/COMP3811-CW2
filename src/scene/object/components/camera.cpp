@@ -4,6 +4,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/matrix_decompose.hpp>
 
 #include <scene/object/object.h>
 #include <scene/object/components/transform.h>
@@ -40,14 +41,14 @@ Camera::Camera(std::shared_ptr<Object> obj, int width, int height, float FOV, fl
 
 glm::mat4 Camera::getMatrix() {
     // calculate direction vector
+    glm::mat4 model = transform->modelMatrix();
+    glm::vec3 pos, scale, skew;
+    glm::vec4 pers;
+    glm::quat rot;
+    glm::decompose(model, scale, rot, pos, skew, pers);
+
     glm::vec3 direction = glm::rotate(
-        glm::quat(
-            glm::vec3(
-                glm::radians(transform->rotation.x),
-                glm::radians(transform->rotation.y),
-                glm::radians(transform->rotation.z)
-            )
-        ),
+        rot,
         glm::vec3(0, 0, -1)
     );
 
@@ -55,7 +56,7 @@ glm::mat4 Camera::getMatrix() {
         // calculate projection matrix
         glm::perspective(glm::radians(FOV), (float)width / height, near, far) *
         // calculate view matrix
-        glm::lookAt(transform->position, transform->position + direction, glm::vec3(0, 1.0f, 0));
+        glm::lookAt(pos, pos + direction, glm::vec3(0, 1.0f, 0));
 }
 
 void Camera::renderInspector() {

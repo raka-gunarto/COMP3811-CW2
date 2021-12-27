@@ -27,6 +27,7 @@ public:
     void setName(std::string name) { this->name = name; }
     std::string getName() { return name; }
     std::shared_ptr<Object> getParent() { return parent; }
+    std::shared_ptr<Scene> getScene() { return scene; }
 
     void reparent(std::shared_ptr<Object> p);
     void update(std::shared_ptr<Scene> s);

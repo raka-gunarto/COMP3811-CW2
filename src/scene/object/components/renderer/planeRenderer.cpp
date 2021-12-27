@@ -1,5 +1,6 @@
 #include "planeRenderer.h"
 
+#include <scene/scene.h>
 #include <scene/object/components/transform.h>
 
 #include <imgui.h>
@@ -8,6 +9,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
+#include <memory>
 
 bool PlaneRenderer::initialised = false;
 std::shared_ptr<VBO> PlaneRenderer::planeVBO;
@@ -24,6 +26,9 @@ PlaneRenderer::PlaneRenderer(std::shared_ptr<Object> obj) : Renderer(obj)
     // default mode flat color, white
     mode = PlaneRenderer::Mode::MATERIAL;
     diffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
+
+    // set default shader
+    shader = obj->getScene()->shaders[0];
 }
 
 void PlaneRenderer::initVertexData() {

@@ -11,6 +11,7 @@ public:
     Component(std::shared_ptr<Object> obj) : object(obj) {}
     std::string getName() { return name; }
     virtual void renderInspector() = 0; 
+    static void renderComponentChildWindow(std::shared_ptr<Object> obj);
 
 protected:
     std::string name;

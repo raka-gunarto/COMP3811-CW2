@@ -13,11 +13,20 @@ void Object::reparent(std::shared_ptr<Object> p)
                 break;
             }
         }
+    else // remove from scene direct child
+        for (auto it = scene->objects.begin(); it != scene->objects.end(); ++it) {
+            if (it->get() == this)
+            {
+                scene->objects.erase(it);
+                break;
+            }
+        }
 
     // are we just setting to null?
     if (p == nullptr) {
         parent.reset();
         parent = nullptr;
+        scene->objects.push_back(shared_from_this()); // add back to scene direct child
         return;
     }
 

@@ -11,6 +11,7 @@ class Object;
 
 class Camera : public Component {
 public:
+    Camera(std::shared_ptr<Object> obj) : Camera(obj, 0, 0, 0, 0, 0) {}
     Camera(std::shared_ptr<Object> obj, int width, int height, float FOV, float near, float far);
     void renderInspector() override;
     std::shared_ptr<Transform> transform;

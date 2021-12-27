@@ -17,6 +17,7 @@ public:
     virtual void start() {};
     virtual void update(std::shared_ptr<Scene> s) = 0;
     virtual void renderInspector() = 0;
+    static void renderComponentChildWindow(std::shared_ptr<Object> obj);
 protected:
     std::string name;
     std::shared_ptr<Object> object;
