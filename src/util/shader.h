@@ -7,7 +7,7 @@ public:
     GLuint id;
     const char* name;
 
-    Shader(const char* nane, const char* vertPath, const char* fragPath);
+    Shader(const char* name, const char* vertPath, const char* fragPath);
     ~Shader();
 
     void activate();
