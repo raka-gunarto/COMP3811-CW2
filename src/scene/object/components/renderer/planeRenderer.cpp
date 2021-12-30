@@ -45,7 +45,7 @@ void PlaneRenderer::initVertexData() {
     };
     GLuint elements[] = {
         0,1,2, // one half of plane
-        1,2,3 // other half of plane
+        2,1,3 // other half of plane (maintain CCW winding order)
     };
     planeVAO = std::shared_ptr<VAO>(new VAO());
     planeVBO = std::shared_ptr<VBO>(new VBO(planeVAO, verts, sizeof(verts)));

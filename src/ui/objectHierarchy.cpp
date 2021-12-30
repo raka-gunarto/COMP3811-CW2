@@ -7,6 +7,7 @@
 
 void renderObjectNode(std::shared_ptr<Object> o, Scene* s)
 {
+    ImGui::PushID(o.get());
     if (s->inspectedObject == o)
         ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1, 0, 0, 1));
     bool expanded = ImGui::TreeNode(o->getName().c_str());
@@ -30,7 +31,11 @@ void renderObjectNode(std::shared_ptr<Object> o, Scene* s)
     ImGui::SameLine();
     if (ImGui::SmallButton(std::string("Inspect##" + o->getName()).c_str()))
         s->inspectedObject = o;
+    ImGui::SameLine();
+    if (ImGui::SmallButton(std::string("Clone##" + o->getName()).c_str()))
+        s->objects.push_back(o->clone());
 
+    ImGui::PopID();
     if (expanded) {
         for (auto child : o->children)
             renderObjectNode(child, s);
@@ -41,9 +46,13 @@ void renderObjectNode(std::shared_ptr<Object> o, Scene* s)
 void ObjectHierarchy::render() {
     ImGui::Begin("Object Hierarchy");
     for (auto obj : scene->objects)
-        renderObjectNode(obj, scene.get());
+        if (obj)
+            renderObjectNode(obj, scene.get());
 
+    if (ImGui::Button("Create Empty Object###createEmptyObject"))
+        scene->objects.push_back(std::shared_ptr<Object>(new Object(scene)));
     ImGui::Separator();
+
     ImGui::Text("Drop Here To Unparent");
     if (ImGui::BeginDragDropTarget())
         if (const ImGuiPayload* p = ImGui::AcceptDragDropPayload("HIERARCHY_OBJECT"))

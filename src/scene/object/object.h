@@ -19,6 +19,7 @@ class Object : public std::enable_shared_from_this<Object>
 {
 public:
     Object(std::shared_ptr<Scene> s) : scene(s) {}
+    Object(const Object& other) = delete; // use clone()
 
     std::vector<std::shared_ptr<Component>> components;
     std::vector<std::shared_ptr<Object>> children;
@@ -28,6 +29,8 @@ public:
     std::string getName() { return name; }
     std::shared_ptr<Object> getParent() { return parent; }
     std::shared_ptr<Scene> getScene() { return scene; }
+
+    std::shared_ptr<Object> clone();
 
     void reparent(std::shared_ptr<Object> p);
     void update(std::shared_ptr<Scene> s);

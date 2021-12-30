@@ -52,24 +52,22 @@ void EditCamera::update(std::shared_ptr<Scene> s)
     if (ImGui::GetIO().WantCaptureMouse) return;
     if (glfwGetMouseButton(s->window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
     {
-        // be fancy
-        glfwSetInputMode(s->window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-
         // get some window data
         int width, height;
         glfwGetWindowSize(s->window, &width, &height);
 
-        // reset on first click
-        if (first) {
-            glfwSetCursorPos(s->window, width / 2, height / 2);
+        double mouseX, mouseY;
+        glfwGetCursorPos(s->window, &mouseX, &mouseY);
+
+        if (first)
+        {
+            lastX = mouseX;
+            lastY = mouseY;
             first = false;
             return;
         }
-
-        double mouseX, mouseY;
-        glfwGetCursorPos(s->window, &mouseX, &mouseY);
-        float dX = (mouseX - (width / 2)) / width;
-        float dY = (mouseY - (height / 2)) / height;
+        float dX = (mouseX - lastX) / width;
+        float dY = (mouseY - lastY) / height;
 
         // drag
         if (glfwGetKey(s->window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || glfwGetKey(s->window, GLFW_KEY_RIGHT_SHIFT == GLFW_PRESS))
@@ -97,14 +95,10 @@ void EditCamera::update(std::shared_ptr<Scene> s)
             t->rotation.z = glm::degrees(o.z);
         }
 
-        glfwSetCursorPos(s->window, width / 2, height / 2);
+        lastX = mouseX;
+        lastY = mouseY;
     }
-    else {
-        if (first) return;
-        glfwSetInputMode(s->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        first = true;
-    }
-
+    else first = true;
 }
 
 void EditCamera::renderInspector()

@@ -18,6 +18,18 @@ class EBO;
 class PlaneRenderer : public Renderer {
 public:
     PlaneRenderer(std::shared_ptr<Object> obj);
+    PlaneRenderer(const PlaneRenderer& other) = delete;
+    PlaneRenderer(const PlaneRenderer& other, std::shared_ptr<Object> newObj)
+        : PlaneRenderer(newObj)
+    {
+        diffuseColor = other.diffuseColor;
+        specularIntensity = other.specularIntensity;
+        diffuseTex = other.diffuseTex;
+        specularTex = other.specularTex;
+    }
+    std::shared_ptr<Component> clone(std::shared_ptr<Object> newObj) {
+        return std::shared_ptr<Component>(new PlaneRenderer(*this, newObj));
+    }
 
     void render(std::shared_ptr<Scene> s) override;
     void renderInspector() override;

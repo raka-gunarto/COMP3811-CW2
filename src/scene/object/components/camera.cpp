@@ -41,6 +41,7 @@ Camera::Camera(std::shared_ptr<Object> obj, int width, int height, float FOV, fl
 
 glm::mat4 Camera::getMatrix() {
     // calculate direction vector
+    // FIXME: there has to be a better way than having to call decompose
     glm::mat4 model = transform->modelMatrix();
     glm::vec3 pos, scale, skew;
     glm::vec4 pers;
@@ -56,6 +57,29 @@ glm::mat4 Camera::getMatrix() {
         // calculate projection matrix
         glm::perspective(glm::radians(FOV), (float)width / height, near, far) *
         // calculate view matrix
+        glm::lookAt(pos, pos + direction, glm::vec3(0, 1.0f, 0));
+}
+
+glm::mat4 Camera::getPerspective() {
+    return
+        glm::perspective(glm::radians(FOV), (float)width / height, near, far);
+}
+
+glm::mat4 Camera::getView() {
+    // calculate direction vector
+    // FIXME: there has to be a better way than having to call decompose
+    glm::mat4 model = transform->modelMatrix();
+    glm::vec3 pos, scale, skew;
+    glm::vec4 pers;
+    glm::quat rot;
+    glm::decompose(model, scale, rot, pos, skew, pers);
+
+    glm::vec3 direction = glm::rotate(
+        rot,
+        glm::vec3(0, 0, -1)
+    );
+
+    return
         glm::lookAt(pos, pos + direction, glm::vec3(0, 1.0f, 0));
 }
 

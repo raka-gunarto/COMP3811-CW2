@@ -1,6 +1,26 @@
 #include "object.h"
 
 #include <scene/object/components/renderer/renderer.h>
+#include <scene/object/components/component.h>
+#include <scene/object/scripts/script.h>
+
+std::shared_ptr<Object> Object::clone()
+{
+    std::shared_ptr<Object> newObj(new Object(this->scene));
+    newObj->setName(name + " (Clone)");
+    // deep copy children
+    for (auto child : children)
+        newObj->children.push_back(child->clone());
+
+    // deep copy components
+    for (auto component : components)
+        newObj->components.push_back(component->clone(newObj));
+
+    // deep copy scripts
+    for (auto script : scripts)
+        newObj->scripts.push_back(script->clone(newObj));
+    return newObj;
+}
 
 void Object::reparent(std::shared_ptr<Object> p)
 {

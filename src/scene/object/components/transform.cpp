@@ -10,11 +10,20 @@
 
 #include <iostream>
 
+glm::mat4 Transform::localMatrix() {
+    glm::vec3 rotationRad(glm::radians(rotation.x), glm::radians(rotation.y), glm::radians(rotation.z));
+    glm::mat4 model =
+        glm::translate(glm::mat4(1.0f), position) *
+        glm::toMat4(glm::quat(rotationRad)) *
+        glm::scale(glm::mat4(1.0f), scale);
+    return model;
+}
+
 glm::mat4 Transform::modelMatrix() {
     glm::vec3 rotationRad(glm::radians(rotation.x), glm::radians(rotation.y), glm::radians(rotation.z));
     glm::mat4 model =
         glm::translate(glm::mat4(1.0f), position) *
-        glm::toMat4(glm::quat(rotationRad)) * 
+        glm::toMat4(glm::quat(rotationRad)) *
         glm::scale(glm::mat4(1.0f), scale);
 
     if (object->getParent() == nullptr) // parentless
@@ -35,7 +44,7 @@ glm::mat4 Transform::modelMatrix() {
     }
 
     // apply transformations to parent mat first
-    model = model * t->modelMatrix();
+    model = t->modelMatrix() * model;
     return model;
 }
 
