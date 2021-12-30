@@ -84,6 +84,7 @@ int main()
 
     gladLoadGL();
     glViewport(0, 0, mode->width, mode->height);
+    glEnable(GL_DEPTH_TEST);
 
     ImGui::CreateContext();
     ImGui::StyleColorsDark();
