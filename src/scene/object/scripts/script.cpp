@@ -19,7 +19,8 @@ static ScriptBuilders builders[] = {
 };
 
 void Script::renderComponentChildWindow(std::shared_ptr<Object> obj) {
-    if (ImGui::BeginPopupModal("Script Menu###inspectorScriptMenu"))
+    static bool open = true;
+    if (ImGui::BeginPopupModal("Script Menu###inspectorScriptMenu", &open))
     {
         // FIXME: not sure if there's a dynamic way to do this,
         //        short of making each component a dll and dynamically

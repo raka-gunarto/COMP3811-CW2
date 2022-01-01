@@ -15,12 +15,12 @@ class VAO;
 class VBO;
 class EBO;
 
-class PlaneRenderer : public Renderer {
+class CubeRenderer : public Renderer {
 public:
-    PlaneRenderer(std::shared_ptr<Object> obj);
-    PlaneRenderer(const PlaneRenderer& other) = delete;
-    PlaneRenderer(const PlaneRenderer& other, std::shared_ptr<Object> newObj)
-        : PlaneRenderer(newObj)
+    CubeRenderer(std::shared_ptr<Object> obj);
+    CubeRenderer(const CubeRenderer& other) = delete;
+    CubeRenderer(const CubeRenderer& other, std::shared_ptr<Object> newObj)
+        : CubeRenderer(newObj)
     {
         diffuseColor = other.diffuseColor;
         specularColor = other.specularColor;
@@ -29,7 +29,7 @@ public:
         specularTex = other.specularTex;
     }
     std::shared_ptr<Component> clone(std::shared_ptr<Object> newObj) {
-        return std::shared_ptr<Component>(new PlaneRenderer(*this, newObj));
+        return std::shared_ptr<Component>(new CubeRenderer(*this, newObj));
     }
 
     void render(std::shared_ptr<Scene> s) override;
@@ -42,19 +42,19 @@ public:
         MATERIAL,
         TEX_MAP
     };
-    PlaneRenderer::Mode mode;
+    CubeRenderer::Mode mode;
 
     glm::vec3 diffuseColor;
     glm::vec3 specularColor;
-    float shininess = 1.0f;
+    float shininess;
     std::shared_ptr<Texture> diffuseTex;
     std::shared_ptr<Texture> specularTex;
 
 
 protected:
     static bool initialised;
-    // every renderer uses the same plane, make them static
-    static std::shared_ptr<VBO> planeVBO;
-    static std::shared_ptr<VAO> planeVAO;
-    static std::shared_ptr<EBO> planeEBO;
+    // every renderer uses the same cube, make them static
+    static std::shared_ptr<VBO> cubeVBO;
+    static std::shared_ptr<VAO> cubeVAO;
+    static std::shared_ptr<EBO> cubeEBO;
 };

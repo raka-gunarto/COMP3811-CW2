@@ -13,6 +13,7 @@
 #include <scene/object/components/camera.h>
 #include <scene/object/components/transform.h>
 #include <scene/object/components/renderer/planeRenderer.h>
+#include <scene/object/components/renderer/sphereRenderer.h>
 #include <scene/object/scripts/camera/editCamera.h>
 
 #include <ui/overview.h>
@@ -42,6 +43,18 @@ std::shared_ptr<Scene> constructDefaultScene(GLFWwindow* w) {
     groundPlaneRenderer->shader = s->shaders[0];
     groundPlane->components.push_back(std::shared_ptr<Component>(groundPlaneRenderer));
     s->objects.push_back(groundPlane);
+
+    // create ground plane
+    std::shared_ptr<Object> sphere(new Object(s));
+    sphere->setName("Sphere");
+    std::shared_ptr<Transform> sphereTransform(new Transform(sphere));
+    sphereTransform->scale.x = 1;
+    sphereTransform->scale.z = 1;
+    sphere->components.push_back(std::shared_ptr<Component>(sphereTransform));
+    std::shared_ptr<SphereRenderer> sphereRenderer(new SphereRenderer(sphere));
+    sphereRenderer->shader = s->shaders[0];
+    sphere->components.push_back(std::shared_ptr<Component>(sphereRenderer));
+    s->objects.push_back(sphere);
 
     // create main camera
     std::shared_ptr<Object> editCamera(new Object(s));

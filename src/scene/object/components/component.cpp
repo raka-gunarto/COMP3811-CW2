@@ -6,6 +6,8 @@
 #include <scene/object/components/camera.h>
 #include <scene/object/components/renderer/meshRenderer.h>
 #include <scene/object/components/renderer/planeRenderer.h>
+#include <scene/object/components/renderer/cubeRenderer.h>
+#include <scene/object/components/renderer/sphereRenderer.h>
 
 #include <imgui.h>
 
@@ -23,11 +25,14 @@ static ComponentBuilders builders[] = {
     {"Transform", newComponent<Transform>},
     {"Camera", newComponent<Camera>},
     {"Plane Renderer", newComponent<PlaneRenderer>},
+    {"Cube Renderer", newComponent<CubeRenderer>},
+    {"Sphere Renderer", newComponent<SphereRenderer>},
     {"Mesh Renderer", newComponent<MeshRenderer>},
 };
 
 void Component::renderComponentChildWindow(std::shared_ptr<Object> obj) {
-    if (ImGui::BeginPopupModal("Component Menu###inspectorComponentMenu"))
+    static bool open = true;
+    if (ImGui::BeginPopupModal("Component Menu###inspectorComponentMenu", &open))
     {
         // FIXME: not sure if there's a dynamic way to do this,
         //        short of making each component a dll and dynamically

@@ -73,16 +73,7 @@ void EditCamera::update(std::shared_ptr<Scene> s)
         if (glfwGetKey(s->window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS || glfwGetKey(s->window, GLFW_KEY_RIGHT_SHIFT == GLFW_PRESS))
         {
             t->position += -dX * dragSpeed * glm::normalize(glm::cross(direction, glm::vec3(0, 1.0f, 0)));
-            t->position += dY * dragSpeed * glm::rotate(
-                glm::quat(
-                    glm::vec3(
-                        glm::radians(t->rotation.x),
-                        glm::radians(t->rotation.y),
-                        glm::radians(t->rotation.z)
-                    )
-                ),
-                glm::vec3(0, 1.0f, 0)
-            );
+            t->position += -dY * dragSpeed * glm::normalize(glm::cross(direction, glm::cross(direction, glm::vec3(0, 1.0f, 0))));
 
         }
         else // rotate

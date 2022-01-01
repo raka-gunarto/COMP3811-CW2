@@ -10,7 +10,8 @@ in vec3 normal;
 uniform sampler2D texDiffuse;
 uniform sampler2D texSpecular;
 uniform vec3 diffuseColor;
-uniform float specularIntensity;
+uniform vec3 specularColor;
+uniform float shininess;
 
 uniform vec3 ambientColor;
 uniform float ambientIntensity;

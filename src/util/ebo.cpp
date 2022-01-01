@@ -10,6 +10,8 @@ EBO::EBO(std::shared_ptr<VAO> vao, GLuint* indices, GLsizeiptr sz, GLenum use)
 
     vao->unbind();
     unbind();
+
+    size = sz;
 }
 
 EBO::~EBO()

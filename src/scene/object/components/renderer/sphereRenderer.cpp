@@ -1,4 +1,4 @@
-#include "planeRenderer.h"
+#include "sphereRenderer.h"
 
 #include <scene/scene.h>
 #include <scene/object/components/transform.h>
@@ -11,56 +11,102 @@
 #include <iostream>
 #include <memory>
 
-bool PlaneRenderer::initialised = false;
-std::shared_ptr<VBO> PlaneRenderer::planeVBO;
-std::shared_ptr<VAO> PlaneRenderer::planeVAO;
-std::shared_ptr<EBO> PlaneRenderer::planeEBO;
+bool SphereRenderer::initialised = false;
+std::shared_ptr<VBO> SphereRenderer::sphereVBO;
+std::shared_ptr<VAO> SphereRenderer::sphereVAO;
+std::shared_ptr<EBO> SphereRenderer::sphereEBO;
 
-PlaneRenderer::PlaneRenderer(std::shared_ptr<Object> obj) : Renderer(obj)
+SphereRenderer::SphereRenderer(std::shared_ptr<Object> obj) : Renderer(obj)
 {
     // ensure vertex data is initialised
-    PlaneRenderer::initVertexData();
+    SphereRenderer::initVertexData();
 
-    name = "PlaneRenderer";
+    name = "SphereRenderer";
 
     // default mode flat color, white
-    mode = PlaneRenderer::Mode::MATERIAL;
+    mode = SphereRenderer::Mode::MATERIAL;
     diffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
     // set default shader
     shader = obj->getScene()->shaders[0];
 }
 
-void PlaneRenderer::initVertexData() {
+void SphereRenderer::initVertexData() {
     if (initialised) return;
     // initialise buffers
     // the vertices can be constant, it can be transformed using
-    // the transform component. Vertices are for a flat plane
-    GLfloat verts[] = {
-        // vertices       // normals (all pointing up)
-        -1.0f, 0, -1.0f,  0, 1.0f, 0,
-        -1.0f, 0, 1.0f,   0, 1.0f, 0,
-        1.0f, 0, -1.0f,   0, 1.0f, 0,
-        1.0f, 0, 1.0f,    0, 1.0f, 0,
-    };
-    GLuint elements[] = {
-        0,1,2, // one half of plane
-        2,1,3 // other half of plane (maintain CCW winding order)
-    };
-    planeVAO = std::shared_ptr<VAO>(new VAO());
-    planeVBO = std::shared_ptr<VBO>(new VBO(planeVAO, verts, sizeof(verts)));
-    planeEBO = std::shared_ptr<EBO>(new EBO(planeVAO, elements, sizeof(elements)));
+    // the transform component. Vertices calculated are for a sphere
+
+    // calculate steps for sectors and stacks 
+    // note: glm::pi is a constexpr, will be evaluated at compile-time
+    std::vector<GLfloat> verts;
+    std::vector<GLuint> elements;
+    const float sectorStep = (float)2 * glm::pi<float>() / (float)SECTORS;
+    const float stackStep = glm::pi<float>() / (float)STACKS;
+
+    for (int stack = 0; stack <= STACKS; ++stack)
+    {
+        float stackAngle = ((glm::pi<float>() / 2) - (stack * stackStep));
+        float xyComponent = glm::cos(stackAngle);
+        float z = glm::sin(stackAngle);
+
+        unsigned int stackStart = stack * (SECTORS + 1);
+        unsigned int stackNext = stackStart + SECTORS + 1;
+
+        for (int sector = 0; sector <= SECTORS; ++sector, ++stackStart, ++stackNext)
+        {
+            float sectorAngle = (sector * sectorStep);
+            float
+                x = xyComponent * glm::cos(sectorAngle),
+                y = xyComponent * glm::sin(sectorAngle);
+
+            // positions
+            verts.push_back(x);
+            verts.push_back(y);
+            verts.push_back(z);
+
+            // normals
+            verts.push_back(x);
+            verts.push_back(y);
+            verts.push_back(z);
+
+            // TODO: texcoords
+
+            // indices
+            // stackStart +---+ stackStart + 1
+            //            |  /|
+            //            |/  |
+            // startNext  +---+ stackNext + 1 
+            if (stack == STACKS || sector == SECTORS) continue;
+            if (stack != 0)
+            {
+                elements.push_back(stackStart);
+                elements.push_back(stackNext);
+                elements.push_back(stackStart + 1);
+            }
+            if (stack != (STACKS - 1))
+            {
+                elements.push_back(stackStart + 1);
+                elements.push_back(stackNext);
+                elements.push_back(stackNext + 1);
+            }
+        }
+    }
+
+    sphereVAO = std::shared_ptr<VAO>(new VAO());
+    sphereVBO = std::shared_ptr<VBO>(new VBO(sphereVAO, &verts[0], verts.size() * sizeof(GLfloat)));
+    sphereEBO = std::shared_ptr<EBO>(new EBO(sphereVAO, &elements[0], elements.size() * sizeof(GLfloat)));
 
     // set buffer attributes
     // vertex positions
-    planeVAO->link(planeVBO, 0, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)0); // vertex coords
+    sphereVAO->link(sphereVBO, 0, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)0); // vertex coords
     // normals 
-    planeVAO->link(planeVBO, 1, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)(3 * sizeof(float))); // vertex coords
+    sphereVAO->link(sphereVBO, 1, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)(3 * sizeof(float))); // vertex coords
 
     initialised = true;
 }
 
-void PlaneRenderer::render(std::shared_ptr<Scene> s)
+void SphereRenderer::render(std::shared_ptr<Scene> s)
 {
     // find object transform
     std::shared_ptr<Transform> t = nullptr;
@@ -74,7 +120,7 @@ void PlaneRenderer::render(std::shared_ptr<Scene> s)
     // cannot find transform, don't render anything
     if (t == nullptr)
     {
-        std::cout << "WARN::" << object->getName() << "::planeRenderer::cannot find transform" << std::endl;
+        std::cout << "WARN::" << object->getName() << "::sphereRenderer::cannot find transform" << std::endl;
         return;
     }
 
@@ -105,7 +151,7 @@ void PlaneRenderer::render(std::shared_ptr<Scene> s)
     // load color / texture
     switch (mode)
     {
-    case PlaneRenderer::Mode::MATERIAL:
+    case SphereRenderer::Mode::MATERIAL:
         glUniform3f(glGetUniformLocation(shader->id, "diffuseColor"),
             diffuseColor.r,
             diffuseColor.g,
@@ -118,29 +164,29 @@ void PlaneRenderer::render(std::shared_ptr<Scene> s)
         );
         glUniform1f(glGetUniformLocation(shader->id, "shininess"), shininess);
         break;
-    case PlaneRenderer::Mode::TEX_MAP:
+    case SphereRenderer::Mode::TEX_MAP:
         glUniform3f(glGetUniformLocation(shader->id, "diffuseColor"), 0, 0, 0);
         glUniform1f(glGetUniformLocation(shader->id, "specularIntensity"), 0);
         break;
     }
-    planeVAO->bind();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
-    planeVAO->unbind();
+    sphereVAO->bind();
+    glDrawElements(GL_TRIANGLES, sphereEBO->size, GL_UNSIGNED_INT, (void*)0);
+    sphereVAO->unbind();
 }
 
-void PlaneRenderer::renderInspector()
+void SphereRenderer::renderInspector()
 {
-    ImGui::Text("Plane Renderer");
+    ImGui::Text("Sphere Renderer");
     ImGui::Text("Mode"); ImGui::SameLine();
     if (ImGui::RadioButton("Material", mode == MATERIAL)) { mode = MATERIAL; } ImGui::SameLine();
     if (ImGui::RadioButton("Texture Map", mode == TEX_MAP)) { mode = TEX_MAP; }
     switch (mode) {
-    case PlaneRenderer::Mode::MATERIAL:
+    case SphereRenderer::Mode::MATERIAL:
         ImGui::ColorEdit3("Diffuse", glm::value_ptr(diffuseColor));
         ImGui::ColorEdit3("Specular", glm::value_ptr(specularColor));
         ImGui::SliderFloat("Shininess", &shininess, 0.0f, 1.0f);
         break;
-    case PlaneRenderer::Mode::TEX_MAP:
+    case SphereRenderer::Mode::TEX_MAP:
         // if (ImGui::BeginDragDropTarget())
         //     ImGui::EndDragDropTarget();
         ImGui::SliderFloat("Shininess", &shininess, 0.0f, 1.0f);

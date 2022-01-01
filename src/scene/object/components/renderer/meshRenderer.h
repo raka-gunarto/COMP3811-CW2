@@ -1,6 +1,7 @@
 #pragma once
 
 #include <scene/object/components/component.h>
+#include <util/mesh.h>
 
 #include <stdexcept>
 
@@ -14,4 +15,6 @@ public:
         throw std::runtime_error("not implemented yet");
         return std::shared_ptr<Component>(nullptr);
     }
+
+    std::shared_ptr<Mesh> mesh;
 };

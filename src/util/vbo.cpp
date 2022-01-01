@@ -13,6 +13,8 @@ VBO::VBO(std::shared_ptr<VAO> vao, GLfloat* verts, GLsizeiptr sz, GLenum use)
 
     vao->unbind();
     unbind();
+
+    size = sz;
 }
 
 VBO::~VBO() {

@@ -1,4 +1,4 @@
-#include "planeRenderer.h"
+#include "cubeRenderer.h"
 
 #include <scene/scene.h>
 #include <scene/object/components/transform.h>
@@ -11,56 +11,88 @@
 #include <iostream>
 #include <memory>
 
-bool PlaneRenderer::initialised = false;
-std::shared_ptr<VBO> PlaneRenderer::planeVBO;
-std::shared_ptr<VAO> PlaneRenderer::planeVAO;
-std::shared_ptr<EBO> PlaneRenderer::planeEBO;
+bool CubeRenderer::initialised = false;
+std::shared_ptr<VBO> CubeRenderer::cubeVBO;
+std::shared_ptr<VAO> CubeRenderer::cubeVAO;
+std::shared_ptr<EBO> CubeRenderer::cubeEBO;
 
-PlaneRenderer::PlaneRenderer(std::shared_ptr<Object> obj) : Renderer(obj)
+CubeRenderer::CubeRenderer(std::shared_ptr<Object> obj) : Renderer(obj)
 {
     // ensure vertex data is initialised
-    PlaneRenderer::initVertexData();
+    CubeRenderer::initVertexData();
 
-    name = "PlaneRenderer";
+    name = "CubeRenderer";
 
     // default mode flat color, white
-    mode = PlaneRenderer::Mode::MATERIAL;
+    mode = CubeRenderer::Mode::MATERIAL;
     diffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
 
     // set default shader
     shader = obj->getScene()->shaders[0];
 }
 
-void PlaneRenderer::initVertexData() {
+void CubeRenderer::initVertexData() {
     if (initialised) return;
     // initialise buffers
     // the vertices can be constant, it can be transformed using
-    // the transform component. Vertices are for a flat plane
+    // the transform component. Vertices are for a cube
+
+    // each face is 4 vertices, drawn with two triangle primitives
+    // defined with the index buffer
     GLfloat verts[] = {
-        // vertices       // normals (all pointing up)
-        -1.0f, 0, -1.0f,  0, 1.0f, 0,
-        -1.0f, 0, 1.0f,   0, 1.0f, 0,
-        1.0f, 0, -1.0f,   0, 1.0f, 0,
-        1.0f, 0, 1.0f,    0, 1.0f, 0,
+        // vertices           // normals
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, // 0
+        0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f, // 1
+        0.5f,  0.5f, -0.5f,   0.0f,  0.0f, -1.0f, // 2
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, // 3
+
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f, // 4
+        0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 1.0f, // 5
+        0.5f,  0.5f,  0.5f,   0.0f,  0.0f, 1.0f, // 6
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f, // 7
+
+        -0.5f,  0.5f,  0.5f,  -1.0f,  0.0f,  0.0f, // 8
+        -0.5f,  0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,
+
+        0.5f,  0.5f,  0.5f,   1.0f,  0.0f,  0.0f, // 12
+        0.5f,  0.5f, -0.5f,   1.0f,  0.0f,  0.0f,
+        0.5f, -0.5f, -0.5f,   1.0f,  0.0f,  0.0f,
+        0.5f, -0.5f,  0.5f,   1.0f,  0.0f,  0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, // 16
+        0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,
+        0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, // 20
+        0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,
+        0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
     };
     GLuint elements[] = {
-        0,1,2, // one half of plane
-        2,1,3 // other half of plane (maintain CCW winding order)
+        0, 1, 2, 2, 3, 0, // first face
+        4, 5, 6, 6, 7, 4, // second face
+        8, 9, 10, 10, 11, 8, // third face
+        12, 13, 14, 14, 15, 11, // fourth face
+        16, 17, 18, 18, 19, 16, // fifth face
+        20, 21, 22, 22, 23, 20, // sixth face
     };
-    planeVAO = std::shared_ptr<VAO>(new VAO());
-    planeVBO = std::shared_ptr<VBO>(new VBO(planeVAO, verts, sizeof(verts)));
-    planeEBO = std::shared_ptr<EBO>(new EBO(planeVAO, elements, sizeof(elements)));
+    cubeVAO = std::shared_ptr<VAO>(new VAO());
+    cubeVBO = std::shared_ptr<VBO>(new VBO(cubeVAO, verts, sizeof(verts)));
+    cubeEBO = std::shared_ptr<EBO>(new EBO(cubeVAO, elements, sizeof(elements)));
 
     // set buffer attributes
     // vertex positions
-    planeVAO->link(planeVBO, 0, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)0); // vertex coords
+    cubeVAO->link(cubeVBO, 0, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)0); // vertex coords
     // normals 
-    planeVAO->link(planeVBO, 1, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)(3 * sizeof(float))); // vertex coords
+    cubeVAO->link(cubeVBO, 1, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)(3 * sizeof(float))); // vertex coords
 
     initialised = true;
 }
 
-void PlaneRenderer::render(std::shared_ptr<Scene> s)
+void CubeRenderer::render(std::shared_ptr<Scene> s)
 {
     // find object transform
     std::shared_ptr<Transform> t = nullptr;
@@ -105,7 +137,7 @@ void PlaneRenderer::render(std::shared_ptr<Scene> s)
     // load color / texture
     switch (mode)
     {
-    case PlaneRenderer::Mode::MATERIAL:
+    case CubeRenderer::Mode::MATERIAL:
         glUniform3f(glGetUniformLocation(shader->id, "diffuseColor"),
             diffuseColor.r,
             diffuseColor.g,
@@ -118,29 +150,29 @@ void PlaneRenderer::render(std::shared_ptr<Scene> s)
         );
         glUniform1f(glGetUniformLocation(shader->id, "shininess"), shininess);
         break;
-    case PlaneRenderer::Mode::TEX_MAP:
+    case CubeRenderer::Mode::TEX_MAP:
         glUniform3f(glGetUniformLocation(shader->id, "diffuseColor"), 0, 0, 0);
         glUniform1f(glGetUniformLocation(shader->id, "specularIntensity"), 0);
         break;
     }
-    planeVAO->bind();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)0);
-    planeVAO->unbind();
+    cubeVAO->bind();
+    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void*)0);
+    cubeVAO->unbind();
 }
 
-void PlaneRenderer::renderInspector()
+void CubeRenderer::renderInspector()
 {
-    ImGui::Text("Plane Renderer");
+    ImGui::Text("Cube Renderer");
     ImGui::Text("Mode"); ImGui::SameLine();
     if (ImGui::RadioButton("Material", mode == MATERIAL)) { mode = MATERIAL; } ImGui::SameLine();
     if (ImGui::RadioButton("Texture Map", mode == TEX_MAP)) { mode = TEX_MAP; }
     switch (mode) {
-    case PlaneRenderer::Mode::MATERIAL:
+    case CubeRenderer::Mode::MATERIAL:
         ImGui::ColorEdit3("Diffuse", glm::value_ptr(diffuseColor));
         ImGui::ColorEdit3("Specular", glm::value_ptr(specularColor));
         ImGui::SliderFloat("Shininess", &shininess, 0.0f, 1.0f);
         break;
-    case PlaneRenderer::Mode::TEX_MAP:
+    case CubeRenderer::Mode::TEX_MAP:
         // if (ImGui::BeginDragDropTarget())
         //     ImGui::EndDragDropTarget();
         ImGui::SliderFloat("Shininess", &shininess, 0.0f, 1.0f);
