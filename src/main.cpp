@@ -20,6 +20,11 @@
 #include <ui/inspector.h>
 #include <ui/objectHierarchy.h>
 
+// stb implementation
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+#undef STB_IMAGE_IMPLEMENTATION
+
 const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
 
