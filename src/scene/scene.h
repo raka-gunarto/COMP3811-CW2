@@ -4,6 +4,8 @@
 #include <scene/object/components/camera.h>
 #include <ui/window.h>
 #include <util/shader.h>
+#include <util/mesh.h>
+#include <util/texture.h>
 
 #include <GLFW/glfw3.h>
 
@@ -18,17 +20,21 @@ class Camera;
 class Scene : public std::enable_shared_from_this<Scene>
 {
 public:
-    Scene(GLFWwindow* window) : window(window) {
+    Scene(GLFWwindow* window, const char* assetPath = "./res") : window(window) {
         glfwSetWindowUserPointer(window, this);
         glfwSetScrollCallback(window, [](GLFWwindow* w, double x, double y) {
             Scene* s = (Scene*)glfwGetWindowUserPointer(w);
             s->scrollX += x;
             s->scrollY += y;
             });
+        loadAssets(assetPath);
     }
+    void loadAssets(const char* path = "./res");
+
     void update();
     void render();
     void renderUI();
+    
 
     std::shared_ptr<Camera> activeCamera;
     std::shared_ptr<Object> inspectedObject;
@@ -37,6 +43,8 @@ public:
     std::vector<std::shared_ptr<Window>> windowUIs;
 
     std::vector<std::shared_ptr<Shader>> shaders;
+    std::vector<std::shared_ptr<Texture>> textures;
+    std::vector<std::shared_ptr<Mesh>> meshes;
     std::vector<std::shared_ptr<Object>> blueprints;
 
     GLFWwindow* window;
