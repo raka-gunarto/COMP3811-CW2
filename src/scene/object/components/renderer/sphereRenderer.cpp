@@ -62,15 +62,17 @@ void SphereRenderer::initVertexData() {
 
             // positions
             verts.push_back(x);
-            verts.push_back(y);
-            verts.push_back(z);
+            verts.push_back(-z);
+            verts.push_back(-y);
 
             // normals
             verts.push_back(x);
-            verts.push_back(y);
-            verts.push_back(z);
+            verts.push_back(-z);
+            verts.push_back(-y);
 
-            // TODO: texcoords
+            // texcoords
+            verts.push_back((float)sector / SECTORS);
+            verts.push_back((float)stack / STACKS);
 
             // indices
             // stackStart +---+ stackStart + 1
@@ -99,9 +101,11 @@ void SphereRenderer::initVertexData() {
 
     // set buffer attributes
     // vertex positions
-    sphereVAO->link(sphereVBO, 0, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)0); // vertex coords
+    sphereVAO->link(sphereVBO, 0, 3, GL_FLOAT, 8 * sizeof(GLfloat), (void*)0); // vertex coords
     // normals 
-    sphereVAO->link(sphereVBO, 1, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)(3 * sizeof(float))); // vertex coords
+    sphereVAO->link(sphereVBO, 1, 3, GL_FLOAT, 8 * sizeof(GLfloat), (void*)(3 * sizeof(float))); // vertex coords
+    // texcoords 
+    sphereVAO->link(sphereVBO, 2, 2, GL_FLOAT, 8 * sizeof(GLfloat), (void*)(6 * sizeof(float))); // vertex coords
 
     initialised = true;
 }
@@ -109,13 +113,7 @@ void SphereRenderer::initVertexData() {
 void SphereRenderer::render(std::shared_ptr<Scene> s)
 {
     // find object transform
-    std::shared_ptr<Transform> t = nullptr;
-    for (auto component : object->components)
-        if (component->getName() == "Transform")
-        {
-            t = std::dynamic_pointer_cast<Transform>(component);
-            break;
-        }
+    std::shared_ptr<Transform> t = object->getComponent<Transform>();
 
     // cannot find transform, don't render anything
     if (t == nullptr)
@@ -162,11 +160,30 @@ void SphereRenderer::render(std::shared_ptr<Scene> s)
             specularColor.g,
             specularColor.b
         );
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, 0);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, 0);
         glUniform1f(glGetUniformLocation(shader->id, "shininess"), shininess);
         break;
     case SphereRenderer::Mode::TEX_MAP:
         glUniform3f(glGetUniformLocation(shader->id, "diffuseColor"), 0, 0, 0);
-        glUniform1f(glGetUniformLocation(shader->id, "specularIntensity"), 0);
+        glUniform3f(glGetUniformLocation(shader->id, "specularColor"), 0, 0, 0);
+        glUniform1f(glGetUniformLocation(shader->id, "shininess"), shininess);
+        if (diffuseTex)
+            diffuseTex->bind(GL_TEXTURE0);
+        else {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+        if (specularTex)
+            specularTex->bind(GL_TEXTURE1);
+        else {
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+        glUniform1i(glGetUniformLocation(shader->id, "diffuseTex"), 0);
+        glUniform1i(glGetUniformLocation(shader->id, "specularTex"), 1);
         break;
     }
     sphereVAO->bind();
@@ -187,8 +204,25 @@ void SphereRenderer::renderInspector()
         ImGui::SliderFloat("Shininess", &shininess, 0.0f, 1.0f);
         break;
     case SphereRenderer::Mode::TEX_MAP:
-        // if (ImGui::BeginDragDropTarget())
-        //     ImGui::EndDragDropTarget();
+        ImGui::Text("Diffuse Map");
+        if (diffuseTex)
+            ImGui::Image((void*)(intptr_t)diffuseTex->ID, ImVec2(50.0f, 50.0f), ImVec2(1, 1), ImVec2(0, 0));
+        else
+            ImGui::Button("Drop Texture Here", ImVec2(50.0f, 50.0f));
+        if (ImGui::BeginDragDropTarget())
+            if (const ImGuiPayload* p = ImGui::AcceptDragDropPayload("TEXTURE"))
+                diffuseTex = (*(Texture**)p->Data)->shared_from_this();
+
+        ImGui::NewLine();
+
+        ImGui::Text("Specular Map");
+        if (specularTex)
+            ImGui::Image((void*)(intptr_t)specularTex->ID, ImVec2(50.0f, 50.0f), ImVec2(1, 1), ImVec2(0, 0));
+        else
+            ImGui::Button("Drop Texture Here", ImVec2(50.0f, 50.0f));
+        if (ImGui::BeginDragDropTarget())
+            if (const ImGuiPayload* p = ImGui::AcceptDragDropPayload("TEXTURE"))
+                specularTex = (*(Texture**)p->Data)->shared_from_this();
         ImGui::SliderFloat("Shininess", &shininess, 0.0f, 1.0f);
         break;
     }
