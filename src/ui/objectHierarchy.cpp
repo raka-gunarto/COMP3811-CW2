@@ -16,7 +16,8 @@ void renderObjectNode(std::shared_ptr<Object> o, Scene* s)
 
     if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_None))
     {
-        ImGui::SetDragDropPayload("HIERARCHY_OBJECT", &o, sizeof(std::shared_ptr<Object>*)); // this is a little dirty i know
+        Object* ptr = o.get();
+        ImGui::SetDragDropPayload("HIERARCHY_OBJECT", &ptr, sizeof(Object*)); // this is a little dirty i know
         ImGui::Text(o->getName().c_str());
         ImGui::EndDragDropSource();
     }
@@ -24,8 +25,7 @@ void renderObjectNode(std::shared_ptr<Object> o, Scene* s)
     if (ImGui::BeginDragDropTarget())
         if (const ImGuiPayload* p = ImGui::AcceptDragDropPayload("HIERARCHY_OBJECT"))
         {
-            std::shared_ptr<Object> t = *(std::shared_ptr<Object>*)p->Data;
-            t->reparent(o);
+            (*((Object**)p->Data))->reparent(o);
         }
 
     ImGui::SameLine();

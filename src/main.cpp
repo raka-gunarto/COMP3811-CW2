@@ -19,6 +19,7 @@
 #include <ui/overview.h>
 #include <ui/inspector.h>
 #include <ui/objectHierarchy.h>
+#include <ui/assets.h>
 
 // stb implementation
 #define STB_IMAGE_IMPLEMENTATION
@@ -79,6 +80,7 @@ std::shared_ptr<Scene> constructDefaultScene(GLFWwindow* w) {
     s->windowUIs.push_back(std::shared_ptr<Window>(new Overview(s)));
     s->windowUIs.push_back(std::shared_ptr<Window>(new ObjectHierarchy(s)));
     s->windowUIs.push_back(std::shared_ptr<Window>(new Inspector(s)));
+    s->windowUIs.push_back(std::shared_ptr<Window>(new Assets(s)));
 
     return s;
 }
@@ -103,6 +105,8 @@ int main()
     gladLoadGL();
     glViewport(0, 0, mode->width, mode->height);
     glEnable(GL_DEPTH_TEST);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     ImGui::CreateContext();
     ImGui::StyleColorsDark();
