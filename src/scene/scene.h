@@ -20,15 +20,16 @@ class Camera;
 class Scene : public std::enable_shared_from_this<Scene>
 {
 public:
-    Scene(GLFWwindow* window, const char* assetPath = "./res") : window(window) {
+    Scene(GLFWwindow* window) : window(window) {
         glfwSetWindowUserPointer(window, this);
         glfwSetScrollCallback(window, [](GLFWwindow* w, double x, double y) {
             Scene* s = (Scene*)glfwGetWindowUserPointer(w);
             s->scrollX += x;
             s->scrollY += y;
             });
-        loadAssets(assetPath);
     }
+    // WARNING: THIS MUST BE CALLED AFTER CONSTRUCTOR!
+    //          (relies on shared_from_this())
     void loadAssets(const char* path = "./res");
 
     void update();

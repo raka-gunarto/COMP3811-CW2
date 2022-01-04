@@ -97,7 +97,7 @@ void SphereRenderer::initVertexData() {
 
     sphereVAO = std::shared_ptr<VAO>(new VAO());
     sphereVBO = std::shared_ptr<VBO>(new VBO(sphereVAO, &verts[0], verts.size() * sizeof(GLfloat)));
-    sphereEBO = std::shared_ptr<EBO>(new EBO(sphereVAO, &elements[0], elements.size() * sizeof(GLfloat)));
+    sphereEBO = std::shared_ptr<EBO>(new EBO(sphereVAO, &elements[0], elements.size() * sizeof(GLuint)));
 
     // set buffer attributes
     // vertex positions

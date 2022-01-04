@@ -52,6 +52,6 @@ void Transform::renderInspector() {
     ImGui::Text("Transform");
     ImGui::DragFloat3("Position", glm::value_ptr(position), 0.01f);
     ImGui::DragFloat3("Rotation", glm::value_ptr(rotation));
-    ImGui::DragFloat3("Scale", glm::value_ptr(scale));
+    ImGui::DragFloat3("Scale", glm::value_ptr(scale), 0.01f, 0.01f);
     ImGui::Separator();
 }

@@ -26,7 +26,7 @@ std::shared_ptr<Object> Object::clone(std::shared_ptr<Object> parent)
     return newObj;
 }
 
-void Object::reparent(std::shared_ptr<Object> p)
+void Object::reparent(std::shared_ptr<Object> p, bool blueprint)
 {
     // do we have a parent? remove us from their children
     if (parent != nullptr)
@@ -38,19 +38,31 @@ void Object::reparent(std::shared_ptr<Object> p)
             }
         }
     else // remove from scene direct child
-        for (auto it = scene->objects.begin(); it != scene->objects.end(); ++it) {
-            if (it->get() == this)
-            {
-                scene->objects.erase(it);
-                break;
+        if (!blueprint)
+            for (auto it = scene->objects.begin(); it != scene->objects.end(); ++it) {
+                if (it->get() == this)
+                {
+                    scene->objects.erase(it);
+                    break;
+                }
             }
-        }
+        else
+            for (auto it = scene->blueprints.begin(); it != scene->blueprints.end(); ++it) {
+                if (it->get() == this)
+                {
+                    scene->blueprints.erase(it);
+                    break;
+                }
+            }
 
     // are we just setting to null?
     if (p == nullptr) {
         parent.reset();
         parent = nullptr;
-        scene->objects.push_back(shared_from_this()); // add back to scene direct child
+        if (!blueprint)
+            scene->objects.push_back(shared_from_this()); // add back to scene direct child
+        else
+            scene->blueprints.push_back(shared_from_this());
         return;
     }
 

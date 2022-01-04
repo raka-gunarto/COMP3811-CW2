@@ -31,6 +31,7 @@ const unsigned int HEIGHT = 600;
 
 std::shared_ptr<Scene> constructDefaultScene(GLFWwindow* w) {
     std::shared_ptr<Scene> s(new Scene(w));
+    s->loadAssets();
 
     // load our shaders
     std::shared_ptr<Shader> defaultShader(new Shader("default", "./res/shader/default/default.vert", "./res/shader/default/default.frag"));

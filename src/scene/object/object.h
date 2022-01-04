@@ -44,7 +44,7 @@ public:
         }
         return c;
     }
-    void reparent(std::shared_ptr<Object> p);
+    void reparent(std::shared_ptr<Object> p, bool blueprint = false);
     void update(std::shared_ptr<Scene> s);
     void render(std::shared_ptr<Scene> s);
 

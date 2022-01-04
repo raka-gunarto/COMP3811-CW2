@@ -27,7 +27,7 @@ void Inspector::render() {
             transform = std::dynamic_pointer_cast<Transform>(component);
             break;
         }
-    if (transform != nullptr)
+    if (transform != nullptr && transform->scale.x > 0 && transform->scale.y > 0 && transform->scale.z > 0)
     {
         if (!currentGizmoOperation) currentGizmoOperation = ImGuizmo::TRANSLATE;
         if (ImGui::RadioButton("Translate", currentGizmoOperation == ImGuizmo::TRANSLATE))
@@ -68,6 +68,9 @@ void Inspector::render() {
         transform->position = t;
         transform->rotation = glm::degrees(glm::eulerAngles(r));
         transform->scale = s;
+        transform->scale.x = std::max(transform->scale.x, 0.01f);
+        transform->scale.y = std::max(transform->scale.y, 0.01f);
+        transform->scale.z = std::max(transform->scale.z, 0.01f);
     }
 
     ImGui::Separator();

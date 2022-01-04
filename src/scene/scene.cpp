@@ -5,6 +5,15 @@
 #include <imgui_impl_opengl3.h>
 #include <ImGuizmo.h>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+#include <scene/object/components/transform.h>
+#include <scene/object/components/renderer/meshRenderer.h>
+
+#include <iostream>
+
 //---BEGIN RANT---
 // yes the uni computers have ancient versions of things 
 // so I have to write this because writing OS-specific
@@ -24,7 +33,108 @@ static std::vector<std::string> filesToProcess;
 // very crude asset loading function
 // fix later with c++17, running out of time for uni
 // coursework submission
-void processFiles(Scene* s)
+std::shared_ptr<Mesh> processModelMesh(aiMesh* mesh, const aiScene* importedScene, std::string name)
+{
+    std::shared_ptr<Mesh> m(new Mesh());
+    std::vector<GLfloat> vertices;
+    std::vector<GLuint> indices;
+
+    // process vertices
+    for (unsigned int vertIdx = 0; vertIdx < mesh->mNumVertices; ++vertIdx)
+    {
+        // positions
+        vertices.push_back(mesh->mVertices[vertIdx].x);
+        vertices.push_back(mesh->mVertices[vertIdx].y);
+        vertices.push_back(mesh->mVertices[vertIdx].z);
+
+        // normals
+        if (!mesh->HasNormals())
+        {
+            std::cout << "ERROR::ASSETIMPROT::ASSIMP::" << name << "::mesh no normals" << std::endl;;
+            return nullptr;
+        }
+        vertices.push_back(mesh->mNormals[vertIdx].x);
+        vertices.push_back(mesh->mNormals[vertIdx].y);
+        vertices.push_back(mesh->mNormals[vertIdx].z);
+
+        // texcoords (unused for now, but the mesh construction expects them already)
+        if (!mesh->mTextureCoords[0])
+        {
+            std::cout << "WARN::ASSETIMPROT::ASSIMP::" << name << "::mesh no tex coords::inserting placeholders" << std::endl;;
+            vertices.push_back(0);
+            vertices.push_back(0);
+        }
+        vertices.push_back(mesh->mTextureCoords[0][vertIdx].x);
+        vertices.push_back(mesh->mTextureCoords[0][vertIdx].y);
+    }
+    // process indices
+    for (unsigned int faceIdx = 0; faceIdx < mesh->mNumFaces; ++faceIdx)
+        for (unsigned int indexIdx = 0; indexIdx < mesh->mFaces[faceIdx].mNumIndices; ++indexIdx)
+            indices.push_back(mesh->mFaces[faceIdx].mIndices[indexIdx]);
+
+    // process materials
+    aiMaterial* mat = importedScene->mMaterials[mesh->mMaterialIndex];
+    aiColor3D diffuse, specular;
+    float shininess;
+    mat->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse);
+    mat->Get(AI_MATKEY_COLOR_SPECULAR, specular);
+    mat->Get(AI_MATKEY_SHININESS, shininess);
+
+    m->diffuseColor.r = diffuse.r;
+    m->diffuseColor.g = diffuse.g;
+    m->diffuseColor.b = diffuse.b;
+    m->specularColor.r = specular.r;
+    m->specularColor.g = specular.g;
+    m->specularColor.b = specular.b;
+    m->shininess = shininess;
+    // TODO: someday, import the textures as well but rn massive cba
+    //       we'll use some nice low poly material prop only asset pack for now
+
+    // construct mesh object
+    m->constructMesh(vertices, indices);
+
+    // name it to allow referencing
+    m->name = name;
+    return m;
+}
+bool processModelNode(aiNode* node, const aiScene* importedScene, std::string modelDir, std::shared_ptr<Object> blueprint)
+{
+    // process all meshes
+    for (unsigned int meshIdx = 0; meshIdx < node->mNumMeshes; ++meshIdx)
+    {
+        // create new child for each mesh
+        std::shared_ptr<Object> meshchild(new Object(blueprint->getScene()));
+        meshchild->setName(blueprint->getName() + std::string("-m" + std::to_string(meshIdx)));
+
+        // add mesh to child and scene
+        std::shared_ptr<Mesh> mesh = processModelMesh(importedScene->mMeshes[node->mMeshes[meshIdx]], importedScene, meshchild->getName());
+        if (mesh == nullptr) return false;
+        meshchild->components.push_back(std::shared_ptr<Component>(new Transform(meshchild)));
+        meshchild->components.push_back(std::shared_ptr<Component>(new MeshRenderer(meshchild, mesh)));
+        meshchild->getComponent<MeshRenderer>()->mesh = mesh;
+        blueprint->getScene()->meshes.push_back(mesh);
+
+        // add child to parent
+        meshchild->reparent(blueprint, true);
+    }
+
+    // process all node children
+    for (unsigned int nodeIdx = 0; nodeIdx < node->mNumChildren; ++nodeIdx)
+    {
+        // create child
+        std::shared_ptr<Object> child(new Object(blueprint->getScene()));
+        child->reparent(blueprint, true);
+        child->components.push_back(std::shared_ptr<Component>(new Transform(child)));
+        child->setName(blueprint->getName() + std::string("-c" + std::to_string(nodeIdx)));
+
+        // make child new blueprint parent in next processing
+        if (!processModelNode(node->mChildren[nodeIdx], importedScene, modelDir, child))
+            return false;
+    }
+
+    return true;
+}
+void processFiles(std::shared_ptr<Scene> s)
 {
     for (auto file : filesToProcess)
     {
@@ -32,8 +142,8 @@ void processFiles(Scene* s)
         std::string name, ext;
 
         // process all dir seps
-        while(std::getline(ss, name, '/'));
-        while(std::getline(ss, name, '\\'));
+        while (std::getline(ss, name, '/'));
+        while (std::getline(ss, name, '\\'));
         ss = std::stringstream(name);
 
         // get name and extension
@@ -69,7 +179,25 @@ void processFiles(Scene* s)
         }
         else if (ext == "blend" || ext == "obj" || ext == "fbx")
         { // process model
-            
+            Assimp::Importer importer;
+            const aiScene* importedScene = importer.ReadFile(file, aiProcess_Triangulate | aiProcess_FlipUVs);
+            if (!importedScene || importedScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !importedScene->mRootNode)
+            {
+                std::cout << "WARN::ASSETIMPORT::ASSIMP::could not import " << file << std::endl;
+                continue;
+            }
+
+            // create new blueprint (prefab)
+            std::string modelDir = file.substr(0, file.find_last_of('/'));
+            std::shared_ptr<Object> newBlueprint(new Object(s));
+            newBlueprint->setName(std::string("importedmodel_" + name));
+            newBlueprint->components.push_back(std::shared_ptr<Component>(new Transform(newBlueprint)));
+
+            // populate blueprint with model meshes recursively and add to blueprints
+            if (processModelNode(importedScene->mRootNode, importedScene, modelDir, newBlueprint))
+                s->blueprints.push_back(newBlueprint);
+            // if model loading fails, let the blueprint smart pointer die so everything
+            // it owns will be released
         }
         else if (ext == "vert")
         { // process shader
@@ -91,7 +219,7 @@ void Scene::loadAssets(const char* path)
         return 0;
         }, 20, 0);
 #endif
-    processFiles(this);
+    processFiles(this->shared_from_this());
 }
 
 void Scene::update() {
