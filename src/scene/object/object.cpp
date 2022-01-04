@@ -4,13 +4,17 @@
 #include <scene/object/components/component.h>
 #include <scene/object/scripts/script.h>
 
-std::shared_ptr<Object> Object::clone()
+
+std::shared_ptr<Object> Object::clone(std::shared_ptr<Object> parent)
 {
     std::shared_ptr<Object> newObj(new Object(this->scene));
     newObj->setName(name + " (Clone)");
+    if (parent)
+        newObj->parent = parent;
+
     // deep copy children
     for (auto child : children)
-        newObj->children.push_back(child->clone());
+        newObj->children.push_back(child->clone(newObj));
 
     // deep copy components
     for (auto component : components)

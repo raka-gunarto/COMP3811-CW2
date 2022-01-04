@@ -30,8 +30,20 @@ public:
     std::shared_ptr<Object> getParent() { return parent; }
     std::shared_ptr<Scene> getScene() { return scene; }
 
-    std::shared_ptr<Object> clone();
+    std::shared_ptr<Object> clone(std::shared_ptr<Object> parent = nullptr);
 
+    template<typename C>
+    std::shared_ptr<C> getComponent()
+    {
+        std::shared_ptr<C> c = nullptr;
+        for (auto component : this->components)
+        {
+            c = std::dynamic_pointer_cast<C>(component);
+            if (c != nullptr)
+                return c;
+        }
+        return c;
+    }
     void reparent(std::shared_ptr<Object> p);
     void update(std::shared_ptr<Scene> s);
     void render(std::shared_ptr<Scene> s);
