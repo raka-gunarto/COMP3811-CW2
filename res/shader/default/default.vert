@@ -17,7 +17,6 @@ void main()
 {
     cPos = vec3(model * vec4(aPos, 1.0f));
     gl_Position = cameraMat * vec4(cPos, 1.0f);
-    normal = normalMat * aNormal;
+    normal = normalize(normalMat * aNormal);
     texCoords = aTexCoords;
-    // TODO: textures
 }
