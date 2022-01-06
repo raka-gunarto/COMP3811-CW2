@@ -34,6 +34,26 @@ public:
 
     void render(std::shared_ptr<Scene> s) override;
     void renderInspector() override;
+    YAML::Emitter& serialise(YAML::Emitter& emitter) override
+    {
+        emitter << YAML::BeginMap;
+        emitter << YAML::Key << "name";
+        emitter << YAML::Value << "CubeRenderer";
+        emitter << YAML::Key << "mode" << YAML::Value << mode;
+        emitter << YAML::Key << "diffuseColor" << YAML::Value << YAML::Flow << YAML::BeginSeq
+            << diffuseColor.r << diffuseColor.g << diffuseColor.b
+            << YAML::EndSeq;
+        emitter << YAML::Key << "specularColor" << YAML::Value << YAML::Flow << YAML::BeginSeq
+            << specularColor.r << specularColor.g << specularColor.b
+            << YAML::EndSeq;
+        emitter << YAML::Key << "shininess" << YAML::Value << shininess;
+        if (diffuseTex)
+            emitter << YAML::Key << "diffuseTex" << YAML::Value << diffuseTex->name;
+        if (specularTex)
+            emitter << YAML::Key << "specularTex" << YAML::Value << specularTex->name;
+        emitter << YAML::EndMap;
+        return emitter;
+    }
 
     static void initVertexData();
 

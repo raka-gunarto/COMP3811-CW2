@@ -17,6 +17,17 @@ public:
 
     void render(std::shared_ptr<Scene> s) override;
     void renderInspector() override;
+    YAML::Emitter& serialise(YAML::Emitter& emitter) override
+    {
+        emitter << YAML::BeginMap;
+        emitter << YAML::Key << "name";
+        emitter << YAML::Value << "MeshRenderer";
+        if (mesh)
+            emitter << YAML::Key << "mesh" << YAML::Value << mesh->name;
+        
+        emitter << YAML::EndMap;
+        return emitter;
+    }
     std::shared_ptr<Component> clone(std::shared_ptr<Object> newObj) {
         return std::shared_ptr<Component>(new MeshRenderer(*this, newObj));
     }

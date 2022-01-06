@@ -39,6 +39,7 @@ public:
     
     static const int MAX_LIGHTS = 16;
     std::vector<std::shared_ptr<Light>> lights;
+    std::shared_ptr<Light> dirLight;
 
     std::shared_ptr<Camera> activeCamera;
     std::shared_ptr<Object> inspectedObject;
@@ -50,6 +51,9 @@ public:
     std::vector<std::shared_ptr<Texture>> textures;
     std::vector<std::shared_ptr<Mesh>> meshes;
     std::vector<std::shared_ptr<Object>> blueprints;
+
+    void save(std::string filename = "my.scene");
+    void load(std::string filename = "my.scene");
 
     GLFWwindow* window;
 

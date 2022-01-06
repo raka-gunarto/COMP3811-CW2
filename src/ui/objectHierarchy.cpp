@@ -56,10 +56,7 @@ void ObjectHierarchy::render() {
     ImGui::Text("Drop Here To Unparent");
     if (ImGui::BeginDragDropTarget())
         if (const ImGuiPayload* p = ImGui::AcceptDragDropPayload("HIERARCHY_OBJECT"))
-        {
-            std::shared_ptr<Object> t = *(std::shared_ptr<Object>*)p->Data;
-            t->reparent(nullptr);
-        }
+            (*((Object**)p->Data))->reparent(nullptr);
     ImGui::SetWindowSize(ImVec2(0, 0)); // size to content
     ImGui::End();
 }

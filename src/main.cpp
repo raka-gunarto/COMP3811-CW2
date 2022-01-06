@@ -33,47 +33,17 @@ std::shared_ptr<Scene> constructDefaultScene(GLFWwindow* w) {
     std::shared_ptr<Scene> s(new Scene(w));
     s->loadAssets();
 
-    // load our shaders
-    std::shared_ptr<Shader> defaultShader(new Shader("default", "./res/shader/default/default.vert", "./res/shader/default/default.frag"));
-    std::shared_ptr<Shader> activeShader(new Shader("active", "./res/shader/active/active.vert", "./res/shader/active/active.frag"));
-    s->shaders.push_back(defaultShader);
-    s->shaders.push_back(activeShader);
-
-    // create ground plane
-    std::shared_ptr<Object> groundPlane(new Object(s));
-    groundPlane->setName("Ground Plane");
-    std::shared_ptr<Transform> groundPlaneTransform(new Transform(groundPlane));
-    groundPlaneTransform->scale.x = 1;
-    groundPlaneTransform->scale.z = 1;
-    groundPlane->components.push_back(std::shared_ptr<Component>(groundPlaneTransform));
-    std::shared_ptr<PlaneRenderer> groundPlaneRenderer(new PlaneRenderer(groundPlane));
-    groundPlaneRenderer->shader = s->shaders[0];
-    groundPlane->components.push_back(std::shared_ptr<Component>(groundPlaneRenderer));
-    s->objects.push_back(groundPlane);
-
-    // create ground plane
-    std::shared_ptr<Object> sphere(new Object(s));
-    sphere->setName("Sphere");
-    std::shared_ptr<Transform> sphereTransform(new Transform(sphere));
-    sphereTransform->position.y = 2;
-    sphereTransform->scale.x = 1;
-    sphereTransform->scale.z = 1;
-    sphere->components.push_back(std::shared_ptr<Component>(sphereTransform));
-    std::shared_ptr<SphereRenderer> sphereRenderer(new SphereRenderer(sphere));
-    sphereRenderer->shader = s->shaders[0];
-    sphere->components.push_back(std::shared_ptr<Component>(sphereRenderer));
-    s->objects.push_back(sphere);
-
     // create main camera
     std::shared_ptr<Object> editCamera(new Object(s));
     editCamera->setName("Edit Camera");
     int width, height;
     glfwGetWindowSize(w, &width, &height);
     std::shared_ptr<Transform> editCameraTransform(new Transform(editCamera));
-    editCameraTransform->position.y = 1;
+    editCameraTransform->position.y = 5;
+    editCameraTransform->position.z = 5;
     editCameraTransform->rotation.x = -45;
     editCamera->components.push_back(std::shared_ptr<Component>(editCameraTransform));
-    editCamera->components.push_back(std::shared_ptr<Component>(new Camera(editCamera, width, height, 45.0f, 0.1f, 100.0f)));
+    editCamera->components.push_back(std::shared_ptr<Component>(new Camera(editCamera, width, height, 45.0f, 0.1f, 10000.0f)));
     editCamera->scripts.push_back(std::shared_ptr<Script>(new EditCamera(editCamera)));
     s->objects.push_back(editCamera);
     s->activeCamera = std::dynamic_pointer_cast<Camera>(editCamera->components[1]);

@@ -2,12 +2,14 @@
 
 #include <glad/glad.h>
 
+#include <string>
+
 class Shader {
 public:
     GLuint id;
-    const char* name;
+    std::string name;
 
-    Shader(const char* name, const char* vertPath, const char* fragPath);
+    Shader(std::string name, const char* vertPath, const char* fragPath);
     ~Shader();
 
     void activate();

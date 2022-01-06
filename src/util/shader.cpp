@@ -42,7 +42,7 @@ void checkErrors(GLuint shader, GLenum type, const char* shaderPath)
     }
 }
 
-Shader::Shader(const char* name, const char* vertFile, const char* fragFile)
+Shader::Shader(std::string name, const char* vertFile, const char* fragFile)
 {
     this->name = name;
 

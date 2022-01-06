@@ -13,7 +13,10 @@
 #include <scene/object/components/light.h>
 #include <scene/object/components/renderer/meshRenderer.h>
 
+#include "yaml-cpp/yaml.h"
+
 #include <iostream>
+#include <fstream>
 
 //---BEGIN RANT---
 // yes the uni computers have ancient versions of things 
@@ -202,7 +205,39 @@ void processFiles(std::shared_ptr<Scene> s)
         }
         else if (ext == "vert")
         { // process shader
+            // find fragment shader
+            std::string fragPath = "";
+            for (auto fragFile : filesToProcess)
+            {
+                std::stringstream ss(fragFile);
+                std::string fragname, fragext;
 
+                // process all dir seps
+                while (std::getline(ss, fragname, '/'));
+                while (std::getline(ss, fragname, '\\'));
+                ss = std::stringstream(fragname);
+
+                // get name and extension
+                fragname = "";
+                while (std::getline(ss, fragext, '.')) {
+                    fragname += fragext;
+                    std::getline(ss, fragext, '.');
+                }
+
+                if (fragname == name && fragext == "frag")
+                {
+                    fragPath = fragFile;
+                    break;
+                }
+            }
+            if (fragPath == "")
+            {
+                std::cout<< "ERROR::ASSETIMPORT::SHADER::could not find fragment shader for " << file << std::endl;
+                continue;
+            }
+
+            std::shared_ptr<Shader> shader(new Shader(name, file.c_str(), fragPath.c_str()));
+            s->shaders.push_back(shader);
         }
     }
 }
@@ -226,12 +261,11 @@ void Scene::loadAssets(const char* path)
 void findLightsRecursive(Scene* s, std::shared_ptr<Object> o)
 {
     auto light = o->getComponent<Light>();
-    if (light)
+    if (light && light->type == Light::Type::POINT && s->lights.size() < Scene::MAX_LIGHTS)
         s->lights.push_back(light);
-
-    // stop if we've reached maxlights
-    if (s->lights.size() == Scene::MAX_LIGHTS)
-        return;
+    
+    if (light && light->type == Light::Type::DIRECTIONAL)
+        s->dirLight = light;
 
     for (auto obj : o->children)
         findLightsRecursive(s, obj);
@@ -273,4 +307,25 @@ void Scene::renderUI() {
     ImGui::Render();
     // saves and restores opengl state (i love you imgui <3)
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+// scene saving
+void Scene::save(std::string filename)
+{
+    YAML::Emitter serialiser;
+
+    // objects as sequence of maps
+    serialiser << YAML::BeginSeq;   
+    for (auto obj : objects)
+        serialiser << *obj; // expect map
+    serialiser << YAML::EndSeq;
+
+    std::ofstream outfile(filename);
+    if (outfile)
+    {
+        outfile << serialiser.c_str();
+        outfile.close();
+    }
+    else 
+        std::cout << "ERROR::SCENE::SERIALISER::could not open file" << std::endl;
 }

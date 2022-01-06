@@ -28,6 +28,17 @@ public:
     void start() override;
     void update(std::shared_ptr<Scene> s) override;
     void renderInspector() override;
+    YAML::Emitter& serialise(YAML::Emitter& emitter) override 
+    {
+        emitter << YAML::BeginMap;
+        emitter << YAML::Key << "name";
+        emitter << YAML::Value << "EditCamera";
+        emitter << YAML::Key << "zoomSpeed" << YAML::Value << zoomSpeed;
+        emitter << YAML::Key << "rotateSpeed" << YAML::Value << rotateSpeed;
+        emitter << YAML::Key << "dragSpeed" << YAML::Value << dragSpeed;
+        emitter << YAML::EndMap;
+        return emitter;
+    }
 
     std::shared_ptr<Script> clone(std::shared_ptr<Object> newObj) {
         return std::shared_ptr<Script>(new EditCamera(*this, newObj));

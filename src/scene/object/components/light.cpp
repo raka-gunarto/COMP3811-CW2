@@ -33,8 +33,16 @@ Light::Light(std::shared_ptr<Object> obj, glm::vec3 color, float linearAttenuati
 void Light::renderInspector()
 {
     ImGui::Text("Light");
+    if (ImGui::RadioButton("Rotate", type == POINT))
+        type = POINT;
+    ImGui::SameLine();
+    if (ImGui::RadioButton("Scale", type == DIRECTIONAL))
+        type = DIRECTIONAL;
     ImGui::ColorEdit3("Color", glm::value_ptr(color));
-    ImGui::DragFloat("Linear Attenuation", &linearAttenuation, 0.001f);
-    ImGui::DragFloat("Quadratic Attenuation", &quadAttenuation, 0.001f);
+    if (type == POINT)
+    {
+        ImGui::DragFloat("Linear Attenuation", &linearAttenuation, 0.001f);
+        ImGui::DragFloat("Quadratic Attenuation", &quadAttenuation, 0.001f);
+    }
     ImGui::Separator();
 }

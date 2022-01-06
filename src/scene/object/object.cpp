@@ -4,6 +4,39 @@
 #include <scene/object/components/component.h>
 #include <scene/object/scripts/script.h>
 
+// (smooth) operator overload for yaml serialisation
+YAML::Emitter& operator<< (YAML::Emitter& serialiser, const Object& o) {
+    // smooooooth operatorrrrrrrrrrr
+    // smooooooooooooooooth operatorrrrrrrrrrrrrrr
+    serialiser << YAML::BeginMap;
+    // name
+    serialiser << YAML::Key << "name";
+    serialiser << YAML::Value << o.name;
+
+    // components (as another sequence of maps)
+    serialiser << YAML::Key << "components";
+    serialiser << YAML::Value << YAML::BeginSeq;
+    for (auto component : o.components)
+        serialiser << *component; // expect map
+    serialiser << YAML::Value << YAML::EndSeq;
+
+    // scripts (as yet another seq of maps)
+    serialiser << YAML::Key << "scripts";
+    serialiser << YAML::Value << YAML::BeginSeq;
+    for (auto script : o.scripts)
+        serialiser << *script; // expect map
+    serialiser << YAML::Value << YAML::EndSeq;
+
+    // children (you can guess by now i hope)
+    serialiser << YAML::Key << "children";
+    serialiser << YAML::Value << YAML::BeginSeq;
+    for (auto child : o.children)
+        serialiser << *child; // expect map
+    serialiser << YAML::Value << YAML::EndSeq;
+    serialiser << YAML::EndMap;
+
+    return serialiser;
+}
 
 std::shared_ptr<Object> Object::clone(std::shared_ptr<Object> parent)
 {

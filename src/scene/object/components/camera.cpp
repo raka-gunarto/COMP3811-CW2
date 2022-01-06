@@ -32,6 +32,14 @@ Camera::Camera(std::shared_ptr<Object> obj, int width, int height, float FOV, fl
     }
 
     transform = t;
+
+    // default width height
+    if (width == 0 || height == 0)
+    {
+        const auto mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+        width = mode->width;
+        height = mode->height;
+    }
 }
 
 glm::mat4 Camera::getMatrix() {

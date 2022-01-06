@@ -1,0 +1,946 @@
+{
+    "extension": "linecounter",
+    "version": "0.2.7",
+    "workspace": "/home/rakagunarto/Uni/comp-graphics/cwk2",
+    "linecount": [
+        {
+            "version": "0.2.7",
+            "counttime": "2022-01-04 16:44:20",
+            "filesum": 47,
+            "codesum": 2010,
+            "commentsum": 198,
+            "blanksum": 419,
+            "statistics": {
+                ".h": {
+                    "code": 537,
+                    "comment": 7,
+                    "blank": 144
+                },
+                ".cpp": {
+                    "code": 1468,
+                    "comment": 191,
+                    "blank": 274
+                },
+                ".txt": {
+                    "code": 5,
+                    "comment": 0,
+                    "blank": 1
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 1,
+                    "code": 5,
+                    "comment": 0,
+                    "filename": "src/CMakeLists.txt"
+                },
+                {
+                    "blank": 22,
+                    "code": 107,
+                    "comment": 7,
+                    "filename": "src/main.cpp"
+                },
+                {
+                    "blank": 16,
+                    "code": 70,
+                    "comment": 8,
+                    "filename": "src/scene/object/components/camera.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 24,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/camera.h"
+                },
+                {
+                    "blank": 8,
+                    "code": 43,
+                    "comment": 3,
+                    "filename": "src/scene/object/components/component.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 17,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/component.h"
+                },
+                {
+                    "blank": 27,
+                    "code": 166,
+                    "comment": 40,
+                    "filename": "src/scene/object/components/renderer/cubeRenderer.cpp"
+                },
+                {
+                    "blank": 11,
+                    "code": 48,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/renderer/cubeRenderer.h"
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/renderer/meshRenderer.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/renderer/meshRenderer.h"
+                },
+                {
+                    "blank": 20,
+                    "code": 144,
+                    "comment": 24,
+                    "filename": "src/scene/object/components/renderer/planeRenderer.cpp"
+                },
+                {
+                    "blank": 11,
+                    "code": 48,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/renderer/planeRenderer.h"
+                },
+                {
+                    "blank": 4,
+                    "code": 16,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/renderer/renderer.h"
+                },
+                {
+                    "blank": 29,
+                    "code": 173,
+                    "comment": 31,
+                    "filename": "src/scene/object/components/renderer/sphereRenderer.cpp"
+                },
+                {
+                    "blank": 11,
+                    "code": 50,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/renderer/sphereRenderer.h"
+                },
+                {
+                    "blank": 9,
+                    "code": 46,
+                    "comment": 3,
+                    "filename": "src/scene/object/components/transform.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/transform.h"
+                },
+                {
+                    "blank": 11,
+                    "code": 73,
+                    "comment": 8,
+                    "filename": "src/scene/object/object.cpp"
+                },
+                {
+                    "blank": 10,
+                    "code": 45,
+                    "comment": 1,
+                    "filename": "src/scene/object/object.h"
+                },
+                {
+                    "blank": 15,
+                    "code": 79,
+                    "comment": 9,
+                    "filename": "src/scene/object/scripts/camera/editCamera.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 36,
+                    "comment": 0,
+                    "filename": "src/scene/object/scripts/camera/editCamera.h"
+                },
+                {
+                    "blank": 7,
+                    "code": 32,
+                    "comment": 3,
+                    "filename": "src/scene/object/scripts/script.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 21,
+                    "comment": 1,
+                    "filename": "src/scene/object/scripts/script.h"
+                },
+                {
+                    "blank": 34,
+                    "code": 152,
+                    "comment": 37,
+                    "filename": "src/scene/scene.cpp"
+                },
+                {
+                    "blank": 13,
+                    "code": 46,
+                    "comment": 1,
+                    "filename": "src/scene/scene.h"
+                },
+                {
+                    "blank": 5,
+                    "code": 33,
+                    "comment": 1,
+                    "filename": "src/ui/assets.cpp"
+                },
+                {
+                    "blank": 2,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/ui/assets.h"
+                },
+                {
+                    "blank": 11,
+                    "code": 80,
+                    "comment": 1,
+                    "filename": "src/ui/inspector.cpp"
+                },
+                {
+                    "blank": 3,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "src/ui/inspector.h"
+                },
+                {
+                    "blank": 9,
+                    "code": 56,
+                    "comment": 2,
+                    "filename": "src/ui/objectHierarchy.cpp"
+                },
+                {
+                    "blank": 2,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/ui/objectHierarchy.h"
+                },
+                {
+                    "blank": 8,
+                    "code": 20,
+                    "comment": 3,
+                    "filename": "src/ui/overview.cpp"
+                },
+                {
+                    "blank": 2,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/ui/overview.h"
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "src/ui/window.cpp"
+                },
+                {
+                    "blank": 3,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/ui/window.h"
+                },
+                {
+                    "blank": 7,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "src/util/ebo.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/util/ebo.h"
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "src/util/mesh.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/util/mesh.h"
+                },
+                {
+                    "blank": 14,
+                    "code": 68,
+                    "comment": 4,
+                    "filename": "src/util/shader.cpp"
+                },
+                {
+                    "blank": 4,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/util/shader.h"
+                },
+                {
+                    "blank": 9,
+                    "code": 59,
+                    "comment": 3,
+                    "filename": "src/util/texture.cpp"
+                },
+                {
+                    "blank": 9,
+                    "code": 28,
+                    "comment": 0,
+                    "filename": "src/util/texture.h"
+                },
+                {
+                    "blank": 7,
+                    "code": 24,
+                    "comment": 0,
+                    "filename": "src/util/vao.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/util/vao.h"
+                },
+                {
+                    "blank": 6,
+                    "code": 20,
+                    "comment": 4,
+                    "filename": "src/util/vbo.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/util/vbo.h"
+                }
+            ]
+        },
+        {
+            "version": "0.2.7",
+            "counttime": "2022-01-04 19:11:17",
+            "filesum": 47,
+            "codesum": 2171,
+            "commentsum": 225,
+            "blanksum": 434,
+            "statistics": {
+                ".h": {
+                    "code": 552,
+                    "comment": 13,
+                    "blank": 144
+                },
+                ".cpp": {
+                    "code": 1614,
+                    "comment": 212,
+                    "blank": 289
+                },
+                ".txt": {
+                    "code": 5,
+                    "comment": 0,
+                    "blank": 1
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 1,
+                    "code": 5,
+                    "comment": 0,
+                    "filename": "src/CMakeLists.txt"
+                },
+                {
+                    "blank": 22,
+                    "code": 108,
+                    "comment": 7,
+                    "filename": "src/main.cpp"
+                },
+                {
+                    "blank": 16,
+                    "code": 70,
+                    "comment": 8,
+                    "filename": "src/scene/object/components/camera.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 24,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/camera.h"
+                },
+                {
+                    "blank": 8,
+                    "code": 43,
+                    "comment": 3,
+                    "filename": "src/scene/object/components/component.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 17,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/component.h"
+                },
+                {
+                    "blank": 27,
+                    "code": 166,
+                    "comment": 40,
+                    "filename": "src/scene/object/components/renderer/cubeRenderer.cpp"
+                },
+                {
+                    "blank": 11,
+                    "code": 48,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/renderer/cubeRenderer.h"
+                },
+                {
+                    "blank": 11,
+                    "code": 52,
+                    "comment": 8,
+                    "filename": "src/scene/object/components/renderer/meshRenderer.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/renderer/meshRenderer.h"
+                },
+                {
+                    "blank": 20,
+                    "code": 144,
+                    "comment": 24,
+                    "filename": "src/scene/object/components/renderer/planeRenderer.cpp"
+                },
+                {
+                    "blank": 11,
+                    "code": 48,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/renderer/planeRenderer.h"
+                },
+                {
+                    "blank": 4,
+                    "code": 16,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/renderer/renderer.h"
+                },
+                {
+                    "blank": 29,
+                    "code": 173,
+                    "comment": 31,
+                    "filename": "src/scene/object/components/renderer/sphereRenderer.cpp"
+                },
+                {
+                    "blank": 11,
+                    "code": 50,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/renderer/sphereRenderer.h"
+                },
+                {
+                    "blank": 9,
+                    "code": 46,
+                    "comment": 3,
+                    "filename": "src/scene/object/components/transform.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 37,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/transform.h"
+                },
+                {
+                    "blank": 11,
+                    "code": 73,
+                    "comment": 8,
+                    "filename": "src/scene/object/object.cpp"
+                },
+                {
+                    "blank": 10,
+                    "code": 45,
+                    "comment": 1,
+                    "filename": "src/scene/object/object.h"
+                },
+                {
+                    "blank": 15,
+                    "code": 79,
+                    "comment": 9,
+                    "filename": "src/scene/object/scripts/camera/editCamera.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 36,
+                    "comment": 0,
+                    "filename": "src/scene/object/scripts/camera/editCamera.h"
+                },
+                {
+                    "blank": 7,
+                    "code": 32,
+                    "comment": 3,
+                    "filename": "src/scene/object/scripts/script.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 21,
+                    "comment": 1,
+                    "filename": "src/scene/object/scripts/script.h"
+                },
+                {
+                    "blank": 31,
+                    "code": 188,
+                    "comment": 40,
+                    "filename": "src/scene/scene.cpp"
+                },
+                {
+                    "blank": 13,
+                    "code": 45,
+                    "comment": 3,
+                    "filename": "src/scene/scene.h"
+                },
+                {
+                    "blank": 8,
+                    "code": 70,
+                    "comment": 4,
+                    "filename": "src/ui/assets.cpp"
+                },
+                {
+                    "blank": 2,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/ui/assets.h"
+                },
+                {
+                    "blank": 11,
+                    "code": 83,
+                    "comment": 1,
+                    "filename": "src/ui/inspector.cpp"
+                },
+                {
+                    "blank": 3,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "src/ui/inspector.h"
+                },
+                {
+                    "blank": 9,
+                    "code": 56,
+                    "comment": 2,
+                    "filename": "src/ui/objectHierarchy.cpp"
+                },
+                {
+                    "blank": 2,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/ui/objectHierarchy.h"
+                },
+                {
+                    "blank": 8,
+                    "code": 20,
+                    "comment": 3,
+                    "filename": "src/ui/overview.cpp"
+                },
+                {
+                    "blank": 2,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/ui/overview.h"
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "src/ui/window.cpp"
+                },
+                {
+                    "blank": 3,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/ui/window.h"
+                },
+                {
+                    "blank": 7,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "src/util/ebo.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/util/ebo.h"
+                },
+                {
+                    "blank": 4,
+                    "code": 17,
+                    "comment": 7,
+                    "filename": "src/util/mesh.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 25,
+                    "comment": 4,
+                    "filename": "src/util/mesh.h"
+                },
+                {
+                    "blank": 14,
+                    "code": 68,
+                    "comment": 4,
+                    "filename": "src/util/shader.cpp"
+                },
+                {
+                    "blank": 4,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/util/shader.h"
+                },
+                {
+                    "blank": 9,
+                    "code": 59,
+                    "comment": 3,
+                    "filename": "src/util/texture.cpp"
+                },
+                {
+                    "blank": 9,
+                    "code": 28,
+                    "comment": 0,
+                    "filename": "src/util/texture.h"
+                },
+                {
+                    "blank": 7,
+                    "code": 24,
+                    "comment": 0,
+                    "filename": "src/util/vao.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/util/vao.h"
+                },
+                {
+                    "blank": 6,
+                    "code": 20,
+                    "comment": 4,
+                    "filename": "src/util/vbo.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/util/vbo.h"
+                }
+            ]
+        },
+        {
+            "version": "0.2.7",
+            "counttime": "2022-01-06 13:12:17",
+            "filesum": 49,
+            "codesum": 2364,
+            "commentsum": 236,
+            "blanksum": 459,
+            "statistics": {
+                ".txt": {
+                    "code": 5,
+                    "comment": 0,
+                    "blank": 1
+                },
+                ".cpp": {
+                    "code": 1783,
+                    "comment": 223,
+                    "blank": 306
+                },
+                ".h": {
+                    "code": 576,
+                    "comment": 13,
+                    "blank": 152
+                }
+            },
+            "filelist": [
+                {
+                    "blank": 1,
+                    "code": 5,
+                    "comment": 0,
+                    "filename": "src/CMakeLists.txt"
+                },
+                {
+                    "blank": 22,
+                    "code": 109,
+                    "comment": 7,
+                    "filename": "src/main.cpp"
+                },
+                {
+                    "blank": 16,
+                    "code": 65,
+                    "comment": 8,
+                    "filename": "src/scene/object/components/camera.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 24,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/camera.h"
+                },
+                {
+                    "blank": 9,
+                    "code": 58,
+                    "comment": 4,
+                    "filename": "src/scene/object/components/component.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 18,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/component.h"
+                },
+                {
+                    "blank": 9,
+                    "code": 29,
+                    "comment": 2,
+                    "filename": "src/scene/object/components/light.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 19,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/light.h"
+                },
+                {
+                    "blank": 27,
+                    "code": 192,
+                    "comment": 43,
+                    "filename": "src/scene/object/components/renderer/cubeRenderer.cpp"
+                },
+                {
+                    "blank": 11,
+                    "code": 48,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/renderer/cubeRenderer.h"
+                },
+                {
+                    "blank": 13,
+                    "code": 88,
+                    "comment": 9,
+                    "filename": "src/scene/object/components/renderer/meshRenderer.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 20,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/renderer/meshRenderer.h"
+                },
+                {
+                    "blank": 20,
+                    "code": 168,
+                    "comment": 25,
+                    "filename": "src/scene/object/components/renderer/planeRenderer.cpp"
+                },
+                {
+                    "blank": 11,
+                    "code": 48,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/renderer/planeRenderer.h"
+                },
+                {
+                    "blank": 4,
+                    "code": 16,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/renderer/renderer.h"
+                },
+                {
+                    "blank": 29,
+                    "code": 198,
+                    "comment": 32,
+                    "filename": "src/scene/object/components/renderer/sphereRenderer.cpp"
+                },
+                {
+                    "blank": 11,
+                    "code": 50,
+                    "comment": 1,
+                    "filename": "src/scene/object/components/renderer/sphereRenderer.h"
+                },
+                {
+                    "blank": 10,
+                    "code": 50,
+                    "comment": 3,
+                    "filename": "src/scene/object/components/transform.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 38,
+                    "comment": 0,
+                    "filename": "src/scene/object/components/transform.h"
+                },
+                {
+                    "blank": 11,
+                    "code": 73,
+                    "comment": 8,
+                    "filename": "src/scene/object/object.cpp"
+                },
+                {
+                    "blank": 10,
+                    "code": 45,
+                    "comment": 1,
+                    "filename": "src/scene/object/object.h"
+                },
+                {
+                    "blank": 15,
+                    "code": 79,
+                    "comment": 9,
+                    "filename": "src/scene/object/scripts/camera/editCamera.cpp"
+                },
+                {
+                    "blank": 7,
+                    "code": 36,
+                    "comment": 0,
+                    "filename": "src/scene/object/scripts/camera/editCamera.h"
+                },
+                {
+                    "blank": 7,
+                    "code": 32,
+                    "comment": 3,
+                    "filename": "src/scene/object/scripts/script.cpp"
+                },
+                {
+                    "blank": 5,
+                    "code": 21,
+                    "comment": 1,
+                    "filename": "src/scene/object/scripts/script.h"
+                },
+                {
+                    "blank": 35,
+                    "code": 202,
+                    "comment": 42,
+                    "filename": "src/scene/scene.cpp"
+                },
+                {
+                    "blank": 13,
+                    "code": 48,
+                    "comment": 3,
+                    "filename": "src/scene/scene.h"
+                },
+                {
+                    "blank": 8,
+                    "code": 70,
+                    "comment": 4,
+                    "filename": "src/ui/assets.cpp"
+                },
+                {
+                    "blank": 2,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/ui/assets.h"
+                },
+                {
+                    "blank": 11,
+                    "code": 83,
+                    "comment": 1,
+                    "filename": "src/ui/inspector.cpp"
+                },
+                {
+                    "blank": 3,
+                    "code": 8,
+                    "comment": 0,
+                    "filename": "src/ui/inspector.h"
+                },
+                {
+                    "blank": 9,
+                    "code": 56,
+                    "comment": 2,
+                    "filename": "src/ui/objectHierarchy.cpp"
+                },
+                {
+                    "blank": 2,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/ui/objectHierarchy.h"
+                },
+                {
+                    "blank": 8,
+                    "code": 20,
+                    "comment": 3,
+                    "filename": "src/ui/overview.cpp"
+                },
+                {
+                    "blank": 2,
+                    "code": 7,
+                    "comment": 0,
+                    "filename": "src/ui/overview.h"
+                },
+                {
+                    "blank": 0,
+                    "code": 0,
+                    "comment": 0,
+                    "filename": "src/ui/window.cpp"
+                },
+                {
+                    "blank": 3,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/ui/window.h"
+                },
+                {
+                    "blank": 7,
+                    "code": 23,
+                    "comment": 0,
+                    "filename": "src/util/ebo.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/util/ebo.h"
+                },
+                {
+                    "blank": 4,
+                    "code": 17,
+                    "comment": 7,
+                    "filename": "src/util/mesh.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 25,
+                    "comment": 4,
+                    "filename": "src/util/mesh.h"
+                },
+                {
+                    "blank": 14,
+                    "code": 68,
+                    "comment": 4,
+                    "filename": "src/util/shader.cpp"
+                },
+                {
+                    "blank": 4,
+                    "code": 10,
+                    "comment": 0,
+                    "filename": "src/util/shader.h"
+                },
+                {
+                    "blank": 9,
+                    "code": 59,
+                    "comment": 3,
+                    "filename": "src/util/texture.cpp"
+                },
+                {
+                    "blank": 9,
+                    "code": 28,
+                    "comment": 0,
+                    "filename": "src/util/texture.h"
+                },
+                {
+                    "blank": 7,
+                    "code": 24,
+                    "comment": 0,
+                    "filename": "src/util/vao.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 14,
+                    "comment": 0,
+                    "filename": "src/util/vao.h"
+                },
+                {
+                    "blank": 6,
+                    "code": 20,
+                    "comment": 4,
+                    "filename": "src/util/vbo.cpp"
+                },
+                {
+                    "blank": 6,
+                    "code": 15,
+                    "comment": 0,
+                    "filename": "src/util/vbo.h"
+                }
+            ]
+        }
+    ]
+}

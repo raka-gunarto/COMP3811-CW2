@@ -26,7 +26,12 @@ struct PointLight {
 
     vec3 color;
 };
+struct DirectionalLight {
+    vec3 dir;
+    vec3 color;
+};
 uniform PointLight lights[16];
+uniform DirectionalLight sun;
 
 void main()
 {
@@ -60,5 +65,14 @@ void main()
         // combine into finalColor
         finalColor += diffuse + specular;
     }
+
+    // calculate the one directional light (sun)
+    vec3 sunDirection = normalize(-sun.dir);
+    float sunDiffuseCoefficient = max(dot(normal, sunDirection), 0);
+    float sunSpecularCoefficient = pow(max(dot(viewDirection, reflect(-sunDirection, normal)), 0),shininess);
+    vec3 sunDiffuse = sun.color * sunDiffuseCoefficient * dColor;
+    vec3 sunSpecular = sun * sunSpecularCoefficient * sColor;
+    finalColor += sunDiffuse + sunSpecular;
+
     FragColor = vec4(finalColor, 1.0);
 }

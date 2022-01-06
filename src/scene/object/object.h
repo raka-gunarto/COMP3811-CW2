@@ -6,6 +6,8 @@
 #include <scene/object/scripts/script.h>
 #include <scene/scene.h>
 
+#include <yaml-cpp/yaml.h>
+
 #include <vector>
 #include <memory>
 #include <string>
@@ -47,6 +49,8 @@ public:
     void reparent(std::shared_ptr<Object> p, bool blueprint = false);
     void update(std::shared_ptr<Scene> s);
     void render(std::shared_ptr<Scene> s);
+
+    friend YAML::Emitter& operator << (YAML::Emitter& emitter, const Object& o);
 
 protected:
     std::shared_ptr<Scene> scene;

@@ -40,3 +40,15 @@ void Script::renderComponentChildWindow(std::shared_ptr<Object> obj) {
     if (ImGui::Button("Add Script"))
         ImGui::OpenPopup("Script Menu###inspectorScriptMenu");
 }
+
+void Script::remove()
+{
+    // find self in obj components and remove (shared_ptr should automatically free us)
+    for (auto it = object->scripts.begin(); it != object->scripts.end(); ++it) {
+        if (it->get() == this)
+        {
+            object->scripts.erase(it);
+            break;
+        }
+    }
+}

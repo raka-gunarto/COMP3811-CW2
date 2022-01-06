@@ -76,14 +76,22 @@ void Inspector::render() {
     ImGui::Separator();
     for (auto component : scene->inspectedObject->components)
     {
+        if (!component) continue;
         ImGui::PushID(component.get());
-        component->renderInspector();
+        if (ImGui::Button("Delete"))
+            component->remove();
+        else
+            component->renderInspector();
         ImGui::PopID();
     }
     for (auto script : scene->inspectedObject->scripts)
     {
+        if (!script) continue;
         ImGui::PushID(script.get());
-        script->renderInspector();
+        if (ImGui::Button("Delete"))
+            script->remove();
+        else
+            script->renderInspector();
         ImGui::PopID();
     }
 
