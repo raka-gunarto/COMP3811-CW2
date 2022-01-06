@@ -2,6 +2,7 @@
 
 #include <scene/scene.h>
 #include <scene/object/components/transform.h>
+#include <scene/object/components/light.h>
 
 #include <imgui.h>
 
@@ -26,7 +27,7 @@ PlaneRenderer::PlaneRenderer(std::shared_ptr<Object> obj) : Renderer(obj)
     // default mode flat color, white
     mode = PlaneRenderer::Mode::MATERIAL;
     diffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
-    specularColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    specularColor = glm::vec3(0.0f, 0.0f, 0.0f);
 
     // set default shader
     shader = obj->getScene()->shaders[0];
@@ -93,12 +94,36 @@ void PlaneRenderer::render(std::shared_ptr<Scene> s)
     glUniformMatrix3fv(glGetUniformLocation(shader->id, "normalMat"), 1, GL_FALSE, glm::value_ptr(normalMat));
     // specular lighting, camera position
     glUniform3f(glGetUniformLocation(shader->id, "cameraPos"),
-        s->activeCamera->transform->position.x,
-        s->activeCamera->transform->position.y,
-        s->activeCamera->transform->position.z
+        s->activeCamera->transform->worldPos().x,
+        s->activeCamera->transform->worldPos().y,
+        s->activeCamera->transform->worldPos().z
     );
     // camera matrix (view + projection)
     glUniformMatrix4fv(glGetUniformLocation(shader->id, "cameraMat"), 1, GL_FALSE, glm::value_ptr(s->activeCamera->getMatrix()));
+    // lights
+    for (int i = 0; i < s->lights.size(); ++i)
+    {
+        glUniform3f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].pos").c_str()),
+            s->lights[i]->transform->worldPos().x,
+            s->lights[i]->transform->worldPos().y,
+            s->lights[i]->transform->worldPos().z
+            );
+        glUniform3f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].color").c_str()),
+            s->lights[i]->color.r,
+            s->lights[i]->color.g,
+            s->lights[i]->color.b
+            );
+        glUniform1f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].linAttenuate").c_str()),
+            s->lights[i]->linearAttenuation
+            );
+        glUniform1f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].quadAttenuate").c_str()),
+            s->lights[i]->quadAttenuation
+            );
+    }
     // load color / texture
     switch (mode)
     {
@@ -154,7 +179,7 @@ void PlaneRenderer::renderInspector()
     case PlaneRenderer::Mode::MATERIAL:
         ImGui::ColorEdit3("Diffuse", glm::value_ptr(diffuseColor));
         ImGui::ColorEdit3("Specular", glm::value_ptr(specularColor));
-        ImGui::SliderFloat("Shininess", &shininess, 0.0f, 1.0f);
+        ImGui::DragFloat("Shininess", &shininess, 0.1f, 0.0f);
         break;
     case PlaneRenderer::Mode::TEX_MAP:
         ImGui::Text("Diffuse Map");
@@ -176,7 +201,7 @@ void PlaneRenderer::renderInspector()
         if (ImGui::BeginDragDropTarget())
             if (const ImGuiPayload* p = ImGui::AcceptDragDropPayload("TEXTURE"))
                 specularTex = (*(Texture**)p->Data)->shared_from_this();
-        ImGui::SliderFloat("Shininess", &shininess, 0.0f, 1.0f);
+        ImGui::DragFloat("Shininess", &shininess, 0.1f, 0.0f);
         break;
     }
     ImGui::Separator();

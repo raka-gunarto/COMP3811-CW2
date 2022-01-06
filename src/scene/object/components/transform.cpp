@@ -10,6 +10,11 @@
 
 #include <iostream>
 
+glm::vec3 Transform::worldPos()
+{
+    return modelMatrix() * glm::vec4(1.0f);
+}
+
 glm::mat4 Transform::localMatrix() {
     glm::vec3 rotationRad(glm::radians(rotation.x), glm::radians(rotation.y), glm::radians(rotation.z));
     glm::mat4 model =

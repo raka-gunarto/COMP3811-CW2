@@ -1,6 +1,7 @@
 #include "meshRenderer.h"
 
 #include <scene/object/components/transform.h>
+#include <scene/object/components/light.h>
 
 #include <glm/gtc/type_ptr.hpp>
 #include <imgui.h>
@@ -40,12 +41,36 @@ void MeshRenderer::render(std::shared_ptr<Scene> s)
     glUniformMatrix3fv(glGetUniformLocation(shader->id, "normalMat"), 1, GL_FALSE, glm::value_ptr(normalMat));
     // specular lighting, camera position
     glUniform3f(glGetUniformLocation(shader->id, "cameraPos"),
-        s->activeCamera->transform->position.x,
-        s->activeCamera->transform->position.y,
-        s->activeCamera->transform->position.z
+        s->activeCamera->transform->worldPos().x,
+        s->activeCamera->transform->worldPos().y,
+        s->activeCamera->transform->worldPos().z
     );
     // camera matrix (view + projection)
     glUniformMatrix4fv(glGetUniformLocation(shader->id, "cameraMat"), 1, GL_FALSE, glm::value_ptr(s->activeCamera->getMatrix()));
+    // lights
+    for (int i = 0; i < s->lights.size(); ++i)
+    {
+        glUniform3f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].pos").c_str()),
+            s->lights[i]->transform->worldPos().x,
+            s->lights[i]->transform->worldPos().y,
+            s->lights[i]->transform->worldPos().z
+            );
+        glUniform3f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].color").c_str()),
+            s->lights[i]->color.r,
+            s->lights[i]->color.g,
+            s->lights[i]->color.b
+            );
+        glUniform1f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].linAttenuate").c_str()),
+            s->lights[i]->linearAttenuation
+            );
+        glUniform1f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].quadAttenuate").c_str()),
+            s->lights[i]->quadAttenuation
+            );
+    }
 
     // load color / texture
     glUniform3f(glGetUniformLocation(shader->id, "diffuseColor"), mesh->diffuseColor.r, mesh->diffuseColor.g, mesh->diffuseColor.b);

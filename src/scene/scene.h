@@ -16,6 +16,7 @@ class Object;
 class Window;
 class Shader;
 class Camera;
+class Light;
 
 class Scene : public std::enable_shared_from_this<Scene>
 {
@@ -36,6 +37,8 @@ public:
     void render();
     void renderUI();
     
+    static const int MAX_LIGHTS = 16;
+    std::vector<std::shared_ptr<Light>> lights;
 
     std::shared_ptr<Camera> activeCamera;
     std::shared_ptr<Object> inspectedObject;

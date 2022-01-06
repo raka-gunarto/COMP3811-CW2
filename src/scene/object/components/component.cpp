@@ -4,6 +4,7 @@
 
 #include <scene/object/components/transform.h>
 #include <scene/object/components/camera.h>
+#include <scene/object/components/light.h>
 #include <scene/object/components/renderer/meshRenderer.h>
 #include <scene/object/components/renderer/planeRenderer.h>
 #include <scene/object/components/renderer/cubeRenderer.h>
@@ -24,6 +25,7 @@ struct ComponentBuilders {
 static ComponentBuilders builders[] = {
     {"Transform", newComponent<Transform>},
     {"Camera", newComponent<Camera>},
+    {"Light", newComponent<Light>},
     {"Plane Renderer", newComponent<PlaneRenderer>},
     {"Cube Renderer", newComponent<CubeRenderer>},
     {"Sphere Renderer", newComponent<SphereRenderer>},
@@ -50,5 +52,20 @@ void Component::renderComponentChildWindow(std::shared_ptr<Object> obj) {
         ImGui::EndPopup();
     }
     if (ImGui::Button("Add Component"))
+    {
+        open = true;
         ImGui::OpenPopup("Component Menu###inspectorComponentMenu");
+    }
+}
+
+void Component::remove()
+{
+    // find self in obj components and remove (shared_ptr should automatically free us)
+    for (auto it = object->components.begin(); it != object->components.end(); ++it) {
+        if (it->get() == this)
+        {
+            object->components.erase(it);
+            break;
+        }
+    }
 }

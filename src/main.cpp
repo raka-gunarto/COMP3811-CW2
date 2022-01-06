@@ -55,6 +55,7 @@ std::shared_ptr<Scene> constructDefaultScene(GLFWwindow* w) {
     std::shared_ptr<Object> sphere(new Object(s));
     sphere->setName("Sphere");
     std::shared_ptr<Transform> sphereTransform(new Transform(sphere));
+    sphereTransform->position.y = 2;
     sphereTransform->scale.x = 1;
     sphereTransform->scale.z = 1;
     sphere->components.push_back(std::shared_ptr<Component>(sphereTransform));

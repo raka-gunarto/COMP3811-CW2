@@ -10,6 +10,7 @@
 #include <assimp/postprocess.h>
 
 #include <scene/object/components/transform.h>
+#include <scene/object/components/light.h>
 #include <scene/object/components/renderer/meshRenderer.h>
 
 #include <iostream>
@@ -222,7 +223,26 @@ void Scene::loadAssets(const char* path)
     processFiles(this->shared_from_this());
 }
 
+void findLightsRecursive(Scene* s, std::shared_ptr<Object> o)
+{
+    auto light = o->getComponent<Light>();
+    if (light)
+        s->lights.push_back(light);
+
+    // stop if we've reached maxlights
+    if (s->lights.size() == Scene::MAX_LIGHTS)
+        return;
+
+    for (auto obj : o->children)
+        findLightsRecursive(s, obj);
+}
+
 void Scene::update() {
+    // find all lights in scene
+    lights.clear();
+    for (auto obj : objects)
+        findLightsRecursive(this, obj);
+
     // calculate deltaTime
     dTime = glfwGetTime() - dTime;
     for (auto obj : objects)

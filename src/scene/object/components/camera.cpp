@@ -22,17 +22,12 @@ Camera::Camera(std::shared_ptr<Object> obj, int width, int height, float FOV, fl
     name = "Camera";
 
     // find object transform
-    std::shared_ptr<Transform> t = nullptr;
-    for (auto component : obj->components)
-        if (component->getName() == "Transform") {
-            t = std::dynamic_pointer_cast<Transform>(component);
-            break;
-        }
+    std::shared_ptr<Transform> t = obj->getComponent<Transform>();
 
     // cannot find transform
     if (t == nullptr)
     {
-        std::cout << "ERROR::" << object->getName() << "::camera::cannot find transform" << std::endl;
+        std::cout << "WARN::" << object->getName() << "::camera::cannot find transform" << std::endl;
         return;
     }
 

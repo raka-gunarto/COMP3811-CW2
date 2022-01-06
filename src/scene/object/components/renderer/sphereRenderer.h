@@ -46,7 +46,7 @@ public:
 
     glm::vec3 diffuseColor;
     glm::vec3 specularColor;
-    float shininess;
+    float shininess = 1.0f;
     std::shared_ptr<Texture> diffuseTex;
     std::shared_ptr<Texture> specularTex;
 

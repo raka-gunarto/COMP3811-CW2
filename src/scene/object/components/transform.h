@@ -35,6 +35,7 @@ public:
     }
     void renderInspector() override;
 
+    glm::vec3 worldPos();
     glm::mat4 localMatrix();
     glm::mat4 modelMatrix();
 

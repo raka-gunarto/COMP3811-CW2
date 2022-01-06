@@ -2,6 +2,7 @@
 
 #include <scene/scene.h>
 #include <scene/object/components/transform.h>
+#include <scene/object/components/light.h>
 
 #include <imgui.h>
 
@@ -26,6 +27,7 @@ CubeRenderer::CubeRenderer(std::shared_ptr<Object> obj) : Renderer(obj)
     // default mode flat color, white
     mode = CubeRenderer::Mode::MATERIAL;
     diffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
+    specularColor = glm::vec3(0.0f, 0.0f, 0.0f);
 
     // set default shader
     shader = obj->getScene()->shaders[0];
@@ -40,42 +42,42 @@ void CubeRenderer::initVertexData() {
     // each face is 4 vertices, drawn with two triangle primitives
     // defined with the index buffer
     GLfloat verts[] = {
-        // vertices           // normals
-        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, // 0
-        0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f, // 1
-        0.5f,  0.5f, -0.5f,   0.0f,  0.0f, -1.0f, // 2
-        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, // 3
+        // vertices           // normals           // texcoords
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f, // 0
+        0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f,  1.0f, 0.0f,  // 1
+        0.5f,  0.5f, -0.5f,   0.0f,  0.0f, -1.0f,  1.0f, 1.0f,  // 2
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,  // 3
 
-        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f, // 4
-        0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 1.0f, // 5
-        0.5f,  0.5f,  0.5f,   0.0f,  0.0f, 1.0f, // 6
-        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f, // 7
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,  0.0f, 0.0f,  // 4
+        0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 1.0f,  1.0f, 0.0f,  // 5
+        0.5f,  0.5f,  0.5f,   0.0f,  0.0f, 1.0f,  1.0f, 1.0f,  // 6
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,  0.0f, 1.0f,  // 7
 
-        -0.5f,  0.5f,  0.5f,  -1.0f,  0.0f,  0.0f, // 8
-        -0.5f,  0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,
-        -0.5f, -0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,
-        -0.5f, -0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,  // 8
+        -0.5f,  0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,  0.0f, 0.0f, 
+        -0.5f, -0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 
 
-        0.5f,  0.5f,  0.5f,   1.0f,  0.0f,  0.0f, // 12
-        0.5f,  0.5f, -0.5f,   1.0f,  0.0f,  0.0f,
-        0.5f, -0.5f, -0.5f,   1.0f,  0.0f,  0.0f,
-        0.5f, -0.5f,  0.5f,   1.0f,  0.0f,  0.0f,
+        0.5f,  0.5f,  0.5f,   1.0f,  0.0f,  0.0f,  0.0f, 1.0f,  // 12
+        0.5f,  0.5f, -0.5f,   1.0f,  0.0f,  0.0f,  1.0f, 1.0f, 
+        0.5f, -0.5f, -0.5f,   1.0f,  0.0f,  0.0f,  1.0f, 0.0f, 
+        0.5f, -0.5f,  0.5f,   1.0f,  0.0f,  0.0f,  0.0f, 0.0f, 
 
-        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, // 16
-        0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,
-        0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,  // 16
+        0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,  1.0f, 1.0f, 
+        0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,  1.0f, 0.0f, 
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f, 
 
-        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, // 20
-        0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,
-        0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,  // 20
+        0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,  1.0f, 1.0f, 
+        0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,  1.0f, 0.0f, 
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f, 
     };
     GLuint elements[] = {
         0, 1, 2, 2, 3, 0, // first face
         4, 5, 6, 6, 7, 4, // second face
         8, 9, 10, 10, 11, 8, // third face
-        12, 13, 14, 14, 15, 11, // fourth face
+        12, 13, 14, 14, 15, 12, // fourth face
         16, 17, 18, 18, 19, 16, // fifth face
         20, 21, 22, 22, 23, 20, // sixth face
     };
@@ -85,9 +87,11 @@ void CubeRenderer::initVertexData() {
 
     // set buffer attributes
     // vertex positions
-    cubeVAO->link(cubeVBO, 0, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)0); // vertex coords
+    cubeVAO->link(cubeVBO, 0, 3, GL_FLOAT, 8 * sizeof(GLfloat), (void*)0); // vertex coords
     // normals 
-    cubeVAO->link(cubeVBO, 1, 3, GL_FLOAT, 6 * sizeof(GLfloat), (void*)(3 * sizeof(float))); // vertex coords
+    cubeVAO->link(cubeVBO, 1, 3, GL_FLOAT, 8 * sizeof(GLfloat), (void*)(3 * sizeof(float))); // vertex coords
+    // texcoords 
+    cubeVAO->link(cubeVBO, 2, 2, GL_FLOAT, 8 * sizeof(GLfloat), (void*)(6 * sizeof(float))); // vertex coords
 
     initialised = true;
 }
@@ -100,7 +104,7 @@ void CubeRenderer::render(std::shared_ptr<Scene> s)
     // cannot find transform, don't render anything
     if (t == nullptr)
     {
-        std::cout << "WARN::" << object->getName() << "::planeRenderer::cannot find transform" << std::endl;
+        std::cout << "WARN::" << object->getName() << "::cubeRenderer::cannot find transform" << std::endl;
         return;
     }
 
@@ -128,6 +132,30 @@ void CubeRenderer::render(std::shared_ptr<Scene> s)
     );
     // camera matrix (view + projection)
     glUniformMatrix4fv(glGetUniformLocation(shader->id, "cameraMat"), 1, GL_FALSE, glm::value_ptr(s->activeCamera->getMatrix()));
+    // lights
+    for (int i = 0; i < s->lights.size(); ++i)
+    {
+        glUniform3f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].pos").c_str()),
+            s->lights[i]->transform->worldPos().x,
+            s->lights[i]->transform->worldPos().y,
+            s->lights[i]->transform->worldPos().z
+            );
+        glUniform3f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].color").c_str()),
+            s->lights[i]->color.r,
+            s->lights[i]->color.g,
+            s->lights[i]->color.b
+            );
+        glUniform1f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].linAttenuate").c_str()),
+            s->lights[i]->linearAttenuation
+            );
+        glUniform1f(glGetUniformLocation(shader->id, 
+            std::string("lights[" + std::to_string(i) + "].quadAttenuate").c_str()),
+            s->lights[i]->quadAttenuation
+            );
+    }
     // load color / texture
     switch (mode)
     {
@@ -184,7 +212,7 @@ void CubeRenderer::renderInspector()
     case CubeRenderer::Mode::MATERIAL:
         ImGui::ColorEdit3("Diffuse", glm::value_ptr(diffuseColor));
         ImGui::ColorEdit3("Specular", glm::value_ptr(specularColor));
-        ImGui::SliderFloat("Shininess", &shininess, 0.0f, 1.0f);
+        ImGui::DragFloat("Shininess", &shininess, 0.1f, 0.0f);
         break;
     case CubeRenderer::Mode::TEX_MAP:
         ImGui::Text("Diffuse Map");
@@ -206,7 +234,7 @@ void CubeRenderer::renderInspector()
         if (ImGui::BeginDragDropTarget())
             if (const ImGuiPayload* p = ImGui::AcceptDragDropPayload("TEXTURE"))
                 specularTex = (*(Texture**)p->Data)->shared_from_this();
-        ImGui::SliderFloat("Shininess", &shininess, 0.0f, 1.0f);
+        ImGui::DragFloat("Shininess", &shininess, 0.1f, 0.0f);
         break;
     }
     ImGui::Separator();
