@@ -62,7 +62,7 @@ std::shared_ptr<Object> Object::deserialise(const YAML::Node& objectNode, std::s
     for (auto it = objectNode["children"].begin(); it != objectNode["children"].end(); ++it)
     {
         auto o = Object::deserialise(it->as<YAML::Node>(), s);
-        o->reparent(obj);
+        o->parent = obj;
         if (o)
             obj->children.push_back(o);
     }

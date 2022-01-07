@@ -1,6 +1,7 @@
 #include "script.h"
 
 #include <scene/object/scripts/camera/editCamera.h>
+#include <scene/object/scripts/sunMoonCycle.h>
 
 #include <imgui.h>
 
@@ -16,6 +17,7 @@ struct ScriptBuilders {
 
 static ScriptBuilders builders[] = {
     {"EditCamera", newComponent<EditCamera>},
+    {"SunMoonCycle", newComponent<SunMoonCycle>},
 };
 
 void Script::renderComponentChildWindow(std::shared_ptr<Object> obj) {

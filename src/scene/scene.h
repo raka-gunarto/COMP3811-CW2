@@ -40,6 +40,7 @@ public:
     static const int MAX_LIGHTS = 16;
     std::vector<std::shared_ptr<Light>> lights;
     std::shared_ptr<Light> dirLight;
+    glm::vec3 backgroundColor = glm::vec3(0.0f, 0.0f, 0.0f);
 
     std::shared_ptr<Camera> activeCamera;
     std::shared_ptr<Object> inspectedObject;
@@ -60,7 +61,7 @@ public:
     bool vsync = true;
     glm::vec3 ambientColor = glm::vec3(1.0f, 1.0f, 1.0f);
     float ambientIntensity = 0.2f;
-    float dTime = 0.0f;
+    double dTime = 0.0;
 
     // scroll values because glfw handles scroll with callbacks
     float scrollX = 0.0f;

@@ -76,6 +76,7 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
+        glClearColor(scene->backgroundColor.r, scene->backgroundColor.g, scene->backgroundColor.b, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         scene->update();
