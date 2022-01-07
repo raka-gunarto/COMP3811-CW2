@@ -34,6 +34,14 @@ void renderObjectNode(std::shared_ptr<Object> o, Scene* s)
     ImGui::SameLine();
     if (ImGui::SmallButton(std::string("Clone##" + o->getName()).c_str()))
         s->objects.push_back(o->clone());
+    ImGui::SameLine();
+    if (ImGui::SmallButton(std::string("Delete##" + o->getName()).c_str()))
+    {
+        o->remove();
+        ImGui::PopID();
+        if (expanded) ImGui::TreePop();
+        return;
+    }
 
     ImGui::PopID();
     if (expanded) {
@@ -57,6 +65,5 @@ void ObjectHierarchy::render() {
     if (ImGui::BeginDragDropTarget())
         if (const ImGuiPayload* p = ImGui::AcceptDragDropPayload("HIERARCHY_OBJECT"))
             (*((Object**)p->Data))->reparent(nullptr);
-    ImGui::SetWindowSize(ImVec2(0, 0)); // size to content
     ImGui::End();
 }

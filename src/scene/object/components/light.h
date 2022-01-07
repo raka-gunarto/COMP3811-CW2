@@ -37,6 +37,18 @@ public:
         emitter << YAML::EndMap;
         return emitter;
     }
+    void _deserialise(const YAML::Node& componentNode) override
+    {
+        // do the reverse of serialise duh
+        type = (Type) componentNode["type"].as<int>();
+        linearAttenuation = componentNode["linearAttenuation"].as<float>();
+        quadAttenuation = componentNode["quadAttenuation"].as<float>();
+        color = glm::vec3(
+            componentNode["color"][0].as<float>(),
+            componentNode["color"][1].as<float>(),
+            componentNode["color"][2].as<float>()
+        );
+    }
 
     float linearAttenuation = 0;
     float quadAttenuation = 0;

@@ -32,6 +32,15 @@ public:
         emitter << YAML::EndMap;
         return emitter;
     }
+    void _deserialise(const YAML::Node& componentNode) override
+    {
+        // do the reverse of serialise duh
+        width = componentNode["width"].as<float>();
+        height = componentNode["height"].as<float>();
+        FOV = componentNode["FOV"].as<float>();
+        near = componentNode["near"].as<float>();
+        far = componentNode["far"].as<float>();
+    }
     std::shared_ptr<Transform> transform;
     glm::mat4 getMatrix();
     glm::mat4 getPerspective();

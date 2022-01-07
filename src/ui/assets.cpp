@@ -8,6 +8,27 @@
 void Assets::render() {
     ImGui::Begin("Assets");
 
+    // shaders
+    if (ImGui::CollapsingHeader("Shaders"))
+        if (ImGui::BeginTable("shader_tbl", 4))
+        {
+            for (auto shader : scene->shaders)
+            {
+                ImGui::TableNextColumn();
+                ImGui::PushID(shader.get());
+                ImGui::Text(shader->name.c_str());
+                if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
+                {
+                    Shader* ptr = shader.get();
+                    ImGui::SetDragDropPayload("SHADER", &ptr, sizeof(Shader*));
+                    ImGui::Text(std::string("SHADER:" + shader->name).c_str());
+                    ImGui::EndDragDropSource();
+                }
+                ImGui::PopID();
+            }
+            ImGui::EndTable();
+        }
+
     // textures
     if (ImGui::CollapsingHeader("Textures"))
         if (ImGui::BeginTable("texture_tbl", 4))

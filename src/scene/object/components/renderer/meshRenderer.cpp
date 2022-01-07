@@ -4,14 +4,17 @@
 #include <scene/object/components/light.h>
 
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/quaternion.hpp>
 #include <imgui.h>
 
 #include <iostream>
 
 void MeshRenderer::render(std::shared_ptr<Scene> s)
 {
+    // set default shader
     if (!shader)
-        shader = s->shaders[0];
+        shader = object->getScene()->shaders[0];
 
     // find object transform
     std::shared_ptr<Transform> t = object->getComponent<Transform>();
@@ -71,6 +74,24 @@ void MeshRenderer::render(std::shared_ptr<Scene> s)
             s->lights[i]->quadAttenuation
             );
     }
+    // extract rotation from directional light transform
+    if (s->dirLight)
+    {
+        glm::vec3 sunDirection = glm::rotate(
+            glm::quat(s->dirLight->transform->modelMatrix()),
+            glm::vec3(0, 1.0f, 0)
+        );
+        glUniform3f(glGetUniformLocation(shader->id, "sun.dir"),
+            sunDirection.x,
+            sunDirection.y,
+            sunDirection.z
+        );
+        glUniform3f(glGetUniformLocation(shader->id, "sun.color"),
+            s->dirLight->color.r,
+            s->dirLight->color.g,
+            s->dirLight->color.b
+        );
+    }
 
     // load color / texture
     glUniform3f(glGetUniformLocation(shader->id, "diffuseColor"), mesh->diffuseColor.r, mesh->diffuseColor.g, mesh->diffuseColor.b);
@@ -100,6 +121,11 @@ void MeshRenderer::render(std::shared_ptr<Scene> s)
 void MeshRenderer::renderInspector()
 {
     ImGui::Text("Mesh Renderer");
+    ImGui::Text("Shader: "); ImGui::SameLine();
+    ImGui::Button(shader->name.c_str());
+    if (ImGui::BeginDragDropTarget())
+        if (const ImGuiPayload* p = ImGui::AcceptDragDropPayload("SHADER"))
+            shader = (*((Shader**)p->Data))->shared_from_this();
     if (mesh)
         ImGui::Text(mesh->name.c_str());
     else ImGui::Text("Drop Mesh Here");

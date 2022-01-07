@@ -23,6 +23,9 @@ public:
     virtual YAML::Emitter& serialise(YAML::Emitter& emitter) {
         return emitter;
     };
+    static std::shared_ptr<Script> deserialise(const YAML::Node& componentNode, std::shared_ptr<Object> obj);
+    virtual void _deserialise(const YAML::Node& componentNode) = 0;
+
     virtual void renderInspector() = 0;
     static void renderComponentChildWindow(std::shared_ptr<Object> obj);
 

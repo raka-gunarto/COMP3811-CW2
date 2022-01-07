@@ -33,10 +33,10 @@ Light::Light(std::shared_ptr<Object> obj, glm::vec3 color, float linearAttenuati
 void Light::renderInspector()
 {
     ImGui::Text("Light");
-    if (ImGui::RadioButton("Rotate", type == POINT))
+    if (ImGui::RadioButton("Point", type == POINT))
         type = POINT;
     ImGui::SameLine();
-    if (ImGui::RadioButton("Scale", type == DIRECTIONAL))
+    if (ImGui::RadioButton("Directional", type == DIRECTIONAL))
         type = DIRECTIONAL;
     ImGui::ColorEdit3("Color", glm::value_ptr(color));
     if (type == POINT)

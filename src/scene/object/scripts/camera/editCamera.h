@@ -39,6 +39,13 @@ public:
         emitter << YAML::EndMap;
         return emitter;
     }
+    void _deserialise(const YAML::Node& componentNode) override
+    {
+        // do the reverse of serialise duh
+        zoomSpeed = componentNode["zoomSpeed"].as<float>();
+        rotateSpeed = componentNode["rotateSpeed"].as<float>();
+        dragSpeed = componentNode["dragSpeed"].as<float>();
+    }
 
     std::shared_ptr<Script> clone(std::shared_ptr<Object> newObj) {
         return std::shared_ptr<Script>(new EditCamera(*this, newObj));

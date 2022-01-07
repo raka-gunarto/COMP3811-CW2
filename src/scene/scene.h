@@ -36,7 +36,7 @@ public:
     void update();
     void render();
     void renderUI();
-    
+
     static const int MAX_LIGHTS = 16;
     std::vector<std::shared_ptr<Light>> lights;
     std::shared_ptr<Light> dirLight;

@@ -71,7 +71,7 @@ void main()
     float sunDiffuseCoefficient = max(dot(normal, sunDirection), 0);
     float sunSpecularCoefficient = pow(max(dot(viewDirection, reflect(-sunDirection, normal)), 0),shininess);
     vec3 sunDiffuse = sun.color * sunDiffuseCoefficient * dColor;
-    vec3 sunSpecular = sun * sunSpecularCoefficient * sColor;
+    vec3 sunSpecular = sun.color * sunSpecularCoefficient * sColor;
     finalColor += sunDiffuse + sunSpecular;
 
     FragColor = vec4(finalColor, 1.0);

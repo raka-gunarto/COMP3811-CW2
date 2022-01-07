@@ -15,7 +15,7 @@ struct ScriptBuilders {
 };
 
 static ScriptBuilders builders[] = {
-    {"Edit Camera Controls", newComponent<EditCamera>},
+    {"EditCamera", newComponent<EditCamera>},
 };
 
 void Script::renderComponentChildWindow(std::shared_ptr<Object> obj) {
@@ -39,6 +39,21 @@ void Script::renderComponentChildWindow(std::shared_ptr<Object> obj) {
     }
     if (ImGui::Button("Add Script"))
         ImGui::OpenPopup("Script Menu###inspectorScriptMenu");
+}
+
+std::shared_ptr<Script> Script::deserialise(const YAML::Node& scriptNode, std::shared_ptr<Object> obj)
+{
+    // find the corresponding builder
+    if (scriptNode.IsMap())
+        for (auto cb : builders)
+            if (scriptNode["name"].as<std::string>() == std::string(cb.name))
+            {
+                auto script = std::shared_ptr<Script>(cb.builder(obj));
+                script->_deserialise(scriptNode);
+                return script;
+            }
+
+    return nullptr;
 }
 
 void Script::remove()

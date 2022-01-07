@@ -29,24 +29,10 @@
 const unsigned int WIDTH = 800;
 const unsigned int HEIGHT = 600;
 
-std::shared_ptr<Scene> constructDefaultScene(GLFWwindow* w) {
+std::shared_ptr<Scene> loadScene(GLFWwindow* w) {
     std::shared_ptr<Scene> s(new Scene(w));
     s->loadAssets();
-
-    // create main camera
-    std::shared_ptr<Object> editCamera(new Object(s));
-    editCamera->setName("Edit Camera");
-    int width, height;
-    glfwGetWindowSize(w, &width, &height);
-    std::shared_ptr<Transform> editCameraTransform(new Transform(editCamera));
-    editCameraTransform->position.y = 5;
-    editCameraTransform->position.z = 5;
-    editCameraTransform->rotation.x = -45;
-    editCamera->components.push_back(std::shared_ptr<Component>(editCameraTransform));
-    editCamera->components.push_back(std::shared_ptr<Component>(new Camera(editCamera, width, height, 45.0f, 0.1f, 10000.0f)));
-    editCamera->scripts.push_back(std::shared_ptr<Script>(new EditCamera(editCamera)));
-    s->objects.push_back(editCamera);
-    s->activeCamera = std::dynamic_pointer_cast<Camera>(editCamera->components[1]);
+    s->load();
 
     // add UI windows
     s->windowUIs.push_back(std::shared_ptr<Window>(new Overview(s)));
@@ -85,7 +71,7 @@ int main()
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 150");
 
-    std::shared_ptr<Scene> scene = constructDefaultScene(window);
+    std::shared_ptr<Scene> scene = loadScene(window);
 
     while (!glfwWindowShouldClose(window))
     {

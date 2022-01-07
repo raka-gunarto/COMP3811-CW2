@@ -4,6 +4,8 @@
 #include <scene/object/components/component.h>
 #include <scene/object/scripts/script.h>
 
+#include <iostream>
+
 // (smooth) operator overload for yaml serialisation
 YAML::Emitter& operator<< (YAML::Emitter& serialiser, const Object& o) {
     // smooooooth operatorrrrrrrrrrr
@@ -36,6 +38,36 @@ YAML::Emitter& operator<< (YAML::Emitter& serialiser, const Object& o) {
     serialiser << YAML::EndMap;
 
     return serialiser;
+}
+
+std::shared_ptr<Object> Object::deserialise(const YAML::Node& objectNode, std::shared_ptr<Scene> s)
+{
+    std::shared_ptr<Object> obj(new Object(s));
+    obj->name = objectNode["name"].as<std::string>();
+
+    for (auto it = objectNode["components"].begin(); it != objectNode["components"].end(); ++it)
+    {
+        auto c = Component::deserialise(it->as<YAML::Node>(), obj);
+        if (c)
+            obj->components.push_back(c);
+    }
+
+    for (auto it = objectNode["scripts"].begin(); it != objectNode["scripts"].end(); ++it)
+    {
+        auto s = Script::deserialise(it->as<YAML::Node>(), obj);
+        if (s)
+            obj->scripts.push_back(s);
+    }
+
+    for (auto it = objectNode["children"].begin(); it != objectNode["children"].end(); ++it)
+    {
+        auto o = Object::deserialise(it->as<YAML::Node>(), s);
+        o->reparent(obj);
+        if (o)
+            obj->children.push_back(o);
+    }
+
+    return obj;
 }
 
 std::shared_ptr<Object> Object::clone(std::shared_ptr<Object> parent)
@@ -120,4 +152,35 @@ void Object::render(std::shared_ptr<Scene> s) {
     }
     for (auto child : children)
         child->render(s);
+}
+
+void Object::remove()
+{
+    // remove all children
+    for (auto child : children)
+        if (child)
+            child->remove();
+
+    // remove all components
+    for (auto component : components)
+        if (component)
+            component->remove();
+
+    // 
+    if (parent != nullptr)
+        for (auto it = parent->children.begin(); it != parent->children.end(); ++it) {
+            if (it->get() == this)
+            {
+                parent->children.erase(it);
+                break;
+            }
+        }
+    else // remove from scene direct child
+        for (auto it = scene->objects.begin(); it != scene->objects.end(); ++it) {
+            if (it->get() == this)
+            {
+                scene->objects.erase(it);
+                break;
+            }
+        }
 }

@@ -8,6 +8,8 @@
 
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include <iostream>
 #include <memory>
@@ -28,9 +30,6 @@ PlaneRenderer::PlaneRenderer(std::shared_ptr<Object> obj) : Renderer(obj)
     mode = PlaneRenderer::Mode::MATERIAL;
     diffuseColor = glm::vec3(1.0f, 1.0f, 1.0f);
     specularColor = glm::vec3(0.0f, 0.0f, 0.0f);
-
-    // set default shader
-    shader = obj->getScene()->shaders[0];
 }
 
 void PlaneRenderer::initVertexData() {
@@ -66,6 +65,10 @@ void PlaneRenderer::initVertexData() {
 
 void PlaneRenderer::render(std::shared_ptr<Scene> s)
 {
+    // set default shader
+    if (!shader)
+        shader = object->getScene()->shaders[0];
+
     // find object transform
     std::shared_ptr<Transform> t = object->getComponent<Transform>();
 
@@ -103,27 +106,46 @@ void PlaneRenderer::render(std::shared_ptr<Scene> s)
     // lights
     for (int i = 0; i < s->lights.size(); ++i)
     {
-        glUniform3f(glGetUniformLocation(shader->id, 
+        glUniform3f(glGetUniformLocation(shader->id,
             std::string("lights[" + std::to_string(i) + "].pos").c_str()),
             s->lights[i]->transform->worldPos().x,
             s->lights[i]->transform->worldPos().y,
             s->lights[i]->transform->worldPos().z
-            );
-        glUniform3f(glGetUniformLocation(shader->id, 
+        );
+        glUniform3f(glGetUniformLocation(shader->id,
             std::string("lights[" + std::to_string(i) + "].color").c_str()),
             s->lights[i]->color.r,
             s->lights[i]->color.g,
             s->lights[i]->color.b
-            );
-        glUniform1f(glGetUniformLocation(shader->id, 
+        );
+        glUniform1f(glGetUniformLocation(shader->id,
             std::string("lights[" + std::to_string(i) + "].linAttenuate").c_str()),
             s->lights[i]->linearAttenuation
-            );
-        glUniform1f(glGetUniformLocation(shader->id, 
+        );
+        glUniform1f(glGetUniformLocation(shader->id,
             std::string("lights[" + std::to_string(i) + "].quadAttenuate").c_str()),
             s->lights[i]->quadAttenuation
-            );
+        );
     }
+    // extract rotation from directional light transform
+    if (s->dirLight)
+    {
+        glm::vec3 sunDirection = glm::rotate(
+            glm::quat(s->dirLight->transform->modelMatrix()),
+            glm::vec3(0, 1.0f, 0)
+        );
+        glUniform3f(glGetUniformLocation(shader->id, "sun.dir"),
+            sunDirection.x,
+            sunDirection.y,
+            sunDirection.z
+        );
+        glUniform3f(glGetUniformLocation(shader->id, "sun.color"),
+            s->dirLight->color.r,
+            s->dirLight->color.g,
+            s->dirLight->color.b
+        );
+    }
+
     // load color / texture
     switch (mode)
     {
@@ -172,6 +194,11 @@ void PlaneRenderer::render(std::shared_ptr<Scene> s)
 void PlaneRenderer::renderInspector()
 {
     ImGui::Text("Plane Renderer");
+    ImGui::Text("Shader: "); ImGui::SameLine();
+    ImGui::Button(shader->name.c_str());
+    if (ImGui::BeginDragDropTarget())
+        if (const ImGuiPayload* p = ImGui::AcceptDragDropPayload("SHADER"))
+            shader = (*((Shader**)p->Data))->shared_from_this();
     ImGui::Text("Mode"); ImGui::SameLine();
     if (ImGui::RadioButton("Material", mode == MATERIAL)) { mode = MATERIAL; } ImGui::SameLine();
     if (ImGui::RadioButton("Texture Map", mode == TEX_MAP)) { mode = TEX_MAP; }

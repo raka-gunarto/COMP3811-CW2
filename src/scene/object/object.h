@@ -47,10 +47,12 @@ public:
         return c;
     }
     void reparent(std::shared_ptr<Object> p, bool blueprint = false);
+    void remove();
     void update(std::shared_ptr<Scene> s);
     void render(std::shared_ptr<Scene> s);
 
     friend YAML::Emitter& operator << (YAML::Emitter& emitter, const Object& o);
+    static std::shared_ptr<Object> deserialise(const YAML::Node& objectNode, std::shared_ptr<Scene> s);
 
 protected:
     std::shared_ptr<Scene> scene;

@@ -3,8 +3,9 @@
 #include <glad/glad.h>
 
 #include <string>
+#include <memory>
 
-class Shader {
+class Shader : public std::enable_shared_from_this<Shader> {
 public:
     GLuint id;
     std::string name;

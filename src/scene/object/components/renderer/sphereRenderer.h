@@ -39,6 +39,10 @@ public:
         emitter << YAML::BeginMap;
         emitter << YAML::Key << "name";
         emitter << YAML::Value << "SphereRenderer";
+        if (shader)
+            emitter << YAML::Key << "shader" << YAML::Value << shader->name;
+        else
+            emitter << YAML::Key << "shader" << YAML::Value << "default";
         emitter << YAML::Key << "mode" << YAML::Value << mode;
         emitter << YAML::Key << "diffuseColor" << YAML::Value << YAML::Flow << YAML::BeginSeq
             << diffuseColor.r << diffuseColor.g << diffuseColor.b
@@ -53,6 +57,50 @@ public:
             emitter << YAML::Key << "specularTex" << YAML::Value << specularTex->name;
         emitter << YAML::EndMap;
         return emitter;
+    }
+    void _deserialise(const YAML::Node& componentNode) override
+    {
+        // do the reverse of serialise duh
+        // find shader
+        if (componentNode["shader"])
+        {
+            std::string shaderName = componentNode["shader"].as<std::string>();
+            for (auto s : object->getScene()->shaders)
+                if (s->name == shaderName)
+                    shader = s;
+        }
+        if (!shader) // should probably output a warning but cba rn
+            shader = object->getScene()->shaders[0];
+
+        // find textures
+        if (componentNode["diffuseTex"])
+        {
+            std::string texName = componentNode["diffuseTex"].as<std::string>();
+            for (auto t : object->getScene()->textures)
+                if (t->name == texName)
+                    diffuseTex = t;
+        }
+        if (componentNode["specularTex"])
+        {
+            std::string texName = componentNode["specularTex"].as<std::string>();
+            for (auto t : object->getScene()->textures)
+                if (t->name == texName)
+                    specularTex = t;
+        }
+
+        // set the rest (im giving up on type checking now)
+        mode = (Mode) componentNode["mode"].as<int>();
+        diffuseColor = glm::vec3(
+            componentNode["diffuseColor"][0].as<float>(),
+            componentNode["diffuseColor"][1].as<float>(),
+            componentNode["diffuseColor"][2].as<float>()
+        );
+        specularColor = glm::vec3(
+            componentNode["specularColor"][0].as<float>(),
+            componentNode["specularColor"][1].as<float>(),
+            componentNode["specularColor"][2].as<float>()
+        );
+        shininess = componentNode["shininess"].as<float>();
     }
 
     static void initVertexData();

@@ -232,7 +232,7 @@ void processFiles(std::shared_ptr<Scene> s)
             }
             if (fragPath == "")
             {
-                std::cout<< "ERROR::ASSETIMPORT::SHADER::could not find fragment shader for " << file << std::endl;
+                std::cout << "ERROR::ASSETIMPORT::SHADER::could not find fragment shader for " << file << std::endl;
                 continue;
             }
 
@@ -263,7 +263,7 @@ void findLightsRecursive(Scene* s, std::shared_ptr<Object> o)
     auto light = o->getComponent<Light>();
     if (light && light->type == Light::Type::POINT && s->lights.size() < Scene::MAX_LIGHTS)
         s->lights.push_back(light);
-    
+
     if (light && light->type == Light::Type::DIRECTIONAL)
         s->dirLight = light;
 
@@ -315,7 +315,7 @@ void Scene::save(std::string filename)
     YAML::Emitter serialiser;
 
     // objects as sequence of maps
-    serialiser << YAML::BeginSeq;   
+    serialiser << YAML::BeginSeq;
     for (auto obj : objects)
         serialiser << *obj; // expect map
     serialiser << YAML::EndSeq;
@@ -326,6 +326,27 @@ void Scene::save(std::string filename)
         outfile << serialiser.c_str();
         outfile.close();
     }
-    else 
+    else
         std::cout << "ERROR::SCENE::SERIALISER::could not open file" << std::endl;
+}
+
+// scene loading
+void Scene::load(std::string filename)
+{
+    YAML::Node sceneNode = YAML::LoadFile(filename);
+    if (!sceneNode || !sceneNode.IsSequence())
+        std::cout << "ERROR::SCENE::DESERIALISER::can't read file" << std::endl;
+
+    for (auto it = sceneNode.begin(); it != sceneNode.end(); ++it)
+        objects.push_back(Object::deserialise(*it, this->shared_from_this()));
+
+    for (auto obj : objects)
+    {
+        auto cam = obj->getComponent<Camera>();
+        if (cam)
+        {
+            activeCamera = cam;
+            break;
+        }
+    }
 }

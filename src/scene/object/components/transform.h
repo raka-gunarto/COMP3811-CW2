@@ -52,6 +52,25 @@ public:
         emitter << YAML::EndMap;
         return emitter;
     }
+    void _deserialise(const YAML::Node& componentNode) override
+    {
+        // do the reverse of serialise duh
+        position = glm::vec3(
+            componentNode["position"][0].as<float>(),
+            componentNode["position"][1].as<float>(),
+            componentNode["position"][2].as<float>()
+        );
+        rotation = glm::vec3(
+            componentNode["rotation"][0].as<float>(),
+            componentNode["rotation"][1].as<float>(),
+            componentNode["rotation"][2].as<float>()
+        );
+        scale = glm::vec3(
+            componentNode["scale"][0].as<float>(),
+            componentNode["scale"][1].as<float>(),
+            componentNode["scale"][2].as<float>()
+        );
+    }
 
     glm::vec3 worldPos();
     glm::mat4 localMatrix();

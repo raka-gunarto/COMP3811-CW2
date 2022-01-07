@@ -26,10 +26,10 @@ static ComponentBuilders builders[] = {
     {"Transform", newComponent<Transform>},
     {"Camera", newComponent<Camera>},
     {"Light", newComponent<Light>},
-    {"Plane Renderer", newComponent<PlaneRenderer>},
-    {"Cube Renderer", newComponent<CubeRenderer>},
-    {"Sphere Renderer", newComponent<SphereRenderer>},
-    {"Mesh Renderer", newComponent<MeshRenderer>},
+    {"PlaneRenderer", newComponent<PlaneRenderer>},
+    {"CubeRenderer", newComponent<CubeRenderer>},
+    {"SphereRenderer", newComponent<SphereRenderer>},
+    {"MeshRenderer", newComponent<MeshRenderer>},
 };
 
 void Component::renderComponentChildWindow(std::shared_ptr<Object> obj) {
@@ -56,6 +56,21 @@ void Component::renderComponentChildWindow(std::shared_ptr<Object> obj) {
         open = true;
         ImGui::OpenPopup("Component Menu###inspectorComponentMenu");
     }
+}
+
+std::shared_ptr<Component> Component::deserialise(const YAML::Node& componentNode, std::shared_ptr<Object> obj)
+{
+    // find the corresponding builder
+    if (componentNode.IsMap())
+        for (auto cb : builders)
+            if (componentNode["name"].as<std::string>() == std::string(cb.name))
+            {
+                auto component = std::shared_ptr<Component>(cb.builder(obj));
+                component->_deserialise(componentNode);
+                return component;
+            }
+
+    return nullptr;
 }
 
 void Component::remove()
