@@ -130,69 +130,12 @@ void SphereRenderer::render(std::shared_ptr<Scene> s)
     // activate the renderer's shader
     shader->activate();
 
-    // scene ambient parameters
-    glUniform3f(glGetUniformLocation(shader->id, "ambientColor"),
-        s->ambientColor.r,
-        s->ambientColor.g,
-        s->ambientColor.b
-    );
-    glUniform1f(glGetUniformLocation(shader->id, "ambientIntensity"), s->ambientIntensity);
-
     // model mat and normal mat
     glm::mat4 modelMat = t->modelMatrix();
     glm::mat3 normalMat = glm::mat3(glm::transpose(glm::inverse(modelMat)));
     glUniformMatrix4fv(glGetUniformLocation(shader->id, "model"), 1, GL_FALSE, glm::value_ptr(modelMat));
     glUniformMatrix3fv(glGetUniformLocation(shader->id, "normalMat"), 1, GL_FALSE, glm::value_ptr(normalMat));
-    // specular lighting, camera position
-    glUniform3f(glGetUniformLocation(shader->id, "cameraPos"),
-        s->activeCamera->transform->worldPos().x,
-        s->activeCamera->transform->worldPos().y,
-        s->activeCamera->transform->worldPos().z
-    );
-    // camera matrix (view + projection)
-    glUniformMatrix4fv(glGetUniformLocation(shader->id, "cameraMat"), 1, GL_FALSE, glm::value_ptr(s->activeCamera->getMatrix()));
-    // lights
-    for (int i = 0; i < s->lights.size(); ++i)
-    {
-        glUniform3f(glGetUniformLocation(shader->id,
-            std::string("lights[" + std::to_string(i) + "].pos").c_str()),
-            s->lights[i]->transform->worldPos().x,
-            s->lights[i]->transform->worldPos().y,
-            s->lights[i]->transform->worldPos().z
-        );
-        glUniform3f(glGetUniformLocation(shader->id,
-            std::string("lights[" + std::to_string(i) + "].color").c_str()),
-            s->lights[i]->color.r,
-            s->lights[i]->color.g,
-            s->lights[i]->color.b
-        );
-        glUniform1f(glGetUniformLocation(shader->id,
-            std::string("lights[" + std::to_string(i) + "].linAttenuate").c_str()),
-            s->lights[i]->linearAttenuation
-        );
-        glUniform1f(glGetUniformLocation(shader->id,
-            std::string("lights[" + std::to_string(i) + "].quadAttenuate").c_str()),
-            s->lights[i]->quadAttenuation
-        );
-    }
-    // extract rotation from directional light transform
-    if (s->dirLight)
-    {
-        glm::vec3 sunDirection = glm::rotate(
-            glm::quat(s->dirLight->transform->modelMatrix()),
-            glm::vec3(0, 1.0f, 0)
-        );
-        glUniform3f(glGetUniformLocation(shader->id, "sun.dir"),
-            sunDirection.x,
-            sunDirection.y,
-            sunDirection.z
-        );
-        glUniform3f(glGetUniformLocation(shader->id, "sun.color"),
-            s->dirLight->color.r,
-            s->dirLight->color.g,
-            s->dirLight->color.b
-        );
-    }
+
     // load color / texture
     switch (mode)
     {

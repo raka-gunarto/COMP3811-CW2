@@ -11,13 +11,14 @@
 
 #include <iostream>
 
-Camera::Camera(std::shared_ptr<Object> obj, int width, int height, float FOV, float near, float far)
+Camera::Camera(std::shared_ptr<Object> obj, int width, int height, float FOV, float near, float far, float fogOffset)
     : Component(obj),
     width(width),
     height(height),
     FOV(FOV),
     near(near),
-    far(far)
+    far(far),
+    fogOffset(fogOffset)
 {
     name = "Camera";
 
@@ -93,5 +94,6 @@ void Camera::renderInspector() {
     ImGui::DragFloat("FOV", &FOV, 0.1f);
     ImGui::DragFloat("Near Plane", &near, 0.1f);
     ImGui::DragFloat("Far Plane", &far, 0.1f);
+    ImGui::DragFloat("Fog Offset", &fogOffset, 0.1f);
     ImGui::Separator();
 }

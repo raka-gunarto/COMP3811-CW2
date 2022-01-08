@@ -7,11 +7,17 @@ in vec2 texCoords;
 in vec3 cPos;
 in vec3 normal;
 
-uniform sampler2D texDiffuse;
-uniform sampler2D texSpecular;
+uniform sampler2D diffuseTex;
+uniform sampler2D specularTex;
 uniform vec3 diffuseColor;
 uniform vec3 specularColor;
 uniform float shininess;
+
+// fog parameters
+in float depth; 
+uniform vec3 backgroundColor; 
+uniform float farPlane;
+uniform float fogOffset;
 
 uniform vec3 ambientColor;
 uniform float ambientIntensity;
@@ -36,8 +42,8 @@ uniform DirectionalLight sun;
 void main()
 {
     // material diffuse and specular color (branchless)
-    vec3 dColor = diffuseColor + texture(texDiffuse, texCoords).rgb;
-    vec3 sColor = specularColor + texture(texSpecular, texCoords).rgb;
+    vec3 dColor = diffuseColor + texture(diffuseTex, texCoords).rgb;
+    vec3 sColor = specularColor + texture(specularTex, texCoords).rgb;
 
     vec3 ambient = ambientColor * ambientIntensity * dColor;
     vec3 finalColor = ambient;
@@ -73,6 +79,9 @@ void main()
     vec3 sunDiffuse = sun.color * sunDiffuseCoefficient * dColor;
     vec3 sunSpecular = sun.color * sunSpecularCoefficient * sColor;
     finalColor += sunDiffuse + sunSpecular;
+
+    // "fog"
+    finalColor = mix(finalColor, backgroundColor, smoothstep(farPlane-fogOffset,farPlane,depth));
 
     FragColor = vec4(finalColor, 1.0);
 }

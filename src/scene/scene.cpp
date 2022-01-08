@@ -13,6 +13,10 @@
 #include <scene/object/components/light.h>
 #include <scene/object/components/renderer/meshRenderer.h>
 
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/quaternion.hpp>
+
 #include "yaml-cpp/yaml.h"
 
 #include <iostream>
@@ -271,11 +275,132 @@ void findLightsRecursive(Scene* s, std::shared_ptr<Object> o)
         findLightsRecursive(s, obj);
 }
 
+void shaderUniforms(Scene* s)
+{
+    // reset light uniforms
+    for (auto shader : s->shaders)
+    {
+        for (int i = 0; i < s->lights.size(); ++i)
+        {
+            glUniform3f(glGetUniformLocation(shader->id,
+                std::string("lights[" + std::to_string(i) + "].pos").c_str()),
+                0,
+                0,
+                0
+            );
+            glUniform3f(glGetUniformLocation(shader->id,
+                std::string("lights[" + std::to_string(i) + "].color").c_str()),
+                0,
+                0,
+                0
+            );
+            glUniform1f(glGetUniformLocation(shader->id,
+                std::string("lights[" + std::to_string(i) + "].linAttenuate").c_str()),
+                0
+            );
+            glUniform1f(glGetUniformLocation(shader->id,
+                std::string("lights[" + std::to_string(i) + "].quadAttenuate").c_str()),
+                0
+            );
+        }
+        glUniform3f(glGetUniformLocation(shader->id, "sun.dir"),
+            0,
+            0,
+            0
+        );
+        glUniform3f(glGetUniformLocation(shader->id, "sun.color"),
+            0,
+            0,
+            0
+        );
+    }
+
+    // set uniforms
+    for (auto shader : s->shaders)
+    {
+        shader->activate();
+
+        // scene ambient parameters
+        glUniform3f(glGetUniformLocation(shader->id, "ambientColor"),
+            s->ambientColor.r,
+            s->ambientColor.g,
+            s->ambientColor.b
+        );
+        glUniform1f(glGetUniformLocation(shader->id, "ambientIntensity"), s->ambientIntensity);
+
+        // specular lighting, camera position
+        glUniform3f(glGetUniformLocation(shader->id, "cameraPos"),
+            s->activeCamera->transform->position.x,
+            s->activeCamera->transform->position.y,
+            s->activeCamera->transform->position.z
+        );
+
+        // background color of scene
+        glUniform3f(glGetUniformLocation(shader->id, "backgroundColor"),
+            s->backgroundColor.r,
+            s->backgroundColor.g,
+            s->backgroundColor.b
+        );
+
+        // camera matrix (view + projection) and fog params
+        glUniformMatrix4fv(glGetUniformLocation(shader->id, "cameraMat"), 1, GL_FALSE, glm::value_ptr(s->activeCamera->getMatrix()));
+        glUniformMatrix4fv(glGetUniformLocation(shader->id, "view"), 1, GL_FALSE, glm::value_ptr(s->activeCamera->getView()));
+        glUniform1f(glGetUniformLocation(shader->id, "farPlane"), s->activeCamera->far);
+        glUniform1f(glGetUniformLocation(shader->id, "fogOffset"), s->activeCamera->fogOffset);
+
+        // lights
+        for (int i = 0; i < s->lights.size(); ++i)
+        {
+            glUniform3f(glGetUniformLocation(shader->id,
+                std::string("lights[" + std::to_string(i) + "].pos").c_str()),
+                s->lights[i]->transform->worldPos().x,
+                s->lights[i]->transform->worldPos().y,
+                s->lights[i]->transform->worldPos().z
+            );
+            glUniform3f(glGetUniformLocation(shader->id,
+                std::string("lights[" + std::to_string(i) + "].color").c_str()),
+                s->lights[i]->color.r,
+                s->lights[i]->color.g,
+                s->lights[i]->color.b
+            );
+            glUniform1f(glGetUniformLocation(shader->id,
+                std::string("lights[" + std::to_string(i) + "].linAttenuate").c_str()),
+                s->lights[i]->linearAttenuation
+            );
+            glUniform1f(glGetUniformLocation(shader->id,
+                std::string("lights[" + std::to_string(i) + "].quadAttenuate").c_str()),
+                s->lights[i]->quadAttenuation
+            );
+        }
+        // extract rotation from directional light transform
+        if (s->dirLight)
+        {
+            glm::vec3 sunDirection = glm::rotate(
+                glm::quat(s->dirLight->transform->modelMatrix()),
+                glm::vec3(0, 1.0f, 0)
+            );
+            glUniform3f(glGetUniformLocation(shader->id, "sun.dir"),
+                sunDirection.x,
+                sunDirection.y,
+                sunDirection.z
+            );
+            glUniform3f(glGetUniformLocation(shader->id, "sun.color"),
+                s->dirLight->color.r,
+                s->dirLight->color.g,
+                s->dirLight->color.b
+            );
+        }
+    }
+}
+
 void Scene::update() {
     // find all lights in scene
     lights.clear();
     for (auto obj : objects)
         findLightsRecursive(this, obj);
+
+    // set all shader uniforms that can be set
+    shaderUniforms(this);
 
     // calculate deltaTime
     dTime = glfwGetTime() - dTime;

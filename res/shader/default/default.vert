@@ -9,8 +9,11 @@ out vec2 texCoords;
 out vec3 cPos;
 out vec3 normal;
 
+out float depth;
+
 uniform mat4 cameraMat;
 uniform mat4 model;
+uniform mat4 view;
 uniform mat3 normalMat;
 
 void main()
@@ -18,5 +21,6 @@ void main()
     cPos = vec3(model * vec4(aPos, 1.0f));
     gl_Position = cameraMat * vec4(cPos, 1.0f);
     normal = normalize(normalMat * aNormal);
+    depth = -(view * vec4(cPos, 1.0f)).z;
     texCoords = aTexCoords;
 }
