@@ -6,6 +6,7 @@
 #include <util/shader.h>
 #include <util/mesh.h>
 #include <util/texture.h>
+#include <util/fbo.h>
 
 #include <GLFW/glfw3.h>
 
@@ -28,6 +29,7 @@ public:
             s->scrollX += x;
             s->scrollY += y;
             });
+        sunShadowBuffer = std::shared_ptr<FBO>(new FBO(2048, 2048, GL_DEPTH_ATTACHMENT));
     }
     // WARNING: THIS MUST BE CALLED AFTER CONSTRUCTOR!
     //          (relies on shared_from_this())
@@ -40,6 +42,7 @@ public:
     static const int MAX_LIGHTS = 16;
     std::vector<std::shared_ptr<Light>> lights;
     std::shared_ptr<Light> dirLight;
+    std::shared_ptr<FBO> sunShadowBuffer;
     glm::vec3 backgroundColor = glm::vec3(0.0f, 0.0f, 0.0f);
 
     std::shared_ptr<Camera> activeCamera;

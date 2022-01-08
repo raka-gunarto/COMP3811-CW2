@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-void MeshRenderer::render(std::shared_ptr<Scene> s)
+void MeshRenderer::render(std::shared_ptr<Scene> s, std::shared_ptr<Shader> shaderOverride)
 {
     // set default shader
     if (!shader)
@@ -27,7 +27,10 @@ void MeshRenderer::render(std::shared_ptr<Scene> s)
     }
 
     // activate the renderer's shader
-    shader->activate();
+    if (shaderOverride)
+        shaderOverride->activate();
+    else
+        shader->activate();
 
     // model mat and normal mat
     glm::mat4 modelMat = t->modelMatrix();

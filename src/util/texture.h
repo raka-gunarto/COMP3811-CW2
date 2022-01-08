@@ -28,6 +28,7 @@ public:
     };
 
     Texture(ImageData image, GLenum type, GLenum scaling, GLenum repeat, glm::vec4 borderColor = glm::vec4(1.0f), std::string name = "tex");
+    Texture(unsigned int width, unsigned int height, GLenum fmt, std::string name = "tex"); // shadow buffer
     ~Texture();
 
     void bind(GLenum slot);

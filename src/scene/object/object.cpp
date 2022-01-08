@@ -143,15 +143,15 @@ void Object::update(std::shared_ptr<Scene> s) {
         child->update(s);
 }
 
-void Object::render(std::shared_ptr<Scene> s) {
+void Object::render(std::shared_ptr<Scene> s, std::shared_ptr<Shader> shaderOverride) {
     for (auto component : components)
     {
         std::shared_ptr<Renderer> r = std::dynamic_pointer_cast<Renderer>(component);
         if (r != nullptr)
-            r->render(s);
+            r->render(s, shaderOverride);
     }
     for (auto child : children)
-        child->render(s);
+        child->render(s, shaderOverride);
 }
 
 void Object::remove()

@@ -54,6 +54,28 @@ Texture::ImageData Texture::loadFromFile(const char* path, int format)
     return d;
 }
 
+Texture::Texture(unsigned int width, unsigned int height, GLenum fmt, std::string name)
+    : name(name),
+    scaling(GL_NEAREST),
+    repeat(GL_CLAMP_TO_BORDER),
+    type(GL_TEXTURE_2D)
+{
+    // generate texture
+    glGenTextures(1, &ID);
+    bind(GL_TEXTURE0);
+
+    // params
+    glTexParameteri(type, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(type, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(type, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+    glTexParameteri(type, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+    float borderColor[] = { 0.0, 0.0, 0.0, 1.0 };
+    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, fmt, width, height, 0, fmt, GL_FLOAT, NULL);
+    unbind();
+}
+
 Texture::~Texture()
 {
     glDeleteTextures(1, &ID);

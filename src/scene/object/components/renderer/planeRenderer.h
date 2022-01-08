@@ -32,7 +32,7 @@ public:
         return std::shared_ptr<Component>(new PlaneRenderer(*this, newObj));
     }
 
-    void render(std::shared_ptr<Scene> s) override;
+    void render(std::shared_ptr<Scene> s, std::shared_ptr<Shader> shaderOverride = nullptr) override;
     void renderInspector() override;
     YAML::Emitter& serialise(YAML::Emitter& emitter) override
     {

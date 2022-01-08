@@ -38,6 +38,8 @@ struct DirectionalLight {
 };
 uniform PointLight lights[16];
 uniform DirectionalLight sun;
+uniform sampler2DShadow sunShadow;
+in vec4 sunSpacePos;
 
 void main()
 {
@@ -73,12 +75,23 @@ void main()
     }
 
     // calculate the one directional light (sun)
-    vec3 sunDirection = normalize(-sun.dir);
-    float sunDiffuseCoefficient = max(dot(normal, sunDirection), 0);
-    float sunSpecularCoefficient = pow(max(dot(viewDirection, reflect(-sunDirection, normal)), 0),shininess);
-    vec3 sunDiffuse = sun.color * sunDiffuseCoefficient * dColor;
-    vec3 sunSpecular = sun.color * sunSpecularCoefficient * sColor;
-    finalColor += sunDiffuse + sunSpecular;
+    if (vec3(sun.color) != vec3(0.0f, 0.0f, 0.0f))
+    {
+        // calculate diffuse + specular
+        vec3 sunDirection = normalize(-sun.dir);
+        float sunDiffuseCoefficient = max(dot(normal, sunDirection), 0);
+        float sunSpecularCoefficient = pow(max(dot(viewDirection, reflect(-sunDirection, normal)), 0),shininess);
+        vec3 sunDiffuse = sun.color * sunDiffuseCoefficient * dColor;
+        vec3 sunSpecular = sun.color * sunSpecularCoefficient * sColor;
+
+        // calculate shadows
+        vec3 sunProjection = sunSpacePos.xyz / sunSpacePos.w; // perspective divide
+        sunProjection = sunProjection * 0.5 + 0.5;
+        float bias = max(0.001 * (1.0 - dot(normal, sunDirection)), 0.001);
+        float shadowCoefficient = texture(sunShadow, vec3(sunProjection.xy, sunProjection.z - bias));
+
+        finalColor += shadowCoefficient * (sunDiffuse + sunSpecular);
+    }
 
     // "fog"
     finalColor = mix(finalColor, backgroundColor, smoothstep(farPlane-fogOffset,farPlane,depth));

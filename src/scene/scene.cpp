@@ -280,7 +280,7 @@ void shaderUniforms(Scene* s)
     // reset light uniforms
     for (auto shader : s->shaders)
     {
-        for (int i = 0; i < s->lights.size(); ++i)
+        for (int i = 0; i < Scene::MAX_LIGHTS; ++i)
         {
             glUniform3f(glGetUniformLocation(shader->id,
                 std::string("lights[" + std::to_string(i) + "].pos").c_str()),
@@ -389,19 +389,21 @@ void shaderUniforms(Scene* s)
                 s->dirLight->color.g,
                 s->dirLight->color.b
             );
+
+            // set depth buffer
+            s->sunShadowBuffer->texture->bind(GL_TEXTURE2);
+            glUniform1i(glGetUniformLocation(shader->id, "sunShadow"), 2);
+
+            // set sun space matrix for depth shader
+            glm::mat4 sunViewProjection =
+                glm::ortho(-200.0f, 200.0f, -200.0f, 200.0f, 0.1f, 600.0f) *
+                glm::lookAt(s->dirLight->transform->worldPos(), s->dirLight->transform->worldPos() + sunDirection, glm::vec3(0, 1.0f, 0));
+            glUniformMatrix4fv(glGetUniformLocation(shader->id, "sunViewProjection"), 1, GL_FALSE, glm::value_ptr(sunViewProjection));
         }
     }
 }
 
 void Scene::update() {
-    // find all lights in scene
-    lights.clear();
-    for (auto obj : objects)
-        findLightsRecursive(this, obj);
-
-    // set all shader uniforms that can be set
-    shaderUniforms(this);
-
     // calculate deltaTime
     dTime = glfwGetTime() - dTime;
     for (auto obj : objects)
@@ -416,6 +418,40 @@ void Scene::update() {
 }
 
 void Scene::render() {
+    // find all lights in scene
+    lights.clear();
+    dirLight = nullptr;
+    for (auto obj : objects)
+        findLightsRecursive(this, obj);
+
+    // set all shader uniforms that can be set
+    shaderUniforms(this);
+
+    // render to shadowbuffer
+    if (dirLight)
+    {
+        std::shared_ptr<Shader> depthShader;
+        for (auto shader : shaders)
+            if (shader->name.find("depth_") != std::string::npos)
+            {
+                depthShader = shader;
+                break;
+            }
+        if (depthShader)
+        {
+            glViewport(0, 0, sunShadowBuffer->width, sunShadowBuffer->height);
+            sunShadowBuffer->bind();
+            glClear(GL_DEPTH_BUFFER_BIT);
+            for (auto obj : objects)
+                obj->render(this->shared_from_this(), depthShader);
+            sunShadowBuffer->unbind();
+            const auto mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+            glViewport(0, 0, mode->width, mode->height);
+        }
+        else std::cout << "ERROR::RENDERER::could not find depth shader" << std::endl;
+    }
+
+    // render to screen
     for (auto obj : objects)
         obj->render(this->shared_from_this());
 }

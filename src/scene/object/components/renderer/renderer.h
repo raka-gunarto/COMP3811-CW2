@@ -15,6 +15,6 @@ class Renderer : public Component
 {
 public:
     Renderer(std::shared_ptr<Object> obj) : Component(obj) {}
-    virtual void render(std::shared_ptr<Scene> s) = 0;
+    virtual void render(std::shared_ptr<Scene> s, std::shared_ptr<Shader> shaderOverride = nullptr) = 0;
     std::shared_ptr<Shader> shader = nullptr;
 };

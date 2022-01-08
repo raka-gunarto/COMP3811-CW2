@@ -16,6 +16,7 @@ class Scene;
 class Component;
 class Object;
 class Script;
+class Shader;
 
 class Object : public std::enable_shared_from_this<Object>
 {
@@ -49,7 +50,7 @@ public:
     void reparent(std::shared_ptr<Object> p, bool blueprint = false);
     void remove();
     void update(std::shared_ptr<Scene> s);
-    void render(std::shared_ptr<Scene> s);
+    void render(std::shared_ptr<Scene> s, std::shared_ptr<Shader> shaderOverride = nullptr);
 
     friend YAML::Emitter& operator << (YAML::Emitter& emitter, const Object& o);
     static std::shared_ptr<Object> deserialise(const YAML::Node& objectNode, std::shared_ptr<Scene> s);
