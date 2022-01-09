@@ -1,0 +1,2411 @@
+- name: Edit Camera
+  components:
+    - name: Transform
+      position: [31.6579342, 25.63274, 46.711071]
+      rotation: [-28.5224056, 42.3717194, -11.2527981]
+      scale: [0.999963522, 0.999964893, 0.999949694]
+    - name: Camera
+      width: 1920
+      height: 1080
+      FOV: 45
+      near: 0.100000001
+      far: 120
+      fogOffset: 40
+  scripts:
+    - name: EditCamera
+      zoomSpeed: 2
+      rotateSpeed: 100
+      dragSpeed: 100
+  children:
+    []
+- name: SunMoonPivot
+  components:
+    - name: Transform
+      position: [0, 0, 0]
+      rotation: [0, 0, 27.4529362]
+      scale: [0.999938846, 0.999939561, 1]
+  scripts:
+    - name: SunMoonCycle
+      time: 0.32625815624442017
+      timeScale: 4000
+  children:
+    - name: SunMoon
+      components:
+        - name: Transform
+          position: [0, 400, 0]
+          rotation: [0, -0, 179.899994]
+          scale: [1.00742686, 1.00742686, 1]
+        - name: Light
+          type: 1
+          linearAttenuation: 0.00499999989
+          quadAttenuation: 0.00499999989
+          color: [0.738245487, 0.764705896, 0.58477509]
+      scripts:
+        []
+      children:
+        []
+- name: Trees
+  components:
+    - name: Transform
+      position: [0, 0, 0]
+      rotation: [0, -0, 0]
+      scale: [1, 1, 1]
+  scripts:
+    []
+  children:
+    - name: importedmodel_Tree_1 (Clone)
+      components:
+        - name: Transform
+          position: [-52.5039024, 14.1513109, -2.3958242e-07]
+          rotation: [-180, -0, 0]
+          scale: [0.0199999996, 0.0199999996, 0.0199999996]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Tree_1-c0 (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Tree_1-c0-c0 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+              scripts:
+                []
+              children:
+                - name: importedmodel_Tree_1-c0-c0-m0 (Clone)
+                  components:
+                    - name: Transform
+                      position: [0, 0, 0]
+                      rotation: [0, 0, 0]
+                      scale: [1, 1, 1]
+                    - name: MeshRenderer
+                      shader: default
+                      mesh: importedmodel_Tree_1-c0-c0-m0
+                  scripts:
+                    []
+                  children:
+                    []
+            - name: importedmodel_Tree_1-c0-c1 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+              scripts:
+                []
+              children:
+                - name: importedmodel_Tree_1-c0-c1-m0 (Clone)
+                  components:
+                    - name: Transform
+                      position: [0, 0, 0]
+                      rotation: [0, 0, 0]
+                      scale: [1, 1, 1]
+                    - name: MeshRenderer
+                      shader: default
+                      mesh: importedmodel_Tree_1-c0-c1-m0
+                  scripts:
+                    []
+                  children:
+                    []
+            - name: importedmodel_Tree_1-c0-c2 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+              scripts:
+                []
+              children:
+                - name: importedmodel_Tree_1-c0-c2-m0 (Clone)
+                  components:
+                    - name: Transform
+                      position: [0, 0, 0]
+                      rotation: [0, 0, 0]
+                      scale: [1, 1, 1]
+                    - name: MeshRenderer
+                      shader: default
+                      mesh: importedmodel_Tree_1-c0-c2-m0
+                  scripts:
+                    []
+                  children:
+                    []
+        - name: importedmodel_Tree_1-c1 (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Tree_1-c1-m0 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Tree_1-c1-m0
+              scripts:
+                []
+              children:
+                []
+            - name: importedmodel_Tree_1-c1-m1 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Tree_1-c1-m1
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Tree_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [9.58054638, 14.1512976, -40.2686081]
+          rotation: [-3.01673481e-06, 23.1271343, 179.999985]
+          scale: [0.0200000126, 0.0199998841, 0.019999994]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Tree_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Tree_1-c0-c0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+              scripts:
+                []
+              children:
+                - name: importedmodel_Tree_1-c0-c0-m0 (Clone) (Clone)
+                  components:
+                    - name: Transform
+                      position: [0, 0, 0]
+                      rotation: [0, 0, 0]
+                      scale: [1, 1, 1]
+                    - name: MeshRenderer
+                      shader: default
+                      mesh: importedmodel_Tree_1-c0-c0-m0
+                  scripts:
+                    []
+                  children:
+                    []
+            - name: importedmodel_Tree_1-c0-c1 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+              scripts:
+                []
+              children:
+                - name: importedmodel_Tree_1-c0-c1-m0 (Clone) (Clone)
+                  components:
+                    - name: Transform
+                      position: [0, 0, 0]
+                      rotation: [0, 0, 0]
+                      scale: [1, 1, 1]
+                    - name: MeshRenderer
+                      shader: default
+                      mesh: importedmodel_Tree_1-c0-c1-m0
+                  scripts:
+                    []
+                  children:
+                    []
+            - name: importedmodel_Tree_1-c0-c2 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+              scripts:
+                []
+              children:
+                - name: importedmodel_Tree_1-c0-c2-m0 (Clone) (Clone)
+                  components:
+                    - name: Transform
+                      position: [0, 0, 0]
+                      rotation: [0, 0, 0]
+                      scale: [1, 1, 1]
+                    - name: MeshRenderer
+                      shader: default
+                      mesh: importedmodel_Tree_1-c0-c2-m0
+                  scripts:
+                    []
+                  children:
+                    []
+        - name: importedmodel_Tree_1-c1 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Tree_1-c1-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Tree_1-c1-m0
+              scripts:
+                []
+              children:
+                []
+            - name: importedmodel_Tree_1-c1-m1 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Tree_1-c1-m1
+              scripts:
+                []
+              children:
+                []
+- name: Log Wall
+  components:
+    - name: Transform
+      position: [0, 0, 0]
+      rotation: [0, -0, 0]
+      scale: [1, 1, 1]
+  scripts:
+    []
+  children:
+    - name: importedmodel_Log_1 (Clone)
+      components:
+        - name: Transform
+          position: [0, 0, 0]
+          rotation: [0, -0, 0]
+          scale: [0.100000001, 0.100000001, 0.100000001]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Log_1-c0 (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Log_1-c0-m0 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+            - name: importedmodel_Log_1-c0-m1 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_1-c0-m1
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Log_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0, 0.547723651, 0]
+          rotation: [0, -0, 0]
+          scale: [0.100000001, 0.100000001, 0.100000001]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Log_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Log_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+            - name: importedmodel_Log_1-c0-m1 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_1-c0-m1
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Log_1 (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0, 1.19234288, 0]
+          rotation: [0, -0, 0]
+          scale: [0.100000001, 0.100000001, 0.100000001]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Log_1-c0 (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Log_1-c0-m0 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+            - name: importedmodel_Log_1-c0-m1 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_1-c0-m1
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Log_1 (Clone) (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0, 1.82538664, 0]
+          rotation: [0, -0, 0]
+          scale: [0.100000001, 0.100000001, 0.100000001]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Log_1-c0 (Clone) (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Log_1-c0-m0 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+            - name: importedmodel_Log_1-c0-m1 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_1-c0-m1
+              scripts:
+                []
+              children:
+                []
+    - name: PictureFrame
+      components:
+        - name: Transform
+          position: [0.60200572, 1.38789868, 4.11212921]
+          rotation: [0, 0, -90]
+          scale: [0.999630153, 0.999629974, 1]
+      scripts:
+        []
+      children:
+        - name: Frame
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, -0, 0]
+              scale: [1, 1, 1]
+            - name: PlaneRenderer
+              shader: default
+              mode: 0
+              diffuseColor: [0.507539988, 0.507539988, 0.507539988]
+              specularColor: [0.508273005, 0.508000016, 0.508000016]
+              shininess: 51.2000008
+          scripts:
+            []
+          children:
+            []
+        - name: Marc
+          components:
+            - name: Transform
+              position: [0, 0.0132995546, 0]
+              rotation: [0, 89.8829651, 0]
+              scale: [0.800000012, 1, 0.800000012]
+            - name: PlaneRenderer
+              shader: default
+              mode: 1
+              diffuseColor: [1, 1, 1]
+              specularColor: [0, 0, 0]
+              shininess: 1
+              diffuseTex: MarcDekamps_nearest_border
+          scripts:
+            []
+          children:
+            []
+    - name: PictureFrame (Clone)
+      components:
+        - name: Transform
+          position: [0.60200572, 1.38789868, -0.896666408]
+          rotation: [0, 0, -90]
+          scale: [0.999319375, 0.999319196, 1]
+      scripts:
+        []
+      children:
+        - name: Frame (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, -0, 0]
+              scale: [1, 1, 1]
+            - name: PlaneRenderer
+              shader: default
+              mode: 0
+              diffuseColor: [0.507539988, 0.507539988, 0.507539988]
+              specularColor: [0.508273005, 0.508000016, 0.508000016]
+              shininess: 51.2000008
+          scripts:
+            []
+          children:
+            []
+        - name: Markus
+          components:
+            - name: Transform
+              position: [0, 0.0132995546, 0]
+              rotation: [0, 89.8829651, 0]
+              scale: [0.800000012, 1, 0.800000012]
+            - name: PlaneRenderer
+              shader: default
+              mode: 1
+              diffuseColor: [1, 1, 1]
+              specularColor: [0, 0, 0]
+              shininess: 1
+              diffuseTex: markus_nearest_border
+          scripts:
+            []
+          children:
+            []
+- name: Firepit
+  components:
+    - name: Transform
+      position: [5.43965101, 1.09286702, 3.17357445]
+      rotation: [0, -0, 0]
+      scale: [1, 1.00000012, 1.00000012]
+  scripts:
+    []
+  children:
+    - name: importedmodel_Log_2 (Clone)
+      components:
+        - name: Transform
+          position: [0, 0, 0]
+          rotation: [-120.303787, -0, 0]
+          scale: [0.0500000007, 0.0500000156, 0.0500000156]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Log_2-c0 (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Log_2-c0-m0 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_2-c0-m0
+              scripts:
+                []
+              children:
+                []
+            - name: importedmodel_Log_2-c0-m1 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_2-c0-m1
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Log_2 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.71398735, 0.152748525, -1.40958273]
+          rotation: [69.5165634, 48.5973587, -166.18071]
+          scale: [0.0500001758, 0.0500214659, 0.0500001311]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Log_2-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Log_2-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_2-c0-m0
+              scripts:
+                []
+              children:
+                []
+            - name: importedmodel_Log_2-c0-m1 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_2-c0-m1
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Log_2 (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [1.02732766, 0.0399886295, -0.351295918]
+          rotation: [-144.206451, 67.7883377, -24.9513531]
+          scale: [0.0500001386, 0.0500002615, 0.0500000566]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Log_2-c0 (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Log_2-c0-m0 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_2-c0-m0
+              scripts:
+                []
+              children:
+                []
+            - name: importedmodel_Log_2-c0-m1 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_2-c0-m1
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Log_2 (Clone) (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-0.134304225, 0.808853865, -0.690272331]
+          rotation: [22.0347691, -74.8771439, -142.711655]
+          scale: [0.0500001758, 0.0500003174, 0.0500001609]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Log_2-c0 (Clone) (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Log_2-c0-m0 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_2-c0-m0
+              scripts:
+                []
+              children:
+                []
+            - name: importedmodel_Log_2-c0-m1 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Log_2-c0-m1
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Rock_1 (Clone)
+      components:
+        - name: Transform
+          position: [1.52347136, -1.16689754, 0.809711456]
+          rotation: [0, 46.6066284, 0]
+          scale: [0.00999999978, 0.00999999978, 0.00999999978]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Rock_1-c0 (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, -0, 0]
+              scale: [0.5, 0.5, 0.5]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Rock_1-c0-m0 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Rock_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Rock_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-1.16463614, -1.16689754, 0.47624886]
+          rotation: [0, -46.428669, 0]
+          scale: [0.00999999978, 0.00999999978, 0.00999999978]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Rock_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, -0, 0]
+              scale: [0.5, 0.5, 0.5]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Rock_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Rock_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Rock_1 (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-1.47909689, -1.16689754, -1.09338391]
+          rotation: [0, -89.6053391, 0]
+          scale: [0.0100000156, 0.00999999978, 0.0100000156]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Rock_1-c0 (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, -0, 0]
+              scale: [0.5, 0.5, 0.5]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Rock_1-c0-m0 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Rock_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Rock_1 (Clone) (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [1.23400939, -1.01951087, -2.01627707]
+          rotation: [171.602081, 18.9772053, 177.196289]
+          scale: [0.0100038946, 0.0100000082, 0.0100000799]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Rock_1-c0 (Clone) (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, -0, 0]
+              scale: [0.5, 0.5, 0.5]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Rock_1-c0-m0 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Rock_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Rock_1 (Clone) (Clone) (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-0.371689707, -0.980051458, -2.25208211]
+          rotation: [171.144608, -26.2127876, -176.118546]
+          scale: [0.0100002242, 0.01000001, 0.0100002037]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Rock_1-c0 (Clone) (Clone) (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, -0, 0]
+              scale: [0.5, 0.5, 0.5]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Rock_1-c0-m0 (Clone) (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Rock_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Rock_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0, -1.16689754, 1.21962881]
+          rotation: [0, -0, 0]
+          scale: [0.00999999978, 0.00999999978, 0.00999999978]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Rock_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, -0, 0]
+              scale: [0.5, 0.5, 0.5]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Rock_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Rock_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Rock_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [2.1759851, -1.16689754, -0.57542932]
+          rotation: [-180, 83.0424118, -180]
+          scale: [0.0100000016, 0.00999999978, 0.0100000016]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Rock_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, -0, 0]
+              scale: [0.5, 0.5, 0.5]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Rock_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Rock_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: Fire
+      components:
+        - name: Transform
+          position: [1.01531386, 2.54339695, 0.16135174]
+          rotation: [0, -0, 0]
+          scale: [1, 1, 1]
+        - name: Light
+          type: 0
+          linearAttenuation: 0
+          quadAttenuation: 0.00999999978
+          color: [1, 0.617647052, 0]
+      scripts:
+        []
+      children:
+        - name: FireCube
+          components:
+            - name: Transform
+              position: [-0.621665716, -0.926528215, -0.605070174]
+              rotation: [-124.712372, -55.8349648, 36.7137566]
+              scale: [0.489999086, 0.489998907, 0.489998966]
+            - name: CubeRenderer
+              shader: firecube
+              mode: 0
+              diffuseColor: [1, 0.531718493, 0.00490194559]
+              specularColor: [0, 0, 0]
+              shininess: 1
+          scripts:
+            []
+          children:
+            []
+        - name: FireCube (Clone)
+          components:
+            - name: Transform
+              position: [-1.06374013, -0.86758697, -0.38846451]
+              rotation: [-3.85512285e-05, -19.741684, 32.1757469]
+              scale: [0.49000001, 0.489999712, 0.490000069]
+            - name: CubeRenderer
+              shader: firecube
+              mode: 0
+              diffuseColor: [1, 0.323529363, 0]
+              specularColor: [0, 0, 0]
+              shininess: 1
+          scripts:
+            []
+          children:
+            []
+        - name: FireCube (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [-0.782725334, -0.328486919, -0.27151528]
+              rotation: [-9.92985249, -18.5772934, 11.6530857]
+              scale: [0.48999995, 0.489999443, 0.489999652]
+            - name: CubeRenderer
+              shader: firecube
+              mode: 0
+              diffuseColor: [1, 0.411764741, 0]
+              specularColor: [0, 0, 0]
+              shininess: 1
+          scripts:
+            []
+          children:
+            []
+- name: Terrain
+  components:
+    - name: Transform
+      position: [0, 0, 0]
+      rotation: [0, -0, 0]
+      scale: [0.200000003, 0.100000001, 0.200000003]
+  scripts:
+    []
+  children:
+    - name: importedmodel_Terrain_2-c0 (Clone)
+      components:
+        - name: Transform
+          position: [0, 0, 0]
+          rotation: [0, 0, 0]
+          scale: [1, 1, 1]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Terrain_2-c0-m0 (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+            - name: MeshRenderer
+              shader: default
+              mesh: importedmodel_Terrain_2-c0-m0
+          scripts:
+            []
+          children:
+            []
+- name: Crate
+  components:
+    - name: Transform
+      position: [9.46992302, 0.533370852, 10.0240526]
+      rotation: [0, -0, 0]
+      scale: [2.21000004, 2.21000004, 2.21000004]
+    - name: CubeRenderer
+      shader: default
+      mode: 1
+      diffuseColor: [1, 1, 1]
+      specularColor: [0, 0, 0]
+      shininess: 5
+      diffuseTex: container-diffuse_nearest_border
+      specularTex: container-specular_nearest_border
+  scripts:
+    []
+  children:
+    []
+- name: Roblox Man
+  components:
+    - name: Transform
+      position: [11.799613, 3.06110144, -1.75909889]
+      rotation: [0, -28.3397751, 0]
+      scale: [0.999999702, 1, 0.999999762]
+  scripts:
+    []
+  children:
+    - name: Head
+      components:
+        - name: Transform
+          position: [0, 1.94343388, 0]
+          rotation: [-180, 87.4441147, -180]
+          scale: [0.5, 0.600000024, 0.5]
+        - name: SphereRenderer
+          shader: default
+          mode: 1
+          diffuseColor: [1, 0.852941215, 0]
+          specularColor: [0, 0, 0]
+          shininess: 1
+          diffuseTex: MarcDekamps_nearest_border
+      scripts:
+        []
+      children:
+        []
+    - name: Body
+      components:
+        - name: Transform
+          position: [0, 0, 0]
+          rotation: [0, -0, 0]
+          scale: [3, 3, 1]
+        - name: CubeRenderer
+          shader: default
+          mode: 1
+          diffuseColor: [1, 1, 1]
+          specularColor: [0, 0, 0]
+          shininess: 1
+          diffuseTex: icantbelieveitsnotunity_nearest_border
+      scripts:
+        []
+      children:
+        []
+    - name: Left Arm
+      components:
+        - name: Transform
+          position: [1.93083167, 1.95132399, 0.57745254]
+          rotation: [-130.454208, 20.4172535, -16.5660172]
+          scale: [0.999999881, 1.99999523, 0.999998748]
+        - name: CubeRenderer
+          shader: default
+          mode: 0
+          diffuseColor: [1, 0.883506358, 0.00980395079]
+          specularColor: [0, 0, 0]
+          shininess: 1
+      scripts:
+        []
+      children:
+        []
+    - name: Right Arm
+      components:
+        - name: Transform
+          position: [-1.97310972, 1.80279648, 0]
+          rotation: [0, -0, 29.5319519]
+          scale: [0.999999762, 1.99999952, 1]
+        - name: CubeRenderer
+          shader: default
+          mode: 0
+          diffuseColor: [1, 0.882352948, 0]
+          specularColor: [0, 0, 0]
+          shininess: 1
+      scripts:
+        []
+      children:
+        []
+    - name: Left Leg
+      components:
+        - name: Transform
+          position: [-1.64163804, -1.27807939, 1.37038887]
+          rotation: [-78.2035675, -22.2346592, -12.6125784]
+          scale: [0.999999642, 1.99999774, 0.999998987]
+        - name: CubeRenderer
+          shader: default
+          mode: 0
+          diffuseColor: [0, 0.294117659, 1]
+          specularColor: [0, 0, 0]
+          shininess: 1
+      scripts:
+        []
+      children:
+        []
+    - name: Right Leg
+      components:
+        - name: Transform
+          position: [1.56010234, -1.29071689, 1.20886445]
+          rotation: [-88.1014023, 32.278923, -4.47298861]
+          scale: [0.999999762, 1.9999994, 0.99999404]
+        - name: CubeRenderer
+          shader: default
+          mode: 0
+          diffuseColor: [0, 0.294117689, 1]
+          specularColor: [0, 0, 0]
+          shininess: 1
+      scripts:
+        []
+      children:
+        []
+- name: Roblox Man 2
+  components:
+    - name: Transform
+      position: [9.7388916, 3.45895004, 10.519268]
+      rotation: [180, -36.0259628, 180]
+      scale: [0.999585092, 1, 0.999585092]
+  scripts:
+    []
+  children:
+    - name: Head (Clone)
+      components:
+        - name: Transform
+          position: [0.168024495, 1.94343388, -0.0075002634]
+          rotation: [-180, 87.4441147, -180]
+          scale: [0.5, 0.600000024, 0.5]
+        - name: SphereRenderer
+          shader: default
+          mode: 1
+          diffuseColor: [1, 0.852941215, 0]
+          specularColor: [0, 0, 0]
+          shininess: 1
+          diffuseTex: markus_nearest_border
+      scripts:
+        []
+      children:
+        []
+    - name: Body (Clone)
+      components:
+        - name: Transform
+          position: [0, 0, 0]
+          rotation: [0, -0, 0]
+          scale: [3, 3, 1]
+        - name: CubeRenderer
+          shader: default
+          mode: 1
+          diffuseColor: [1, 1, 1]
+          specularColor: [0, 0, 0]
+          shininess: 1
+          diffuseTex: icantbelieveitsnotunity_nearest_border
+      scripts:
+        []
+      children:
+        []
+    - name: Left Arm (Clone)
+      components:
+        - name: Transform
+          position: [1.93083167, 1.95132399, 0.57745254]
+          rotation: [-130.454208, 20.4172535, -16.5660172]
+          scale: [0.999999881, 1.99999523, 0.999998748]
+        - name: CubeRenderer
+          shader: default
+          mode: 0
+          diffuseColor: [1, 0.883506358, 0.00980395079]
+          specularColor: [0, 0, 0]
+          shininess: 1
+      scripts:
+        []
+      children:
+        []
+    - name: Right Arm (Clone)
+      components:
+        - name: Transform
+          position: [-1.97310972, 1.80279648, 0]
+          rotation: [0, -0, 29.5319519]
+          scale: [0.999999762, 1.99999952, 1]
+        - name: CubeRenderer
+          shader: default
+          mode: 0
+          diffuseColor: [1, 0.882352948, 0]
+          specularColor: [0, 0, 0]
+          shininess: 1
+      scripts:
+        []
+      children:
+        []
+    - name: Left Leg (Clone)
+      components:
+        - name: Transform
+          position: [-1.64163804, -1.27807939, 1.37038887]
+          rotation: [-78.2035675, -22.2346592, -12.6125784]
+          scale: [0.999999642, 1.99999774, 0.999998987]
+        - name: CubeRenderer
+          shader: default
+          mode: 0
+          diffuseColor: [0, 0.294117659, 1]
+          specularColor: [0, 0, 0]
+          shininess: 1
+      scripts:
+        []
+      children:
+        []
+    - name: Right Leg (Clone)
+      components:
+        - name: Transform
+          position: [1.56010234, -1.29071689, 1.20886445]
+          rotation: [-88.1014023, 32.278923, -4.47298861]
+          scale: [0.999999762, 1.9999994, 0.99999404]
+        - name: CubeRenderer
+          shader: default
+          mode: 0
+          diffuseColor: [0, 0.294117689, 1]
+          specularColor: [0, 0, 0]
+          shininess: 1
+      scripts:
+        []
+      children:
+        []
+- name: Sitting Rock
+  components:
+    - name: Transform
+      position: [11.9702721, 0, -3.22923136]
+      rotation: [0, -0, 0]
+      scale: [0.0199999996, 0.0199999996, 0.0199999996]
+  scripts:
+    []
+  children:
+    - name: importedmodel_Rock_2-c0 (Clone)
+      components:
+        - name: Transform
+          position: [0, 0, 0]
+          rotation: [0, 0, 0]
+          scale: [1, 1, 1]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Rock_2-c0-m0 (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+            - name: MeshRenderer
+              shader: default
+              mesh: importedmodel_Rock_2-c0-m0
+          scripts:
+            []
+          children:
+            []
+- name: Grass Patch
+  components:
+    - name: Transform
+      position: [0, -0.27018255, 18.037899]
+      rotation: [0, -0, 0]
+      scale: [1, 1, 1]
+  scripts:
+    []
+  children:
+    - name: importedmodel_Grass_1 (Clone)
+      components:
+        - name: Transform
+          position: [0, -0.105923414, 0]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-0.446659923, -0.105923414, -1.14629161]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.524152339, -0.105923414, -0.692857921]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-0.988205552, -0.105923414, -0.0624842159]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.846652687, -0.105923414, 0.351792902]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-0.493651837, -0.105923414, 0.647363067]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.109034538, -0.105923414, -1.72441232]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.296513706, -0.105923414, 0.901316345]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+- name: Floating Earth Thingy
+  components:
+    - name: Transform
+      position: [-10.8561192, 0, 8.62187767]
+      rotation: [0, -0, 0]
+      scale: [1, 1, 1]
+  scripts:
+    []
+  children:
+    - name: importedmodel_Plant_6 (Clone)
+      components:
+        - name: Transform
+          position: [0, 0, 0]
+          rotation: [0, -0, 0]
+          scale: [0.0500000007, 0.0500000007, 0.0500000007]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Plant_6-c0 (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Plant_6-c0-m0 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Plant_6-c0-m0
+              scripts:
+                []
+              children:
+                []
+            - name: importedmodel_Plant_6-c0-m1 (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, 0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: default
+                  mesh: importedmodel_Plant_6-c0-m1
+              scripts:
+                []
+              children:
+                []
+    - name: Earf
+      components:
+        - name: Transform
+          position: [0, 4.54192495, 0]
+          rotation: [180, 90.4347305, 180]
+          scale: [0.999899864, 1, 0.999910414]
+        - name: SphereRenderer
+          shader: default
+          mode: 1
+          diffuseColor: [1, 1, 1]
+          specularColor: [0, 0, 0]
+          shininess: 1
+          diffuseTex: Mercator-projection_nearest_border
+      scripts:
+        - name: BobAndSpin
+          bobSpeed: 1
+          bobOffset: 5
+          bobSize: 0.5
+          spinSpeed: 100
+      children:
+        []
+    - name: red light
+      components:
+        - name: Transform
+          position: [0, 3.59088159, 0]
+          rotation: [0, -0, 0]
+          scale: [1, 1, 1]
+        - name: Light
+          type: 0
+          linearAttenuation: 0
+          quadAttenuation: 0.5
+          color: [1, 0, 0]
+      scripts:
+        []
+      children:
+        []
+    - name: Spin Origin
+      components:
+        - name: Transform
+          position: [0, 5, 0]
+          rotation: [-180, 71833.7344, 180]
+          scale: [0.999965847, 1, 0.999965847]
+      scripts:
+        - name: BobAndSpin
+          bobSpeed: 1
+          bobOffset: 5
+          bobSize: 0
+          spinSpeed: 100
+      children:
+        - name: Roblox Man (Clone)
+          components:
+            - name: Transform
+              position: [5.12188292, 6.16770315, -9.49657059]
+              rotation: [5.0089684e-06, 308824.375, 5.0089684e-06]
+              scale: [0.999985158, 1, 0.999985576]
+          scripts:
+            - name: BobAndSpin
+              bobSpeed: 1
+              bobOffset: 3
+              bobSize: 2
+              spinSpeed: 500
+          children:
+            - name: Head (Clone)
+              components:
+                - name: Transform
+                  position: [5.95261479e-11, 1.7510283, 2.66837463e-09]
+                  rotation: [180, 87.4441147, 180]
+                  scale: [0.5, 0.600000024, 0.5]
+                - name: SphereRenderer
+                  shader: default
+                  mode: 1
+                  diffuseColor: [1, 0.852941215, 0]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+                  diffuseTex: MarcDekamps_nearest_border
+              scripts:
+                []
+              children:
+                []
+            - name: Body (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [3, 3, 1]
+                - name: CubeRenderer
+                  shader: default
+                  mode: 1
+                  diffuseColor: [1, 1, 1]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+                  diffuseTex: icantbelieveitsnotunity_nearest_border
+              scripts:
+                []
+              children:
+                []
+            - name: Left Arm (Clone)
+              components:
+                - name: Transform
+                  position: [1.93083167, 1.95132399, 0.57745254]
+                  rotation: [-130.454208, 20.4172535, -16.5660172]
+                  scale: [0.999999881, 1.99999523, 0.999998748]
+                - name: CubeRenderer
+                  shader: default
+                  mode: 0
+                  diffuseColor: [1, 0.883506358, 0.00980395079]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+              scripts:
+                []
+              children:
+                []
+            - name: Right Arm (Clone)
+              components:
+                - name: Transform
+                  position: [-1.97310972, 1.80279648, 0]
+                  rotation: [0, -0, 29.5319519]
+                  scale: [0.999999762, 1.99999952, 1]
+                - name: CubeRenderer
+                  shader: default
+                  mode: 0
+                  diffuseColor: [1, 0.882352948, 0]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+              scripts:
+                []
+              children:
+                []
+            - name: Left Leg (Clone)
+              components:
+                - name: Transform
+                  position: [-1.64163804, -1.27807939, 1.37038887]
+                  rotation: [-78.2035675, -22.2346592, -12.6125784]
+                  scale: [0.999999642, 1.99999774, 0.999998987]
+                - name: CubeRenderer
+                  shader: default
+                  mode: 0
+                  diffuseColor: [0, 0.294117659, 1]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+              scripts:
+                []
+              children:
+                []
+            - name: Right Leg (Clone)
+              components:
+                - name: Transform
+                  position: [1.56010234, -1.29071689, 1.20886445]
+                  rotation: [-88.1014023, 32.278923, -4.47298861]
+                  scale: [0.999999762, 1.9999994, 0.99999404]
+                - name: CubeRenderer
+                  shader: default
+                  mode: 0
+                  diffuseColor: [0, 0.294117689, 1]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+              scripts:
+                []
+              children:
+                []
+        - name: Roblox Man 2 (Clone)
+          components:
+            - name: Transform
+              position: [6.59355164, -4.86059491e-07, 9.06660271]
+              rotation: [180, -36.0259628, 180]
+              scale: [0.999584854, 1, 0.999584854]
+          scripts:
+            []
+          children:
+            - name: Head (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0.168024495, 1.94343388, -0.0075002634]
+                  rotation: [-180, 87.4441147, -180]
+                  scale: [0.5, 0.600000024, 0.5]
+                - name: SphereRenderer
+                  shader: default
+                  mode: 1
+                  diffuseColor: [1, 0.852941215, 0]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+                  diffuseTex: markus_nearest_border
+              scripts:
+                []
+              children:
+                []
+            - name: Body (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [3, 3, 1]
+                - name: CubeRenderer
+                  shader: default
+                  mode: 1
+                  diffuseColor: [1, 1, 1]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+                  diffuseTex: icantbelieveitsnotunity_nearest_border
+              scripts:
+                []
+              children:
+                []
+            - name: Left Arm (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [1.93083167, 1.95132399, 0.57745254]
+                  rotation: [-130.454208, 20.4172535, -16.5660172]
+                  scale: [0.999999881, 1.99999523, 0.999998748]
+                - name: CubeRenderer
+                  shader: default
+                  mode: 0
+                  diffuseColor: [1, 0.883506358, 0.00980395079]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+              scripts:
+                []
+              children:
+                []
+            - name: Right Arm (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [-1.97310972, 1.80279648, 0]
+                  rotation: [0, -0, 29.5319519]
+                  scale: [0.999999762, 1.99999952, 1]
+                - name: CubeRenderer
+                  shader: default
+                  mode: 0
+                  diffuseColor: [1, 0.882352948, 0]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+              scripts:
+                []
+              children:
+                []
+            - name: Left Leg (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [-1.64163804, -1.27807939, 1.37038887]
+                  rotation: [-78.2035675, -22.2346592, -12.6125784]
+                  scale: [0.999999642, 1.99999774, 0.999998987]
+                - name: CubeRenderer
+                  shader: default
+                  mode: 0
+                  diffuseColor: [0, 0.294117659, 1]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+              scripts:
+                []
+              children:
+                []
+            - name: Right Leg (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [1.56010234, -1.29071689, 1.20886445]
+                  rotation: [-88.1014023, 32.278923, -4.47298861]
+                  scale: [0.999999762, 1.9999994, 0.99999404]
+                - name: CubeRenderer
+                  shader: default
+                  mode: 0
+                  diffuseColor: [0, 0.294117689, 1]
+                  specularColor: [0, 0, 0]
+                  shininess: 1
+              scripts:
+                []
+              children:
+                []
+- name: Grass Patch (Clone)
+  components:
+    - name: Transform
+      position: [3.92788959, -0.27018255, -5.15926027]
+      rotation: [0, -22.3892441, 0]
+      scale: [1, 1, 1]
+  scripts:
+    []
+  children:
+    - name: importedmodel_Grass_1 (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0, -0.105923414, 0]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-0.446659923, -0.105923414, -1.14629161]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.524152339, -0.105923414, -0.692857921]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-0.988205552, -0.105923414, -0.0624842159]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.846652687, -0.105923414, 0.351792902]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-0.493651837, -0.105923414, 0.647363067]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.109034538, -0.105923414, -1.72441232]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.296513706, -0.105923414, 0.901316345]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+- name: Grass Patch (Clone) (Clone)
+  components:
+    - name: Transform
+      position: [14.5284224, -0.27018255, 6.50860023]
+      rotation: [0, 5.87482643, 0]
+      scale: [1, 1, 1]
+  scripts:
+    []
+  children:
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0, -0.105923414, 0]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-0.446659923, -0.105923414, -1.14629161]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.524152339, -0.105923414, -0.692857921]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-0.988205552, -0.105923414, -0.0624842159]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.846652687, -0.105923414, 0.351792902]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [-0.493651837, -0.105923414, 0.647363067]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.109034538, -0.105923414, -1.72441232]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
+    - name: importedmodel_Grass_1 (Clone) (Clone) (Clone) (Clone)
+      components:
+        - name: Transform
+          position: [0.296513706, -0.105923414, 0.901316345]
+          rotation: [0, -3.61799359, 0]
+          scale: [0.0300000105, 0.0299999993, 0.0300000105]
+      scripts:
+        []
+      children:
+        - name: importedmodel_Grass_1-c0 (Clone) (Clone) (Clone) (Clone)
+          components:
+            - name: Transform
+              position: [0, 0, 0]
+              rotation: [0, 0, 0]
+              scale: [1, 1, 1]
+          scripts:
+            []
+          children:
+            - name: importedmodel_Grass_1-c0-m0 (Clone) (Clone) (Clone) (Clone)
+              components:
+                - name: Transform
+                  position: [0, 0, 0]
+                  rotation: [0, -0, 0]
+                  scale: [1, 1, 1]
+                - name: MeshRenderer
+                  shader: grass
+                  mesh: importedmodel_Grass_1-c0-m0
+              scripts:
+                []
+              children:
+                []
