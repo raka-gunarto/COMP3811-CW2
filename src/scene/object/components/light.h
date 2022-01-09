@@ -30,7 +30,7 @@ public:
         emitter << YAML::Value << "Light";
         emitter << YAML::Key << "type" << YAML::Value << type;
         emitter << YAML::Key << "linearAttenuation" << YAML::Value << linearAttenuation;
-        emitter << YAML::Key << "quadAttenuation" << YAML::Value << linearAttenuation;
+        emitter << YAML::Key << "quadAttenuation" << YAML::Value << quadAttenuation;
         emitter << YAML::Key << "color" << YAML::Value << YAML::Flow << YAML::BeginSeq
             << color.r << color.g << color.b
             << YAML::EndSeq;

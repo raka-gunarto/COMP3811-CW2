@@ -46,7 +46,8 @@ void renderObjectNode(std::shared_ptr<Object> o, Scene* s)
     ImGui::PopID();
     if (expanded) {
         for (auto child : o->children)
-            renderObjectNode(child, s);
+            if (child)
+                renderObjectNode(child, s);
         ImGui::TreePop();
     }
 }

@@ -48,7 +48,7 @@ void SunMoonCycle::update(std::shared_ptr<Scene> s)
     }
     else {
         // moon cycle
-        light->color = glm::vec3(0.4431372549f, 0.56470588235f, 0.67058823529f);
+        light->color = 0.2f * glm::vec3(0.4431372549f, 0.56470588235f, 0.67058823529f);
         s->backgroundColor = glm::vec3(0.0f);
     }
 }

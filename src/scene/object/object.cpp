@@ -93,6 +93,10 @@ std::shared_ptr<Object> Object::clone(std::shared_ptr<Object> parent)
 
 void Object::reparent(std::shared_ptr<Object> p, bool blueprint)
 {
+    // increment the ref count so we don't get nuked
+    // by shared_ptr just in case this object is empty
+    std::shared_ptr<Object> temporary = this->shared_from_this();
+    
     // do we have a parent? remove us from their children
     if (parent != nullptr)
         for (auto it = parent->children.begin(); it != parent->children.end(); ++it) {

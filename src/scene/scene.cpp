@@ -400,6 +400,7 @@ void shaderUniforms(Scene* s)
                 glm::lookAt(s->dirLight->transform->worldPos(), s->dirLight->transform->worldPos() + sunDirection, glm::vec3(0, 1.0f, 0));
             glUniformMatrix4fv(glGetUniformLocation(shader->id, "sunViewProjection"), 1, GL_FALSE, glm::value_ptr(sunViewProjection));
         }
+        glUniform1f(glGetUniformLocation(shader->id, "time"), glfwGetTime());
     }
 }
 

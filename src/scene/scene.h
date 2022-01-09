@@ -63,7 +63,7 @@ public:
 
     bool vsync = true;
     glm::vec3 ambientColor = glm::vec3(1.0f, 1.0f, 1.0f);
-    float ambientIntensity = 0.2f;
+    float ambientIntensity = 0.0f;
     double dTime = 0.0;
 
     // scroll values because glfw handles scroll with callbacks
